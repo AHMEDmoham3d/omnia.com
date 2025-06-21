@@ -27,15 +27,16 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <div className="relative">
-              <Sparkles className="w-8 h-8 text-purple-400 animate-pulse" />
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-ping"></div>
-            </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Omnia
-            </span>
-          </div>
+<div className="flex items-center space-x-2 ml-[120px]">
+  <div className="relative">
+    <Sparkles className="w-8 h-8 text-purple-400 animate-pulse" />
+    <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-ping"></div>
+  </div>
+  <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+    Omnia
+  </span>
+</div>
+
 
           {/* Desktop Navigation */}
 <nav className="hidden md:flex space-x-8 mr-[120px]">
