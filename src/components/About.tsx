@@ -45,12 +45,13 @@ const About = () => {
           {/* Image */}
           <div className="relative">
             <div className="aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-purple-900/30 to-pink-900/30 p-2">
-              <img
-                src="https://images.pexels.com/photos/6985001/pexels-photo-6985001.jpeg?auto=compress&cs=tinysrgb&w=800"
-                alt="Spiritual healing session with tarot cards and crystals"
-                className="w-full h-full object-cover rounded-2xl shadow-2xl"
-                loading="lazy"
-              />
+<img
+  src="/omnia.jpg"
+  alt="Spiritual healing session with tarot cards and crystals"
+  className="w-full h-full object-cover rounded-2xl shadow-2xl"
+  loading="lazy"
+/>
+
             </div>
             {/* Floating Elements */}
             <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full opacity-20 animate-pulse"></div>
