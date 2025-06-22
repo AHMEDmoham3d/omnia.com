@@ -71,14 +71,14 @@ const Contact = ({ onMessageSent }) => {
     {
       icon: <Mail className="w-6 h-6" />,
       title: "Email",
-      value: "hello@omnia.com",
-      link: "mailto:hello@omnia.com"
+      value: "ms.omnia.o@hotmail.com",
+      link: "mailto:ms.omnia.o@hotmail.com"
     },
     {
       icon: <Phone className="w-6 h-6" />,
       title: "WhatsApp",
-      value: "+1 (555) 123-4567",
-      link: "https://wa.me/15551234567"
+      value: "+20 10 09058159",
+      link: "https://wa.me/+20 10 09058159"
     },
     {
       icon: <MapPin className="w-6 h-6" />,
