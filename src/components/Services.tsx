@@ -7,32 +7,32 @@ const Services = () => {
       icon: <BookOpen className="w-8 h-8" />,
       title: "Tarot Card Reading",
       description: "Discover insights about your past, present, and future through the ancient art of tarot. Each reading is personalized to your specific questions and life situation.",
-      duration: "60 minutes",
-      price: "$75",
+      // duration: "60 minutes",
+      // price: "$75",
       features: ["Personal guidance", "Future insights", "Relationship advice", "Career direction"]
     },
     {
       icon: <Headphones className="w-8 h-8" />,
       title: "Sound Healing with Tuning Forks",
       description: "Experience deep relaxation and cellular healing through therapeutic sound frequencies. Tuning forks help restore balance and harmony to your energy field.",
-      duration: "45 minutes",
-      price: "$65",
+      // duration: "45 minutes",
+      // price: "$65",
       features: ["Stress relief", "Energy alignment", "Chakra balancing", "Deep relaxation"]
     },
     {
       icon: <Zap className="w-8 h-8" />,
       title: "Energy Healing Session",
       description: "Clear blockages and restore natural energy flow through hands-on healing techniques. Perfect for physical, emotional, and spiritual wellness.",
-      duration: "50 minutes",
-      price: "$80",
+      // duration: "50 minutes",
+      // price: "$80",
       features: ["Chakra clearing", "Aura cleansing", "Emotional release", "Spiritual alignment"]
     },
     {
       icon: <Users className="w-8 h-8" />,
       title: "Group Meditation Circle",
       description: "Join like-minded souls in a powerful group meditation experience. Amplify your spiritual practice through collective energy and intention.",
-      duration: "90 minutes",
-      price: "$30",
+      // duration: "90 minutes",
+      // price: "$30",
       features: ["Group energy", "Guided meditation", "Spiritual community", "Shared healing"]
     }
   ];
@@ -87,9 +87,9 @@ const Services = () => {
                     <div className="flex items-center space-x-4 text-sm text-gray-400">
                       <span className="flex items-center space-x-1">
                         <Clock className="w-4 h-4" />
-                        <span>{service.duration}</span>
+                        {/* <span>{service.duration}</span> */}
                       </span>
-                      <span className="text-purple-400 font-semibold text-lg">{service.price}</span>
+                      {/* <span className="text-purple-400 font-semibold text-lg">{service.price}</span> */}
                     </div>
                   </div>
                 </div>
