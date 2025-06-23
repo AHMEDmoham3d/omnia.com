@@ -206,7 +206,7 @@ function App() {
             }
           />
           <Route
-            path="/admin"
+            path="/OMNIA-Admin-2025-*-#-/6/23()-%$#"
             element={
               <AdminPanel
                 visitorData={visitorData}
