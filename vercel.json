@@ -1,5 +1,8 @@
 {
   "rewrites": [
-    { "source": "/OMNIA-Admin-2025-*-#-/6/23()-%$#", "destination": "/" }
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }
