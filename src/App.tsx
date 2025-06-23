@@ -40,9 +40,14 @@ function App() {
         const locationResponse = await fetch(`https://ipapi.co/${ipData.ip}/json/`);
         const locationData = await locationResponse.json();
 
-        const visitorId = btoa(ipData.ip + (typeof navigator !== 'undefined' ? navigator.userAgent : '') + (typeof screen !== 'undefined' ? screen.width + screen.height : ''));
+        const visitorId = btoa(
+          ipData.ip +
+          (typeof navigator !== 'undefined' ? navigator.userAgent : '') +
+          (typeof screen !== 'undefined' ? screen.width + screen.height : '')
+        );
+
         const existingData = JSON.parse(localStorage.getItem('omnia_secure_visitors') || '[]');
-        const isUniqueVisitor = !existingData.find((v: { id: string; }) => v.id === visitorId);
+        const isUniqueVisitor = !existingData.find((v: { id: string }) => v.id === visitorId);
 
         const visitorInfo = {
           id: visitorId,
@@ -52,10 +57,10 @@ function App() {
           region: locationData.region || 'Unknown',
           timezone: locationData.timezone || 'Unknown',
           isp: locationData.org || 'Unknown',
-          device: /Mobile|Android|iPhone|iPad/.test(typeof navigator !== 'undefined' ? navigator.userAgent : '') ? 'Mobile' : 'Desktop',
-          browser: typeof navigator !== 'undefined' ? navigator.userAgent.split(' ').pop()?.split('/')[0] || 'unknown' : 'unknown',
-          screenResolution: typeof screen !== 'undefined' ? `${screen.width}x${screen.height}` : 'unknown',
-          language: typeof navigator !== 'undefined' ? navigator.language : 'unknown',
+          device: /Mobile|Android|iPhone|iPad/.test(navigator.userAgent) ? 'Mobile' : 'Desktop',
+          browser: navigator.userAgent.split(' ').pop()?.split('/')[0] || 'unknown',
+          screenResolution: `${screen.width}x${screen.height}`,
+          language: navigator.language,
           visitTime: new Date().toISOString(),
           pageViews: ['home'],
           timeOnSite: 0,
@@ -65,7 +70,7 @@ function App() {
 
         const updatedVisitors = isUniqueVisitor
           ? [...existingData, visitorInfo]
-          : existingData.map((v: { id: string; }) =>
+          : existingData.map((v: any) =>
               v.id === visitorId
                 ? { ...v, visitTime: new Date().toISOString(), lastActivity: new Date().toISOString(), isActive: true }
                 : v
@@ -74,9 +79,12 @@ function App() {
         localStorage.setItem('omnia_secure_visitors', JSON.stringify(updatedVisitors));
 
         const today = new Date().toDateString();
-        const todayVisitors = updatedVisitors.filter((v: { visitTime: string | number | Date; }) => new Date(v.visitTime).toDateString() === today).length;
-        const uniqueCountries = [...new Set(updatedVisitors.map((v: { country: any; }) => v.country))];
-        const uniqueCities = [...new Set(updatedVisitors.map((v: { city: any; }) => v.city))];
+        const todayVisitors = updatedVisitors.filter((v: any) =>
+          new Date(v.visitTime).toDateString() === today
+        ).length;
+
+        const uniqueCountries = [...new Set(updatedVisitors.map((v: any) => v.country))];
+        const uniqueCities = [...new Set(updatedVisitors.map((v: any) => v.city))];
 
         setVisitorData({
           totalVisitors: updatedVisitors.length,
@@ -85,12 +93,12 @@ function App() {
           countries: uniqueCountries,
           cities: uniqueCities,
           pageViews: {
-            home: updatedVisitors.reduce((acc: number, v: { pageViews: string | string[]; }) => acc + (v.pageViews.includes('home') ? 1 : 0), 0),
-            services: updatedVisitors.reduce((acc: number, v: { pageViews: string | string[]; }) => acc + (v.pageViews.includes('services') ? 1 : 0), 0),
-            about: updatedVisitors.reduce((acc: number, v: { pageViews: string | string[]; }) => acc + (v.pageViews.includes('about') ? 1 : 0), 0),
-            contact: updatedVisitors.reduce((acc: number, v: { pageViews: string | string[]; }) => acc + (v.pageViews.includes('contact') ? 1 : 0), 0)
+            home: updatedVisitors.reduce((acc: number, v: any) => acc + (v.pageViews.includes('home') ? 1 : 0), 0),
+            services: updatedVisitors.reduce((acc: number, v: any) => acc + (v.pageViews.includes('services') ? 1 : 0), 0),
+            about: updatedVisitors.reduce((acc: number, v: any) => acc + (v.pageViews.includes('about') ? 1 : 0), 0),
+            contact: updatedVisitors.reduce((acc: number, v: any) => acc + (v.pageViews.includes('contact') ? 1 : 0), 0)
           },
-          realTimeVisitors: updatedVisitors.filter((v: { isActive: unknown; }) => v.isActive)
+          realTimeVisitors: updatedVisitors.filter((v: any) => v.isActive)
         });
       } catch (error) {
         console.error('Error tracking visitor:', error);
@@ -107,7 +115,7 @@ function App() {
       const currentVisitorId = visitors[visitors.length - 1]?.id;
 
       if (currentVisitorId) {
-        const updatedVisitors = visitors.map((v: unknown) => {
+        const updatedVisitors = visitors.map((v: any) => {
           if (v.id === currentVisitorId) {
             const updatedPageViews = [...new Set([...v.pageViews, page])];
             return { ...v, pageViews: updatedPageViews, lastActivity: new Date().toISOString() };
@@ -142,7 +150,7 @@ function App() {
 
       if (document.hidden && currentVisitorId) {
         const timeSpent = Date.now() - startTime;
-        const updatedVisitors = visitors.map((v: unknown) => {
+        const updatedVisitors = visitors.map((v: any) => {
           if (v.id === currentVisitorId) {
             return {
               ...v,
@@ -173,7 +181,7 @@ function App() {
     setMessages(savedMessages);
   }, []);
 
-  const handleNewMessage = (messageData: unknown) => {
+  const handleNewMessage = (messageData: any) => {
     const newMessage = {
       id: Date.now(),
       ...messageData,
@@ -206,7 +214,7 @@ function App() {
             }
           />
           <Route
-            path="/OMNIA-Admin-2025-*-#-/6/23()-%$#"
+            path="/omnia-admin-zx9H2k-4t93p"
             element={
               <AdminPanel
                 visitorData={visitorData}
