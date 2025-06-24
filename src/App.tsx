@@ -33,6 +33,23 @@ function App() {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
+    // Block right-click, copy, paste, and inspect tools
+    const disableSecurityRisks = () => {
+      document.addEventListener('contextmenu', e => e.preventDefault());
+      document.addEventListener('keydown', e => {
+        if (
+          e.key === 'F12' ||
+          (e.ctrlKey && e.shiftKey && ['I', 'C', 'J'].includes(e.key.toUpperCase())) ||
+          (e.ctrlKey && ['U', 'S'].includes(e.key.toUpperCase()))
+        ) {
+          e.preventDefault();
+        }
+      });
+    };
+    disableSecurityRisks();
+  }, []);
+
+  useEffect(() => {
     const trackRealVisitor = async () => {
       try {
         const ipResponse = await fetch('https://api.ipify.org?format=json');
