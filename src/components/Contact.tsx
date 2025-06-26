@@ -3,9 +3,8 @@ import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-reac
 import { createClient } from '@supabase/supabase-js';
 import ReCAPTCHA from 'react-google-recaptcha';
 
-const supabaseUrl = process.env.REACT_APP_SUPABASE_URL!;
-const supabaseKey = process.env.REACT_APP_SUPABASE_KEY!;
- // أخفِه في env في الإنتاج
+const supabaseUrl = 'https://mldvuzkrcjnltzgwtpfc.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // أخفِه في env في الإنتاج
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const siteKey = '6LfuV24rAAAAAEENG3ljqTwT7GhGyrGuyAxrNv8Z'; // مفتاح reCAPTCHA العام
