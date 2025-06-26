@@ -7,7 +7,7 @@ const supabaseUrl = 'https://mldvuzkrcjnltzgwtpfc.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // أخفِه في env في الإنتاج
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-const siteKey = '6LfuV24rAAAAAEENG3ljqTwT7GhGyrGuyAxrNv8Z'; // مفتاح reCAPTCHA العام
+const siteKey = '6LfBa24rAAAAAHnek4GjY1cCRbOJ7SpItQxE6_06'; // مفتاح reCAPTCHA العام
 
 const Contact = ({ onMessageSent }: { onMessageSent?: (data: unknown) => void }) => {
   const [formData, setFormData] = useState({
