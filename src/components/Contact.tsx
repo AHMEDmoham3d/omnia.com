@@ -260,11 +260,6 @@ const Contact = ({ onMessageSent }: { onMessageSent?: (data: unknown) => void })
           </div>
         </div>
       </div>
-      <ReCAPTCHA
-  sitekey={siteKey}
-  onChange={(value: React.SetStateAction<string | null>) => setCaptchaValue(value)}
-/>
-
     </section>
   );
 };
