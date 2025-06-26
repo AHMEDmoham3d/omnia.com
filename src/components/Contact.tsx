@@ -1,28 +1,19 @@
 import React, { useState } from 'react';
-import { MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react'; // حذفت Phone لأن مش مستخدم
+import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = 'https://mldvuzkrcjnltzgwtpfc.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // أخفِه في env في الإنتاج
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZHZ1emtyY2pubHR6Z3d0cGZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5Mjg4MjYsImV4cCI6MjA2NjUwNDgyNn0.idcUACM1z8IPkYdpV-oT_R1jZexmC25W7IMZaFvooUc';
+
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-const contactInfo = [
-  {
-    icon: <MapPin className="w-6 h-6" />,
-    title: "Location",
-    value: "Available Worldwide",
-    link: "#"
-  }
-];
-
-const Contact = ({ onMessageSent }: { onMessageSent?: (data: unknown) => void }) => {
+const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     whatsapp: '',
     message: ''
   });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
@@ -34,39 +25,54 @@ const Contact = ({ onMessageSent }: { onMessageSent?: (data: unknown) => void })
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setIsSubmitting(true);
+    e.preventDefault();
+    setIsSubmitting(true);
 
-  try {
-    const { data, error } = await supabase.from('contact_messages').insert([
-      {
-        name: formData.name,
-        email: formData.email,
-        whatsapp: formData.whatsapp,
-        message: formData.message,
-      },
-    ]);
+    try {
+      const { error } = await supabase.from('messages').insert([
+        {
+          name: formData.name,
+          email: formData.email,
+          whatsapp: formData.whatsapp,
+          message: formData.message
+        }
+      ]);
 
-    if (error) {
-      console.error('Supabase insert error:', error);
-      throw error;
+      if (error) throw error;
+
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', whatsapp: '', message: '' });
+
+      setTimeout(() => setSubmitStatus('idle'), 5000);
+    } catch (err) {
+      console.error('Error sending message:', err);
+      setSubmitStatus('error');
+      setTimeout(() => setSubmitStatus('idle'), 5000);
+    } finally {
+      setIsSubmitting(false);
     }
+  };
 
-    console.log('Insert data:', data);
-    setSubmitStatus('success');
-    if (onMessageSent) onMessageSent(formData);
-
-    setFormData({ name: '', email: '', whatsapp: '', message: '' });
-
-    setTimeout(() => setSubmitStatus('idle'), 5000);
-  } catch (err) {
-    console.error('Error sending message:', err);
-    setSubmitStatus('error');
-    setTimeout(() => setSubmitStatus('idle'), 5000);
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+  const contactInfo = [
+    {
+      icon: <Mail className="w-6 h-6" />,
+      title: "Email",
+      value: "ms.omnia.o@hotmail.com",
+      link: "mailto:ms.omnia.o@hotmail.com"
+    },
+    {
+      icon: <Phone className="w-6 h-6" />,
+      title: "WhatsApp",
+      value: "+20 10 09058159",
+      link: "https://wa.me/+201009058159"
+    },
+    {
+      icon: <MapPin className="w-6 h-6" />,
+      title: "Location",
+      value: "Available Worldwide",
+      link: "#"
+    }
+  ];
 
   return (
     <section id="contact" className="py-20 px-4 relative">
