@@ -34,35 +34,39 @@ const Contact = ({ onMessageSent }: { onMessageSent?: (data: unknown) => void })
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  e.preventDefault();
+  setIsSubmitting(true);
 
-    try {
-      const { error } = await supabase.from('messages').insert([
-        {
-          name: formData.name,
-          email: formData.email,
-          whatsapp: formData.whatsapp,
-          message: formData.message
-        }
-      ]);
+  try {
+    const { data, error } = await supabase.from('contact_messages').insert([
+      {
+        name: formData.name,
+        email: formData.email,
+        whatsapp: formData.whatsapp,
+        message: formData.message,
+      },
+    ]);
 
-      if (error) throw error;
-
-      setSubmitStatus('success');
-      if (onMessageSent) onMessageSent(formData);
-
-      setFormData({ name: '', email: '', whatsapp: '', message: '' });
-
-      setTimeout(() => setSubmitStatus('idle'), 5000);
-    } catch (err) {
-      console.error('Error sending message:', err);
-      setSubmitStatus('error');
-      setTimeout(() => setSubmitStatus('idle'), 5000);
-    } finally {
-      setIsSubmitting(false);
+    if (error) {
+      console.error('Supabase insert error:', error);
+      throw error;
     }
-  };
+
+    console.log('Insert data:', data);
+    setSubmitStatus('success');
+    if (onMessageSent) onMessageSent(formData);
+
+    setFormData({ name: '', email: '', whatsapp: '', message: '' });
+
+    setTimeout(() => setSubmitStatus('idle'), 5000);
+  } catch (err) {
+    console.error('Error sending message:', err);
+    setSubmitStatus('error');
+    setTimeout(() => setSubmitStatus('idle'), 5000);
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <section id="contact" className="py-20 px-4 relative">
