@@ -253,7 +253,11 @@ const Contact = () => {
           </div>
         </div>
       </div>
-  
+      <ReCAPTCHA
+  sitekey={siteKey}
+  onChange={(value: React.SetStateAction<string | null>) => setCaptchaValue(value)}
+/>
+
     </section>
   );
 };
