@@ -3,9 +3,8 @@ import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-reac
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = 'https://mldvuzkrcjnltzgwtpfc.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZHZ1emtyY2pubHR6Z3d0cGZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5Mjg4MjYsImV4cCI6MjA2NjUwNDgyNn0.idcUACM1z8IPkYdpV-oT_R1jZexmC25W7IMZaFvooUc'; // أخفِه في env في الإنتاج
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // أخفِه في env في الإنتاج
 const supabase = createClient(supabaseUrl, supabaseKey);
-
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -15,7 +14,6 @@ const Contact = () => {
     message: ''
   });
 
-  const [captchaValue, setCaptchaValue] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
@@ -29,13 +27,6 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    // reCAPTCHA check
-    if (!captchaValue) {
-      setSubmitStatus('error');
-      setIsSubmitting(false);
-      return;
-    }
 
     try {
       const { error } = await supabase.from('messages').insert([
@@ -51,11 +42,18 @@ const Contact = () => {
 
       setSubmitStatus('success');
       setFormData({ name: '', email: '', whatsapp: '', message: '' });
-      setCaptchaValue(null); // Reset reCAPTCHA
 
       setTimeout(() => setSubmitStatus('idle'), 5000);
-    } catch (err) {
-      console.error('Error sending message:', err);
+    } catch (err: unknown) {
+      let errorMessage = 'Unexpected error occurred';
+
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      } else if (typeof err === 'object' && err !== null && 'message' in err) {
+        errorMessage = String((err as { message?: string }).message);
+      }
+
+      alert('Error: ' + errorMessage);
       setSubmitStatus('error');
       setTimeout(() => setSubmitStatus('idle'), 5000);
     } finally {
@@ -85,10 +83,8 @@ const Contact = () => {
   ];
 
   return (
-    
     <section id="contact" className="py-20 px-4 relative">
       <div className="container mx-auto max-w-6xl">
-        {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
             Connect With Me
@@ -100,16 +96,10 @@ const Contact = () => {
         </div>
 
         <div className="grid lg:grid-cols-3 gap-12">
-          {/* Contact Info */}
           <div className="space-y-8">
             <h3 className="text-2xl font-bold text-white mb-6">Get In Touch</h3>
-            
             {contactInfo.map((info, index) => (
-              <a
-                key={index}
-                href={info.link}
-                className="group flex items-start space-x-4 p-4 bg-gray-800/50 rounded-xl hover:bg-gray-700/50 transition-all duration-300 transform hover:scale-105"
-              >
+              <a key={index} href={info.link} className="group flex items-start space-x-4 p-4 bg-gray-800/50 rounded-xl hover:bg-gray-700/50 transition-all duration-300 transform hover:scale-105">
                 <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-3 rounded-lg group-hover:scale-110 transition-transform duration-300">
                   {info.icon}
                 </div>
@@ -121,8 +111,6 @@ const Contact = () => {
                 </div>
               </a>
             ))}
-
-            {/* Social Proof */}
             <div className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-xl p-6 border border-purple-400/20">
               <h4 className="text-white font-semibold mb-3">Why Choose Omnia?</h4>
               <ul className="space-y-2 text-gray-300 text-sm">
@@ -134,17 +122,13 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Contact Form */}
           <div className="lg:col-span-2">
             <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50">
               <h3 className="text-2xl font-bold text-white mb-6">Send a Message</h3>
-              
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-gray-300 mb-2 font-medium">
-                      Full Name *
-                    </label>
+                    <label htmlFor="name" className="block text-gray-300 mb-2 font-medium">Full Name *</label>
                     <input
                       type="text"
                       id="name"
@@ -152,15 +136,12 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all duration-300"
+                      className="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400"
                       placeholder="Enter your full name"
                     />
                   </div>
-                  
                   <div>
-                    <label htmlFor="email" className="block text-gray-300 mb-2 font-medium">
-                      Email Address *
-                    </label>
+                    <label htmlFor="email" className="block text-gray-300 mb-2 font-medium">Email Address *</label>
                     <input
                       type="email"
                       id="email"
@@ -168,31 +149,27 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all duration-300"
+                      className="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400"
                       placeholder="your@email.com"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="whatsapp" className="block text-gray-300 mb-2 font-medium">
-                    WhatsApp Number
-                  </label>
+                  <label htmlFor="whatsapp" className="block text-gray-300 mb-2 font-medium">WhatsApp Number</label>
                   <input
                     type="tel"
                     id="whatsapp"
                     name="whatsapp"
                     value={formData.whatsapp}
                     onChange={handleChange}
-                    className="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all duration-300"
+                    className="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400"
                     placeholder="+20 10 09058159"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-gray-300 mb-2 font-medium">
-                    Message *
-                  </label>
+                  <label htmlFor="message" className="block text-gray-300 mb-2 font-medium">Message *</label>
                   <textarea
                     id="message"
                     name="message"
@@ -200,12 +177,11 @@ const Contact = () => {
                     onChange={handleChange}
                     rows={5}
                     required
-                    className="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all duration-300"
+                    className="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400"
                     placeholder="Tell me about what you're looking for and how I can help you on your spiritual journey..."
                   />
                 </div>
 
-                {/* Security Notice */}
                 <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
                   <p className="text-green-400 text-sm flex items-center">
                     <CheckCircle className="w-4 h-4 mr-2" />
@@ -213,7 +189,6 @@ const Contact = () => {
                   </p>
                 </div>
 
-                {/* Submit Button */}
                 <button
                   type="submit"
                   disabled={isSubmitting}
@@ -232,7 +207,6 @@ const Contact = () => {
                   )}
                 </button>
 
-                {/* Status Messages */}
                 {submitStatus === 'success' && (
                   <div className="bg-green-900/30 border border-green-500/50 rounded-lg p-4 text-green-400 flex items-center">
                     <CheckCircle className="w-5 h-5 mr-2" />
@@ -251,7 +225,6 @@ const Contact = () => {
           </div>
         </div>
       </div>
-      
     </section>
   );
 };
