@@ -214,12 +214,7 @@ const Contact = () => {
                     Your information is encrypted and secure. Messages are delivered directly to admin.
                   </p>
                 </div>
-  <div className="flex justify-center">
-    <ReCAPTCHA
-      sitekey={siteKey}
-      onChange={(value) => setCaptchaValue(value)}
-    />
-  </div>
+
                 {/* Submit Button */}
                 <button
                   type="submit"
@@ -258,6 +253,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
+  
     </section>
   );
 };
