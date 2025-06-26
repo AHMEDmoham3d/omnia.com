@@ -9,7 +9,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 const siteKey = '6LfuV24rAAAAAEENG3ljqTwT7GhGyrGuyAxrNv8Z'; // مفتاح reCAPTCHA العام
 
-const Contact = () => {
+const Contact = ({ onMessageSent }: { onMessageSent?: (data: unknown) => void }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -32,7 +32,6 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // reCAPTCHA check
     if (!captchaValue) {
       setSubmitStatus('error');
       setIsSubmitting(false);
@@ -52,8 +51,10 @@ const Contact = () => {
       if (error) throw error;
 
       setSubmitStatus('success');
+      if (onMessageSent) onMessageSent(formData);
+
       setFormData({ name: '', email: '', whatsapp: '', message: '' });
-      setCaptchaValue(null); // Reset reCAPTCHA
+      setCaptchaValue(null);
 
       setTimeout(() => setSubmitStatus('idle'), 5000);
     } catch (err) {
@@ -142,6 +143,12 @@ const Contact = () => {
               <h3 className="text-2xl font-bold text-white mb-6">Send a Message</h3>
               
               <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="flex justify-center">
+    <ReCAPTCHA
+      sitekey={siteKey}
+      onChange={(value) => setCaptchaValue(value)}
+    />
+  </div>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-gray-300 mb-2 font-medium">
