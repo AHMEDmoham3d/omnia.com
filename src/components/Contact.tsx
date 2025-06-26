@@ -3,7 +3,7 @@ import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-reac
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = 'https://mldvuzkrcjnltzgwtpfc.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // أخفِه في env في الإنتاج
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZHZ1emtyY2pubHR6Z3d0cGZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5Mjg4MjYsImV4cCI6MjA2NjUwNDgyNn0.idcUACM1z8IPkYdpV-oT_R1jZexmC25W7IMZaFvooUc'; // أخفِه في env في الإنتاج
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 
