@@ -3,10 +3,9 @@ import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-reac
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
-  process.env.REACT_APP_SUPABASE_URL!,
-  process.env.REACT_APP_SUPABASE_KEY!
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_KEY
 );
-
 
 const Contact = () => {
   const [formData, setFormData] = useState({
