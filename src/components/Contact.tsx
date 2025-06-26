@@ -3,9 +3,9 @@ import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-reac
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = 'https://mldvuzkrcjnltzgwtpfc.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZHZ1emtyY2pubHR6Z3d0cGZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5Mjg4MjYsImV4cCI6MjA2NjUwNDgyNn0.idcUACM1z8IPkYdpV-oT_R1jZexmC25W7IMZaFvooUc';
-
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // أخفِه في env في الإنتاج
 const supabase = createClient(supabaseUrl, supabaseKey);
+
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +14,8 @@ const Contact = () => {
     whatsapp: '',
     message: ''
   });
+
+  const [captchaValue, setCaptchaValue] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
@@ -27,6 +29,13 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    // reCAPTCHA check
+    if (!captchaValue) {
+      setSubmitStatus('error');
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       const { error } = await supabase.from('messages').insert([
@@ -42,6 +51,7 @@ const Contact = () => {
 
       setSubmitStatus('success');
       setFormData({ name: '', email: '', whatsapp: '', message: '' });
+      setCaptchaValue(null); // Reset reCAPTCHA
 
       setTimeout(() => setSubmitStatus('idle'), 5000);
     } catch (err) {
@@ -75,6 +85,7 @@ const Contact = () => {
   ];
 
   return (
+    
     <section id="contact" className="py-20 px-4 relative">
       <div className="container mx-auto max-w-6xl">
         {/* Section Header */}
@@ -240,6 +251,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
+      
     </section>
   );
 };
