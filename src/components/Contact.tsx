@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { createClient } from '@supabase/supabase-js';
 
-const Contact = ({ onMessageSent }) => {
+const supabaseUrl = 'https://mldvuzkrcjnltzgwtpfc.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZHZ1emtyY2pubHR6Z3d0cGZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5Mjg4MjYsImV4cCI6MjA2NjUwNDgyNn0.idcUACM1z8IPkYdpV-oT_R1jZexmC25W7IMZaFvooUc';
+
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -23,43 +29,23 @@ const Contact = ({ onMessageSent }) => {
     setIsSubmitting(true);
 
     try {
-      // Get user's real location for message context
-      let locationData = { country: 'Unknown', city: 'Unknown', region: 'Unknown' };
-      
-      try {
-        const ipResponse = await fetch('https://api.ipify.org?format=json');
-        const ipData = await ipResponse.json();
-        const locationResponse = await fetch(`https://ipapi.co/${ipData.ip}/json/`);
-        locationData = await locationResponse.json();
-      } catch (error) {
-        console.log('Location detection failed, using fallback');
-      }
+      const { error } = await supabase.from('messages').insert([
+        {
+          name: formData.name,
+          email: formData.email,
+          whatsapp: formData.whatsapp,
+          message: formData.message
+        }
+      ]);
 
-      // Create secure message object
-      const messageData = {
-        ...formData,
-        country: locationData.country_name || 'Unknown',
-        city: locationData.city || 'Unknown',
-        region: locationData.region || 'Unknown',
-        userAgent: navigator.userAgent,
-        timestamp: new Date().toISOString(),
-        messageId: btoa(Date.now() + Math.random().toString())
-      };
-
-      // Simulate secure transmission delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Send to parent component (App) to handle secure storage
-      onMessageSent(messageData);
+      if (error) throw error;
 
       setSubmitStatus('success');
       setFormData({ name: '', email: '', whatsapp: '', message: '' });
-      
-      // Auto-hide success message after 5 seconds
+
       setTimeout(() => setSubmitStatus('idle'), 5000);
-      
-    } catch (error) {
-      console.error('Message submission error:', error);
+    } catch (err) {
+      console.error('Error sending message:', err);
       setSubmitStatus('error');
       setTimeout(() => setSubmitStatus('idle'), 5000);
     } finally {
@@ -78,7 +64,7 @@ const Contact = ({ onMessageSent }) => {
       icon: <Phone className="w-6 h-6" />,
       title: "WhatsApp",
       value: "+20 10 09058159",
-      link: "https://wa.me/+20 10 09058159"
+      link: "https://wa.me/+201009058159"
     },
     {
       icon: <MapPin className="w-6 h-6" />,
