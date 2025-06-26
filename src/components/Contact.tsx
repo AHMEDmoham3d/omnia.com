@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react'; // حذفت Phone لأن مش مستخدم
 import { createClient } from '@supabase/supabase-js';
-import ReCAPTCHA from 'react-google-recaptcha';
 
 const supabaseUrl = 'https://mldvuzkrcjnltzgwtpfc.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // أخفِه في env في الإنتاج
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-const siteKey = '6LfVcG4rAAAAAA7h1ExL7xr3WgAOP58pidUBfedD'; // مفتاح reCAPTCHA العام
+const contactInfo = [
+  {
+    icon: <MapPin className="w-6 h-6" />,
+    title: "Location",
+    value: "Available Worldwide",
+    link: "#"
+  }
+];
 
 const Contact = ({ onMessageSent }: { onMessageSent?: (data: unknown) => void }) => {
   const [formData, setFormData] = useState({
@@ -17,7 +23,6 @@ const Contact = ({ onMessageSent }: { onMessageSent?: (data: unknown) => void })
     message: ''
   });
 
-  const [captchaValue, setCaptchaValue] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
@@ -31,12 +36,6 @@ const Contact = ({ onMessageSent }: { onMessageSent?: (data: unknown) => void })
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    if (!captchaValue) {
-      setSubmitStatus('error');
-      setIsSubmitting(false);
-      return;
-    }
 
     try {
       const { error } = await supabase.from('messages').insert([
@@ -54,7 +53,6 @@ const Contact = ({ onMessageSent }: { onMessageSent?: (data: unknown) => void })
       if (onMessageSent) onMessageSent(formData);
 
       setFormData({ name: '', email: '', whatsapp: '', message: '' });
-      setCaptchaValue(null);
 
       setTimeout(() => setSubmitStatus('idle'), 5000);
     } catch (err) {
@@ -66,29 +64,7 @@ const Contact = ({ onMessageSent }: { onMessageSent?: (data: unknown) => void })
     }
   };
 
-  const contactInfo = [
-    {
-      icon: <Mail className="w-6 h-6" />,
-      title: "Email",
-      value: "ms.omnia.o@hotmail.com",
-      link: "mailto:ms.omnia.o@hotmail.com"
-    },
-    {
-      icon: <Phone className="w-6 h-6" />,
-      title: "WhatsApp",
-      value: "+20 10 09058159",
-      link: "https://wa.me/+201009058159"
-    },
-    {
-      icon: <MapPin className="w-6 h-6" />,
-      title: "Location",
-      value: "Available Worldwide",
-      link: "#"
-    }
-  ];
-
   return (
-    
     <section id="contact" className="py-20 px-4 relative">
       <div className="container mx-auto max-w-6xl">
         {/* Section Header */}
@@ -143,12 +119,6 @@ const Contact = ({ onMessageSent }: { onMessageSent?: (data: unknown) => void })
               <h3 className="text-2xl font-bold text-white mb-6">Send a Message</h3>
               
               <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="flex justify-center">
-    <ReCAPTCHA
-      sitekey={siteKey}
-      onChange={(value) => setCaptchaValue(value)}
-    />
-  </div>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-gray-300 mb-2 font-medium">
