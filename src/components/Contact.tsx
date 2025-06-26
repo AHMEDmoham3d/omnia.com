@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_KEY
-);
+const supabaseUrl = 'https://mldvuzkrcjnltzgwtpfc.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // أخفِه في env في الإنتاج
+const supabase = createClient(supabaseUrl, supabaseKey);
+
 
 const Contact = () => {
   const [formData, setFormData] = useState({
