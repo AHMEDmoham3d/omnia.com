@@ -446,75 +446,57 @@
 // };
 
 // export default AdminPanel;
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = 'https://mldvuzkrcjnltzgwtpfc.supabase.co';
-// const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // استخدم نفس المفتاح اللي في Contact
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZHZ1emtyY2pubHR6Z3d0cGZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5Mjg4MjYsImV4cCI6MjA2NjUwNDgyNn0.idcUACM1z8IPkYdpV-oT_R1jZexmC25W7IMZaFvooUc';
+// تعريف نوع الرسالة
+interface Message {
+  id: number;
+  created_at: string;
+  name: string;
+  email: string;
+  whatsapp: string;
+  message: string;
+}
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(
+  'https://mldvuzkrcjnltzgwtpfc.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZHZ1emtyY2pubHR6Z3d0cGZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5Mjg4MjYsImV4cCI6MjA2NjUwNDgyNn0.idcUACM1z8IPkYdpV-oT_R1jZexmC25W7IMZaFvooUc'
+);
 
-const AdminMessages = () => {
-  const [messages, setMessages] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  const fetchMessages = async () => {
-    const { data, error } = await supabase
-      .from('messages')
-      .select('*')
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      console.error('Error fetching messages:', error.message);
-    } else {
-      setMessages(data);
-    }
-    setLoading(false);
-  };
+export default function MessagesTest() {
+  const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
+    const fetchMessages = async () => {
+      const { data, error } = await supabase.from('messages').select('*');
+
+      if (error) {
+        console.error('❌ Fetch error:', error.message);
+      } else if (data) {
+        setMessages(data as Message[]); // تأكيد أن البيانات من نوع Message[]
+      }
+    };
+
     fetchMessages();
   }, []);
-  return (
-    <div className="p-6 bg-gray-900 min-h-screen text-white">
-      <h1 className="text-3xl font-bold mb-6 text-purple-400">📨 Messages Dashboard</h1>
 
-      {loading ? (
-        <p className="text-gray-400">Loading messages...</p>
-      ) : messages.length === 0 ? (
-        <p className="text-gray-400">No messages found.</p>
+  return (
+    <div style={{ padding: '2rem', fontFamily: 'Arial, sans-serif' }}>
+      <h2>📬 Messages:</h2>
+      {messages.length === 0 ? (
+        <p>No messages found.</p>
       ) : (
-        <div className="space-y-6">
-          {messages.map((msg) => (
-            <div
-              key={msg.id}
-              className="bg-gray-800 border border-gray-700 p-4 rounded-lg shadow-md"
-            >
-              <div className="mb-2">
-                <span className="text-purple-400 font-semibold">Name:</span> {msg.name}
-              </div>
-              <div className="mb-2">
-                <span className="text-purple-400 font-semibold">Email:</span> {msg.email}
-              </div>
-              {msg.whatsapp && (
-                <div className="mb-2">
-                  <span className="text-purple-400 font-semibold">WhatsApp:</span> {msg.whatsapp}
-                </div>
-              )}
-              <div className="mb-2">
-                <span className="text-purple-400 font-semibold">Message:</span> {msg.message}
-              </div>
-              <div className="text-sm text-gray-400">
-                <span>Sent at:</span>{' '}
-                {new Date(msg.created_at).toLocaleString()}
-              </div>
-            </div>
-          ))}
-        </div>
+        messages.map((msg) => (
+          <div key={msg.id} style={{ marginBottom: '1rem', border: '1px solid #ccc', padding: '1rem', borderRadius: '8px' }}>
+            <p><strong>Name:</strong> {msg.name}</p>
+            <p><strong>Email:</strong> {msg.email}</p>
+            <p><strong>WhatsApp:</strong> {msg.whatsapp}</p>
+            <p><strong>Message:</strong> {msg.message}</p>
+            <p style={{ fontSize: '0.8rem', color: 'gray' }}>Sent: {new Date(msg.created_at).toLocaleString()}</p>
+          </div>
+        ))
       )}
     </div>
   );
-};
-
-export default AdminMessages;
+}
