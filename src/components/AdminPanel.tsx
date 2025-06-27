@@ -1,40 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import { X, Users, Globe, Clock, Download, Trash2, Ban, UserCheck, Eye, BarChart3, Shield, MapPin } from 'lucide-react';
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = 'https://mldvuzkrcjnltzgwtpfc.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZHZ1emtyY2pubHR6Z3d0cGZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5Mjg4MjYsImV4cCI6MjA2NjUwNDgyNn0.idcUACM1z8IPkYdpV-oT_R1jZexmC25W7IMZaFvooUc';
+const supabase = createClient(supabaseUrl, supabaseKey);
+
 
 interface AdminPanelProps {
   onClose: () => void;
-  visitorData: any;
-  messages: any[];
-  setMessages: (messages: any[]) => void;
+  visitorData: unknown;
 }
 
-const AdminPanel = ({ onClose, visitorData, messages, setMessages }: AdminPanelProps) => {
+const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [realTimeVisitors, setRealTimeVisitors] = useState([]);
   const [bannedIPs, setBannedIPs] = useState([]);
+  const [messages, setMessages] = useState<any[]>([]);
+
+  // 👇 Fetch messages from Supabase
+  const fetchMessages = async () => {
+    const { data, error } = await supabase
+      .from('messages')
+      .select('*')
+      .order('timestamp', { ascending: false });
+
+    if (!error && data) {
+      setMessages(data);
+    }
+  };
 
   useEffect(() => {
-    // Load real visitor data
+    fetchMessages();
+
     const visitors = JSON.parse(localStorage.getItem('omnia_secure_visitors') || '[]');
     setRealTimeVisitors(visitors);
 
-    // Load banned IPs
     const banned = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
     setBannedIPs(banned);
   }, []);
 
-  const tabs = [
-    { id: 'dashboard', name: 'Dashboard', icon: <BarChart3 className="w-4 h-4" /> },
-    { id: 'messages', name: 'Messages', icon: <Users className="w-4 h-4" /> },
-    { id: 'visitors', name: 'Real Visitors', icon: <Globe className="w-4 h-4" /> },
-    { id: 'analytics', name: 'Analytics', icon: <Eye className="w-4 h-4" /> },
-    { id: 'security', name: 'Security', icon: <Shield className="w-4 h-4" /> }
-  ];
+  const deleteMessage = async (messageId: number) => {
+    await supabase.from('messages').delete().eq('id', messageId);
+    fetchMessages();
+  };
+
+  const markMessageAsRead = async (messageId: number) => {
+    await supabase.from('messages').update({ status: 'read' }).eq('id', messageId);
+    fetchMessages();
+  };
 
   const downloadData = (type: string) => {
     const timestamp = new Date().toISOString().split('T')[0];
     const filename = `omnia-${type}-${timestamp}.json`;
-    
+
     let data;
     if (type === 'messages') {
       data = messages;
@@ -55,41 +74,26 @@ const AdminPanel = ({ onClose, visitorData, messages, setMessages }: AdminPanelP
     URL.revokeObjectURL(url);
   };
 
-  const deleteMessage = (messageId: number) => {
-    const updatedMessages = messages.filter(msg => msg.id !== messageId);
-    setMessages(updatedMessages);
-    localStorage.setItem('omnia_secure_messages', JSON.stringify(updatedMessages));
+  const banVisitor = (ip: string) => {
+    const newList = [...bannedIPs, { ip, bannedAt: new Date().toISOString() }];
+    setBannedIPs(newList);
+    localStorage.setItem('omnia_banned_ips', JSON.stringify(newList));
   };
 
-  const markMessageAsRead = (messageId: number) => {
-    const updatedMessages = messages.map(msg => 
-      msg.id === messageId ? { ...msg, status: 'read' } : msg
-    );
-    setMessages(updatedMessages);
-    localStorage.setItem('omnia_secure_messages', JSON.stringify(updatedMessages));
+  const unbanVisitor = (ip: string) => {
+    const newList = bannedIPs.filter((b: any) => b.ip !== ip);
+    setBannedIPs(newList);
+    localStorage.setItem('omnia_banned_ips', JSON.stringify(newList));
   };
 
-  const banVisitor = (visitorIp: string) => {
-    const newBannedIPs = [...bannedIPs, { ip: visitorIp, bannedAt: new Date().toISOString() }];
-    setBannedIPs(newBannedIPs);
-    localStorage.setItem('omnia_banned_ips', JSON.stringify(newBannedIPs));
-  };
-
-  const unbanVisitor = (visitorIp: string) => {
-    const updatedBannedIPs = bannedIPs.filter(banned => banned.ip !== visitorIp);
-    setBannedIPs(updatedBannedIPs);
-    localStorage.setItem('omnia_banned_ips', JSON.stringify(updatedBannedIPs));
-  };
-
-  const formatTimeOnSite = (milliseconds: number) => {
-    if (!milliseconds) return '0s';
-    const seconds = Math.floor(milliseconds / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    
-    if (hours > 0) return `${hours}h ${minutes % 60}m`;
-    if (minutes > 0) return `${minutes}m ${seconds % 60}s`;
-    return `${seconds}s`;
+  const formatTimeOnSite = (ms: number) => {
+    if (!ms) return '0s';
+    const sec = Math.floor(ms / 1000);
+    const min = Math.floor(sec / 60);
+    const hrs = Math.floor(min / 60);
+    if (hrs > 0) return `${hrs}h ${min % 60}m`;
+    if (min > 0) return `${min}m ${sec % 60}s`;
+    return `${sec}s`;
   };
 
   return (
