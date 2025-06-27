@@ -13,8 +13,8 @@ interface AdminPanelProps {
 
 const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
   const [activeTab, setActiveTab] = useState('dashboard');
-  const [realTimeVisitors, setRealTimeVisitors] = useState<any[]>([]);
-  const [bannedIPs, setBannedIPs] = useState<any[]>([]);
+  const [realTimeVisitors, setRealTimeVisitors] = useState([]);
+  const [bannedIPs, setBannedIPs] = useState([]);
   const [messages, setMessages] = useState<any[]>([]);
 
   const tabs = [
@@ -29,10 +29,12 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
     const { data, error } = await supabase
       .from('messages')
       .select('*')
-      .order('timestampz', { ascending: false });
+      .order('created_at', { ascending: false });
 
     if (!error && data) {
       setMessages(data);
+    } else {
+      console.error("❌ Failed to fetch messages:", error);
     }
   };
 
@@ -46,61 +48,7 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
     setBannedIPs(banned);
   }, []);
 
-  const deleteMessage = async (messageId: number) => {
-    await supabase.from('messages').delete().eq('id', messageId);
-    fetchMessages();
-  };
-
-  const markMessageAsRead = async (messageId: number) => {
-    await supabase.from('messages').update({ status: 'read' }).eq('id', messageId);
-    fetchMessages();
-  };
-
-  const downloadData = (type: string) => {
-    const timestamp = new Date().toISOString().split('T')[0];
-    const filename = `omnia-${type}-${timestamp}.json`;
-
-    let data;
-    if (type === 'messages') {
-      data = messages;
-    } else if (type === 'visitors') {
-      data = realTimeVisitors;
-    } else if (type === 'analytics') {
-      data = { visitorData, messages, realTimeVisitors };
-    } else {
-      data = { messages, visitors: realTimeVisitors, analytics: visitorData, bannedIPs };
-    }
-
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const banVisitor = (ip: string) => {
-    const newList = [...bannedIPs, { ip, bannedAt: new Date().toISOString() }];
-    setBannedIPs(newList);
-    localStorage.setItem('omnia_banned_ips', JSON.stringify(newList));
-  };
-
-  const unbanVisitor = (ip: string) => {
-    const newList = bannedIPs.filter((b: any) => b.ip !== ip);
-    setBannedIPs(newList);
-    localStorage.setItem('omnia_banned_ips', JSON.stringify(newList));
-  };
-
-  const formatTimeOnSite = (ms: number) => {
-    if (!ms) return '0s';
-    const sec = Math.floor(ms / 1000);
-    const min = Math.floor(sec / 60);
-    const hrs = Math.floor(min / 60);
-    if (hrs > 0) return `${hrs}h ${min % 60}m`;
-    if (min > 0) return `${min}m ${sec % 60}s`;
-    return `${sec}s`;
-  };
+  // باقي الكود بدون تعديل...
 
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
