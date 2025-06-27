@@ -18,7 +18,14 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
   const [bannedIPs, setBannedIPs] = useState([]);
   const [messages, setMessages] = useState<any[]>([]);
 
-  // 👇 Fetch messages from Supabase
+  const tabs = [
+    { id: 'dashboard', name: 'Dashboard', icon: <BarChart3 className="w-4 h-4" /> },
+    { id: 'messages', name: 'Messages', icon: <Eye className="w-4 h-4" /> },
+    { id: 'visitors', name: 'Visitors', icon: <Users className="w-4 h-4" /> },
+    { id: 'analytics', name: 'Analytics', icon: <Globe className="w-4 h-4" /> },
+    { id: 'security', name: 'Security', icon: <Shield className="w-4 h-4" /> },
+  ];
+
   const fetchMessages = async () => {
     const { data, error } = await supabase
       .from('messages')
