@@ -58,6 +58,7 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
   const [realTimeVisitors, setRealTimeVisitors] = useState<Visitor[]>([]);
   const [bannedIPs, setBannedIPs] = useState<BannedIP[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState<number | null>(null);
 
   const unreadMessagesCount = messages.filter(m => m.status === 'unread').length;
 
@@ -161,7 +162,11 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
     }
   };
 
-  const deleteMessage = async (id: number) => {
+  const handleDeleteMessage = async (id: number) => {
+    setShowDeleteConfirm(id);
+  };
+
+  const confirmDeleteMessage = async (id: number) => {
     const { error } = await supabase
       .from('messages')
       .delete()
@@ -172,6 +177,11 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
     } else {
       console.error("❌ Failed to delete message:", error);
     }
+    setShowDeleteConfirm(null);
+  };
+
+  const cancelDeleteMessage = () => {
+    setShowDeleteConfirm(null);
   };
 
   const banVisitor = (ip: string) => {
@@ -209,6 +219,30 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
 
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-gray-800 p-6 rounded-xl max-w-md w-full">
+            <h3 className="text-xl font-bold text-white mb-4">Confirm Delete</h3>
+            <p className="text-gray-300 mb-6">Are you sure you want to delete this message?</p>
+            <div className="flex justify-end space-x-4">
+              <button
+                onClick={cancelDeleteMessage}
+                className="px-4 py-2 text-gray-300 hover:text-white"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => confirmDeleteMessage(showDeleteConfirm)}
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="bg-gray-900 rounded-2xl w-full max-w-7xl h-[90vh] overflow-hidden border border-gray-700">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-700">
@@ -282,7 +316,7 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                         <p className="text-2xl font-bold text-white">{unreadMessagesCount}</p>
                       </div>
                       <div className="relative">
-                        <Users className="w-8 h-8 text-blue-400" />
+                        <Eye className="w-8 h-8 text-blue-400" />
                         {unreadMessagesCount > 0 && (
                           <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                             {unreadMessagesCount}
@@ -336,10 +370,11 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
             {activeTab === 'messages' && (
               <div className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-bold text-white">
-                    Contact Messages ({messages.length})
+                  <h3 className="text-xl font-bold text-white flex items-center">
+                    <span>Contact Messages ({messages.length})</span>
                     {unreadMessagesCount > 0 && (
-                      <span className="ml-2 bg-red-500 text-white text-sm rounded-full px-2 py-1">
+                      <span className="ml-3 bg-red-500 text-white text-sm rounded-full px-3 py-1 flex items-center">
+                        <Eye className="w-3 h-3 mr-1" />
                         {unreadMessagesCount} unread
                       </span>
                     )}
@@ -385,7 +420,7 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                               </button>
                             )}
                             <button 
-                              onClick={() => deleteMessage(message.id)}
+                              onClick={() => handleDeleteMessage(message.id)}
                               className="text-red-400 hover:text-red-300"
                               title="Delete Message"
                             >
@@ -626,7 +661,6 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
 };
 
 export default AdminPanel;
-
 // // export default AdminPanel;
 // import { useEffect, useState } from 'react';
 // import { createClient } from '@supabase/supabase-js';
