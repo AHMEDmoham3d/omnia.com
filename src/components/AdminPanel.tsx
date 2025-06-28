@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Users, Globe, Clock, Download, Trash2, Ban, UserCheck, Eye, BarChart3, Shield, MapPin, Lock } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 
-// Initialize Supabase client with environment variables
-const supabaseUrl = process.env.REACT_APP_SUPABASE_URL || '';
-const supabaseKey = process.env.REACT_APP_SUPABASE_KEY || '';
+const supabaseUrl = 'https://mldvuzkrcjnltzgwtpfc.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZHZ1emtyY2pubHR6Z3d0cGZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5Mjg4MjYsImV4cCI6MjA2NjUwNDgyNn0.idcUACM1z8IPkYdpV-oT_R1jZexmC25W7IMZaFvooUc';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// Type definitions
+// تعريف الأنواع
 interface Message {
   id: number;
   created_at: string;
@@ -41,7 +40,6 @@ interface Visitor {
 interface BannedIP {
   ip: string;
   bannedAt: string;
-  reason?: string;
 }
 
 interface VisitorData {
@@ -66,19 +64,10 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-
-  // Secure storage keys with useMemo to prevent recreation on every render
-  const STORAGE_KEYS = useMemo(() => ({
-    VISITORS: 'secure_visitors_data_v2',
-    BANNED_IPS: 'secure_banned_ips_data_v2',
-    LOGIN_ATTEMPTS: 'login_attempts_counter',
-    SESSION_EXPIRY: 'admin_session_expiry'
-  }), []);
 
   const unreadMessagesCount = messages.filter(m => m.status === 'unread').length;
 
-  const tabs = useMemo(() => [
+  const tabs = [
     { 
       id: 'dashboard', 
       name: 'Dashboard', 
@@ -113,245 +102,142 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
       name: 'Security', 
       icon: <Shield className="w-4 h-4" /> 
     },
-  ], [unreadMessagesCount]);
+  ];
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError('');
-    setIsLoading(true);
-
-    try {
-      // Rate limiting check
-      const loginAttempts = parseInt(localStorage.getItem(STORAGE_KEYS.LOGIN_ATTEMPTS) || '0');
-      if (loginAttempts > 3) {
-        setLoginError('Too many attempts. Please try again later.');
-        return;
-      }
-
-      if (!email || !password) {
-        setLoginError('Please enter both email and password');
-        localStorage.setItem(STORAGE_KEYS.LOGIN_ATTEMPTS, (loginAttempts + 1).toString());
-        return;
-      }
-
-      // In a real app, you would hash the password and compare with stored hash
-      const correctEmail = process.env.REACT_APP_ADMIN_EMAIL || 'admin@example.com';
-      const correctPassword = process.env.REACT_APP_ADMIN_PASSWORD || 'securePassword123!';
-
-      if (email === correctEmail && password === correctPassword) {
-        setIsLoggedIn(true);
-        localStorage.removeItem(STORAGE_KEYS.LOGIN_ATTEMPTS);
-        localStorage.setItem(STORAGE_KEYS.SESSION_EXPIRY, (Date.now() + 3600000).toString());
-      } else {
-        setLoginError('Invalid credentials');
-        localStorage.setItem(STORAGE_KEYS.LOGIN_ATTEMPTS, (loginAttempts + 1).toString());
-      }
-    } catch (error) {
-      console.error('Login error:', error);
-      setLoginError('An error occurred during login');
-    } finally {
-      setIsLoading(false);
+    
+    // بيانات تسجيل الدخول الثابتة
+    const correctEmail = 'omniaAbdo@gmail.com';
+    const correctPassword = '123456789Omnia';
+    
+    if (email === correctEmail && password === correctPassword) {
+      setIsLoggedIn(true);
+    } else {
+      setLoginError('Invalid email or password');
     }
   };
 
-  const fetchMessages = useCallback(async () => {
-    try {
-      const { data, error } = await supabase
-        .from('messages')
-        .select('*')
-        .order('created_at', { ascending: false });
+  const fetchMessages = async () => {
+    const { data, error } = await supabase
+      .from('messages')
+      .select('*')
+      .order('created_at', { ascending: false });
 
-      if (error) throw error;
+    if (!error && data) {
       setMessages(data as Message[]);
-    } catch (error) {
-      console.error("Failed to fetch messages:", error);
+    } else {
+      console.error("❌ Failed to fetch messages:", error);
     }
-  }, []);
-
-const downloadData = useCallback((type: 'all' | 'messages' | 'visitors') => {
-  let dataToExport: unknown;
-  let fileName = '';
-
-  const sanitizeData = <T extends { ip?: string; email?: string; whatsapp?: string }>(data: T[]): T[] => {
-    return data.map(item => {
-      const { ip, email, whatsapp, ...rest } = item;
-      return {
-        ...rest,
-        ...(ip ? { ip: 'REDACTED' } : {}),
-        ...(email ? { email: 'REDACTED@example.com' } : {}),
-        ...(whatsapp ? { whatsapp: 'REDACTED' } : {})
-      } as T;
-    });
   };
 
-  switch (type) {
-    case 'all':
-      dataToExport = {
-        messages: sanitizeData<Message>(messages),
-        visitors: sanitizeData<Visitor>(realTimeVisitors),
-        bannedIPs: sanitizeData<BannedIP>(bannedIPs)
-      };
-      fileName = `secure-export-${new Date().toISOString().split('T')[0]}.json`;
-      break;
-    case 'messages':
-      dataToExport = sanitizeData<Message>(messages);
-      fileName = `messages-export-${new Date().toISOString().split('T')[0]}.json`;
-      break;
-    case 'visitors':
-      dataToExport = sanitizeData<Visitor>(realTimeVisitors);
-      fileName = `visitors-export-${new Date().toISOString().split('T')[0]}.json`;
-      break;
-  }
+  const downloadData = (type: 'all' | 'messages' | 'visitors') => {
+    let dataToExport: unknown;
+    let fileName = '';
+
+    switch (type) {
+      case 'all':
+        dataToExport = {
+          messages: messages,
+          visitors: realTimeVisitors,
+          bannedIPs: bannedIPs
+        };
+        fileName = 'omnia-data-all.json';
+        break;
+      case 'messages':
+        dataToExport = messages;
+        fileName = 'omnia-messages.json';
+        break;
+      case 'visitors':
+        dataToExport = realTimeVisitors;
+        fileName = 'omnia-visitors.json';
+        break;
+    }
 
     const dataStr = JSON.stringify(dataToExport, null, 2);
-    const dataBlob = new Blob([dataStr], { type: 'application/json;charset=utf-8' });
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
     const url = URL.createObjectURL(dataBlob);
     const link = document.createElement('a');
     link.href = url;
     link.download = fileName;
-    link.style.display = 'none';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-}, [messages, realTimeVisitors, bannedIPs]);
-  const markMessageAsRead = useCallback(async (id: number) => {
-    try {
-      const { error } = await supabase
-        .from('messages')
-        .update({ status: 'read' })
-        .eq('id', id);
+  };
 
-      if (error) throw error;
-      setMessages(prev => prev.map(msg => 
+  const markMessageAsRead = async (id: number) => {
+    const { error } = await supabase
+      .from('messages')
+      .update({ status: 'read' })
+      .eq('id', id);
+
+    if (!error) {
+      setMessages(messages.map(msg => 
         msg.id === id ? { ...msg, status: 'read' } : msg
       ));
-    } catch (error) {
-      console.error("Failed to update message:", error);
+    } else {
+      console.error("❌ Failed to update message:", error);
     }
-  }, []);
+  };
 
-  const handleDeleteMessage = useCallback((id: number) => {
+  const handleDeleteMessage = async (id: number) => {
     setShowDeleteConfirm(id);
-  }, []);
+  };
 
-  const confirmDeleteMessage = useCallback(async (id: number) => {
-    try {
-      const { error } = await supabase
-        .from('messages')
-        .delete()
-        .eq('id', id);
+  const confirmDeleteMessage = async (id: number) => {
+    const { error } = await supabase
+      .from('messages')
+      .delete()
+      .eq('id', id);
 
-      if (error) throw error;
-      setMessages(prev => prev.filter(msg => msg.id !== id));
-    } catch (error) {
-      console.error("Failed to delete message:", error);
-    } finally {
-      setShowDeleteConfirm(null);
+    if (!error) {
+      setMessages(messages.filter(msg => msg.id !== id));
+    } else {
+      console.error("❌ Failed to delete message:", error);
     }
-  }, []);
-
-  const cancelDeleteMessage = useCallback(() => {
     setShowDeleteConfirm(null);
-  }, []);
+  };
 
-  const banVisitor = useCallback((ip: string, reason?: string) => {
-    if (!/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ip)) {
-      console.error('Invalid IP address');
-      return;
-    }
-    
+  const cancelDeleteMessage = () => {
+    setShowDeleteConfirm(null);
+  };
+
+  const banVisitor = (ip: string) => {
     const bannedAt = new Date().toISOString();
-    const bannedIPs: BannedIP[] = JSON.parse(localStorage.getItem(STORAGE_KEYS.BANNED_IPS) || '[]');
-    const updatedBannedIPs = [...bannedIPs, { ip, bannedAt, reason }];
+    const bannedIPs: BannedIP[] = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
+    const updatedBannedIPs = [...bannedIPs, { ip, bannedAt }];
     
-    localStorage.setItem(STORAGE_KEYS.BANNED_IPS, JSON.stringify(updatedBannedIPs));
+    localStorage.setItem('omnia_banned_ips', JSON.stringify(updatedBannedIPs));
     setBannedIPs(updatedBannedIPs);
-  }, [STORAGE_KEYS.BANNED_IPS]);
+  };
 
-  const unbanVisitor = useCallback((ip: string) => {
-    const bannedIPs: BannedIP[] = JSON.parse(localStorage.getItem(STORAGE_KEYS.BANNED_IPS) || '[]');
+  const unbanVisitor = (ip: string) => {
+    const bannedIPs: BannedIP[] = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
     const updatedBannedIPs = bannedIPs.filter(banned => banned.ip !== ip);
     
-    localStorage.setItem(STORAGE_KEYS.BANNED_IPS, JSON.stringify(updatedBannedIPs));
+    localStorage.setItem('omnia_banned_ips', JSON.stringify(updatedBannedIPs));
     setBannedIPs(updatedBannedIPs);
-  }, [STORAGE_KEYS.BANNED_IPS]);
+  };
 
-  const formatTimeOnSite = useCallback((seconds: number) => {
+  const formatTimeOnSite = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}m ${secs}s`;
-  }, []);
+  };
 
-  const checkSession = useCallback(() => {
-    const expiry = localStorage.getItem(STORAGE_KEYS.SESSION_EXPIRY);
-    if (expiry && parseInt(expiry) < Date.now()) {
-      setIsLoggedIn(false);
-      localStorage.removeItem(STORAGE_KEYS.SESSION_EXPIRY);
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetchMessages();
+
+      const visitors: Visitor[] = JSON.parse(localStorage.getItem('omnia_secure_visitors') || '[]');
+      setRealTimeVisitors(visitors);
+
+      const banned: BannedIP[] = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
+      setBannedIPs(banned);
     }
-  }, [STORAGE_KEYS.SESSION_EXPIRY]);
-
-  const loadData = useCallback(async () => {
-    try {
-      await fetchMessages();
-
-      try {
-        const visitorsData = localStorage.getItem(STORAGE_KEYS.VISITORS);
-        if (visitorsData) {
-          const visitors: Visitor[] = JSON.parse(visitorsData);
-          setRealTimeVisitors(visitors);
-        }
-      } catch (e) {
-        console.error("Error loading visitors:", e);
-      }
-
-      try {
-        const bannedData = localStorage.getItem(STORAGE_KEYS.BANNED_IPS);
-        if (bannedData) {
-          const banned: BannedIP[] = JSON.parse(bannedData);
-          setBannedIPs(banned);
-        }
-      } catch (e) {
-        console.error("Error loading banned IPs:", e);
-      }
-    } catch (error) {
-      console.error("Initial data load error:", error);
-    }
-  }, [STORAGE_KEYS.BANNED_IPS, STORAGE_KEYS.VISITORS, fetchMessages]);
-
-  useEffect(() => {
-    if (!isLoggedIn) return;
-    loadData();
-  }, [isLoggedIn, loadData]);
-
-  useEffect(() => {
-    checkSession();
-    const interval = setInterval(checkSession, 60000);
-    return () => clearInterval(interval);
-  }, [checkSession]);
-
-  useEffect(() => {
-    if (!isLoggedIn) return;
-
-    let timeout: NodeJS.Timeout;
-    const resetTimer = () => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        setIsLoggedIn(false);
-        localStorage.removeItem(STORAGE_KEYS.SESSION_EXPIRY);
-      }, 1800000);
-    };
-
-    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'];
-    events.forEach(event => window.addEventListener(event, resetTimer));
-
-    resetTimer();
-
-    return () => {
-      clearTimeout(timeout);
-      events.forEach(event => window.removeEventListener(event, resetTimer));
-    };
-  }, [isLoggedIn, STORAGE_KEYS.SESSION_EXPIRY]);
+  }, [isLoggedIn]);
 
   if (!isLoggedIn) {
     return (
@@ -360,7 +246,6 @@ const downloadData = useCallback((type: 'all' | 'messages' | 'visitors') => {
           <div className="flex flex-col items-center mb-6">
             <Lock className="w-12 h-12 text-purple-500 mb-4" />
             <h2 className="text-2xl font-bold text-white">Admin Login</h2>
-            <p className="text-gray-400 text-sm mt-2">Enter your credentials to continue</p>
           </div>
           
           <form onSubmit={handleLogin} className="space-y-6">
@@ -379,7 +264,6 @@ const downloadData = useCallback((type: 'all' | 'messages' | 'visitors') => {
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                 required
-                autoComplete="username"
               />
             </div>
             
@@ -392,23 +276,15 @@ const downloadData = useCallback((type: 'all' | 'messages' | 'visitors') => {
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                 required
-                autoComplete="current-password"
               />
             </div>
             
             <button
               type="submit"
-              disabled={isLoading}
-              className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-colors duration-300 flex items-center justify-center disabled:opacity-50"
+              className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-colors duration-300 flex items-center justify-center"
             >
-              {isLoading ? (
-                <span className="animate-pulse">Verifying...</span>
-              ) : (
-                <>
-                  <Lock className="w-4 h-4 mr-2" />
-                  Login
-                </>
-              )}
+              <Lock className="w-4 h-4 mr-2" />
+              Login
             </button>
           </form>
         </div>
@@ -418,11 +294,12 @@ const downloadData = useCallback((type: 'all' | 'messages' | 'visitors') => {
 
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      {/* Delete Confirmation Modal */}
       {showDeleteConfirm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-gray-800 p-6 rounded-xl max-w-md w-full">
             <h3 className="text-xl font-bold text-white mb-4">Confirm Delete</h3>
-            <p className="text-gray-300 mb-6">Are you sure you want to delete this message? This action cannot be undone.</p>
+            <p className="text-gray-300 mb-6">Are you sure you want to delete this message?</p>
             <div className="flex justify-end space-x-4">
               <button
                 onClick={cancelDeleteMessage}
@@ -434,7 +311,7 @@ const downloadData = useCallback((type: 'all' | 'messages' | 'visitors') => {
                 onClick={() => confirmDeleteMessage(showDeleteConfirm)}
                 className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
               >
-                Confirm Delete
+                Delete
               </button>
             </div>
           </div>
@@ -442,21 +319,19 @@ const downloadData = useCallback((type: 'all' | 'messages' | 'visitors') => {
       )}
 
       <div className="bg-gray-900 rounded-2xl w-full max-w-7xl h-[90vh] overflow-hidden border border-gray-700">
+        {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-700">
-          <div className="flex items-center space-x-3">
-            <Shield className="w-6 h-6 text-purple-500" />
-            <h2 className="text-2xl font-bold text-white">Secure Admin Dashboard</h2>
-          </div>
+          <h2 className="text-2xl font-bold text-white">Omnia Admin Dashboard</h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-white transition-colors duration-300"
-            aria-label="Close admin panel"
           >
             <X className="w-6 h-6" />
           </button>
         </div>
 
         <div className="flex h-full">
+          {/* Sidebar */}
           <div className="w-64 bg-gray-800 border-r border-gray-700 p-4">
             <nav className="space-y-2">
               {tabs.map((tab) => (
@@ -468,7 +343,6 @@ const downloadData = useCallback((type: 'all' | 'messages' | 'visitors') => {
                       ? 'bg-purple-600 text-white'
                       : 'text-gray-300 hover:bg-gray-700'
                   }`}
-                  aria-label={`Switch to ${tab.name} tab`}
                 >
                   {tab.icon}
                   <span className="flex-1">{tab.name}</span>
@@ -480,27 +354,15 @@ const downloadData = useCallback((type: 'all' | 'messages' | 'visitors') => {
                 </button>
               ))}
             </nav>
-
-            <div className="mt-8 p-4 bg-gray-700/50 rounded-lg">
-              <p className="text-gray-300 text-sm">Secure session active</p>
-              <button
-                onClick={() => {
-                  setIsLoggedIn(false);
-                  localStorage.removeItem(STORAGE_KEYS.SESSION_EXPIRY);
-                }}
-                className="mt-2 text-sm text-red-400 hover:text-red-300 flex items-center"
-              >
-                <Lock className="w-3 h-3 mr-1" />
-                Logout
-              </button>
-            </div>
           </div>
 
+          {/* Main Content */}
           <div className="flex-1 overflow-y-auto">
             {activeTab === 'dashboard' && (
               <div className="p-6">
                 <h3 className="text-xl font-bold text-white mb-6">Real-Time Overview</h3>
                 
+                {/* Stats Grid */}
                 <div className="grid grid-cols-4 gap-6 mb-8">
                   <div className="bg-gray-800 p-6 rounded-xl">
                     <div className="flex items-center justify-between">
@@ -550,6 +412,7 @@ const downloadData = useCallback((type: 'all' | 'messages' | 'visitors') => {
                   </div>
                 </div>
 
+                {/* Quick Actions */}
                 <div className="bg-gray-800 p-6 rounded-xl">
                   <h4 className="text-lg font-semibold text-white mb-4">Quick Actions</h4>
                   <div className="flex space-x-4">
@@ -635,7 +498,6 @@ const downloadData = useCallback((type: 'all' | 'messages' | 'visitors') => {
                               onClick={() => handleDeleteMessage(message.id)}
                               className="text-red-400 hover:text-red-300"
                               title="Delete Message"
-                              aria-label={`Delete message from ${message.name}`}
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
@@ -695,10 +557,9 @@ const downloadData = useCallback((type: 'all' | 'messages' | 'visitors') => {
                           </span>
                           {!bannedIPs.find(banned => banned.ip === visitor.ip) ? (
                             <button 
-                              onClick={() => banVisitor(visitor.ip, 'Manual ban')}
+                              onClick={() => banVisitor(visitor.ip)}
                               className="text-yellow-400 hover:text-yellow-300" 
                               title="Ban User"
-                              aria-label={`Ban visitor from ${visitor.country}`}
                             >
                               <Ban className="w-4 h-4" />
                             </button>
@@ -707,7 +568,6 @@ const downloadData = useCallback((type: 'all' | 'messages' | 'visitors') => {
                               onClick={() => unbanVisitor(visitor.ip)}
                               className="text-green-400 hover:text-green-300" 
                               title="Unban User"
-                              aria-label={`Unban visitor from ${visitor.country}`}
                             >
                               <UserCheck className="w-4 h-4" />
                             </button>
@@ -835,7 +695,6 @@ const downloadData = useCallback((type: 'all' | 'messages' | 'visitors') => {
                               onClick={() => unbanVisitor(banned.ip)}
                               className="text-green-400 hover:text-green-300"
                               title="Unban"
-                              aria-label={`Unban IP ${banned.ip}`}
                             >
                               <UserCheck className="w-4 h-4" />
                             </button>
