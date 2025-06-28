@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { X, Users, Globe, Clock, Download, Trash2, Ban, UserCheck, Eye, BarChart3, Shield, MapPin, Lock } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = 'https://mldvuzkrcjnltzgwtpfc.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZHZ1emtyY2pubHR6Z3d0cGZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5Mjg4MjYsImV4cCI6MjA2NjUwNDgyNn0.idcUACM1z8IPkYdpV-oT_R1jZexmC25W7IMZaFvooUc';
-const supabase = createClient(supabaseUrl, supabaseKey);
+import bcrypt from 'bcryptjs';
 
 // تعريف الأنواع
 interface Message {
@@ -54,6 +51,12 @@ interface AdminPanelProps {
   visitorData: VisitorData;
 }
 
+// تهيئة Supabase من متغيرات البيئة
+const supabase = createClient(
+  process.env.REACT_APP_SUPABASE_URL!,
+  process.env.REACT_APP_SUPABASE_KEY!
+);
+
 const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [realTimeVisitors, setRealTimeVisitors] = useState<Visitor[]>([]);
@@ -64,6 +67,13 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
+  const [csrfToken, setCsrfToken] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  // توليد CSRF token عند التحميل
+  useEffect(() => {
+    setCsrfToken(window.crypto.getRandomValues(new Uint32Array(1))[0].toString(36));
+  }, []);
 
   const unreadMessagesCount = messages.filter(m => m.status === 'unread').length;
 
@@ -104,35 +114,83 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
     },
   ];
 
-  const handleLogin = (e: React.FormEvent) => {
+  const logSecurityEvent = useCallback(async (event: string, details: object) => {
+    try {
+      await supabase.from('security_logs').insert({
+        event,
+        details: JSON.stringify(details),
+        ip_address: await fetch('https://api.ipify.org').then(res => res.text()),
+        created_at: new Date().toISOString()
+      });
+    } catch (error) {
+      console.error("Failed to log security event:", error);
+    }
+  }, []);
+
+  const fetchMessages = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from('messages')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      setMessages(data as Message[]);
+    } catch (error) {
+      console.error("Failed to fetch messages:", error);
+      await logSecurityEvent('fetch_messages_error', { 
+        error: error instanceof Error ? error.message : 'Unknown error' 
+      });
+    }
+  }, [logSecurityEvent]);
+
+  const handleLogin = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError('');
+    setIsLoading(true);
     
-    // بيانات تسجيل الدخول الثابتة
-    const correctEmail = 'omniaAbdo@gmail.com';
-    const correctPassword = '123456789Omnia';
-    
-    if (email === correctEmail && password === correctPassword) {
+    try {
+      // التحقق من البريد الإلكتروني
+      if (email !== process.env.REACT_APP_ADMIN_EMAIL) {
+        throw new Error('Invalid credentials');
+      }
+
+      // التحقق من كلمة المرور باستخدام bcrypt
+      const isMatch = await bcrypt.compare(password, process.env.REACT_APP_ADMIN_PASSWORD_HASH!);
+      
+      if (!isMatch) {
+        throw new Error('Invalid credentials');
+      }
+
+      // إنشاء جلسة آمنة مع Supabase
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password: process.env.REACT_APP_ADMIN_PASSWORD_HASH!
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
       setIsLoggedIn(true);
-    } else {
+      await logSecurityEvent('successful_login', { email });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error("Login error:", errorMessage);
       setLoginError('Invalid email or password');
+      await logSecurityEvent('failed_login_attempt', { 
+        email, 
+        error: errorMessage 
+      });
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }, [email, password, logSecurityEvent]);
 
-  const fetchMessages = async () => {
-    const { data, error } = await supabase
-      .from('messages')
-      .select('*')
-      .order('created_at', { ascending: false });
-
-    if (!error && data) {
-      setMessages(data as Message[]);
-    } else {
-      console.error("❌ Failed to fetch messages:", error);
-    }
-  };
-
-  const downloadData = (type: 'all' | 'messages' | 'visitors') => {
+  const downloadData = useCallback((type: 'all' | 'messages' | 'visitors') => {
     let dataToExport: unknown;
     let fileName = '';
 
@@ -165,79 +223,133 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-  };
+  }, [messages, realTimeVisitors, bannedIPs]);
 
-  const markMessageAsRead = async (id: number) => {
-    const { error } = await supabase
-      .from('messages')
-      .update({ status: 'read' })
-      .eq('id', id);
+  const markMessageAsRead = useCallback(async (id: number) => {
+    try {
+      const { error } = await supabase
+        .from('messages')
+        .update({ status: 'read' })
+        .eq('id', id);
 
-    if (!error) {
-      setMessages(messages.map(msg => 
-        msg.id === id ? { ...msg, status: 'read' } : msg
-      ));
-    } else {
-      console.error("❌ Failed to update message:", error);
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      setMessages(prevMessages => 
+        prevMessages.map(msg => 
+          msg.id === id ? { ...msg, status: 'read' } : msg
+        )
+      );
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error("Failed to update message:", errorMessage);
+      await logSecurityEvent('message_update_error', { 
+        id, 
+        error: errorMessage 
+      });
     }
-  };
+  }, [logSecurityEvent]);
 
-  const handleDeleteMessage = async (id: number) => {
+  const handleDeleteMessage = useCallback((id: number) => {
     setShowDeleteConfirm(id);
-  };
+  }, []);
 
-  const confirmDeleteMessage = async (id: number) => {
-    const { error } = await supabase
-      .from('messages')
-      .delete()
-      .eq('id', id);
+  const confirmDeleteMessage = useCallback(async (id: number) => {
+    try {
+      const { error } = await supabase
+        .from('messages')
+        .delete()
+        .eq('id', id);
 
-    if (!error) {
-      setMessages(messages.filter(msg => msg.id !== id));
-    } else {
-      console.error("❌ Failed to delete message:", error);
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      setMessages(prevMessages => prevMessages.filter(msg => msg.id !== id));
+      await logSecurityEvent('message_deleted', { id });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error("Failed to delete message:", errorMessage);
+      await logSecurityEvent('message_delete_error', { 
+        id, 
+        error: errorMessage 
+      });
+    } finally {
+      setShowDeleteConfirm(null);
     }
+  }, [logSecurityEvent]);
+
+  const cancelDeleteMessage = useCallback(() => {
     setShowDeleteConfirm(null);
-  };
+  }, []);
 
-  const cancelDeleteMessage = () => {
-    setShowDeleteConfirm(null);
-  };
+  const banVisitor = useCallback(async (ip: string) => {
+    try {
+      const bannedAt = new Date().toISOString();
+      const bannedIPs: BannedIP[] = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
+      const updatedBannedIPs = [...bannedIPs, { ip, bannedAt }];
+      
+      localStorage.setItem('omnia_banned_ips', JSON.stringify(updatedBannedIPs));
+      setBannedIPs(updatedBannedIPs);
+      await logSecurityEvent('ip_banned', { ip });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error("Failed to ban IP:", errorMessage);
+      await logSecurityEvent('ban_ip_error', { 
+        ip, 
+        error: errorMessage 
+      });
+    }
+  }, [logSecurityEvent]);
 
-  const banVisitor = (ip: string) => {
-    const bannedAt = new Date().toISOString();
-    const bannedIPs: BannedIP[] = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
-    const updatedBannedIPs = [...bannedIPs, { ip, bannedAt }];
-    
-    localStorage.setItem('omnia_banned_ips', JSON.stringify(updatedBannedIPs));
-    setBannedIPs(updatedBannedIPs);
-  };
+  const unbanVisitor = useCallback(async (ip: string) => {
+    try {
+      const bannedIPs: BannedIP[] = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
+      const updatedBannedIPs = bannedIPs.filter(banned => banned.ip !== ip);
+      
+      localStorage.setItem('omnia_banned_ips', JSON.stringify(updatedBannedIPs));
+      setBannedIPs(updatedBannedIPs);
+      await logSecurityEvent('ip_unbanned', { ip });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error("Failed to unban IP:", errorMessage);
+      await logSecurityEvent('unban_ip_error', { 
+        ip, 
+        error: errorMessage 
+      });
+    }
+  }, [logSecurityEvent]);
 
-  const unbanVisitor = (ip: string) => {
-    const bannedIPs: BannedIP[] = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
-    const updatedBannedIPs = bannedIPs.filter(banned => banned.ip !== ip);
-    
-    localStorage.setItem('omnia_banned_ips', JSON.stringify(updatedBannedIPs));
-    setBannedIPs(updatedBannedIPs);
-  };
-
-  const formatTimeOnSite = (seconds: number) => {
+  const formatTimeOnSite = useCallback((seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}m ${secs}s`;
-  };
+  }, []);
 
   useEffect(() => {
     if (isLoggedIn) {
-      fetchMessages();
+      const loadData = async () => {
+        await fetchMessages();
 
-      const visitors: Visitor[] = JSON.parse(localStorage.getItem('omnia_secure_visitors') || '[]');
-      setRealTimeVisitors(visitors);
+        try {
+          const visitors: Visitor[] = JSON.parse(localStorage.getItem('omnia_secure_visitors') || '[]');
+          setRealTimeVisitors(visitors);
 
-      const banned: BannedIP[] = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
-      setBannedIPs(banned);
+          const banned: BannedIP[] = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
+          setBannedIPs(banned);
+        } catch (error) {
+          const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+          console.error("Data loading error:", errorMessage);
+          await logSecurityEvent('data_loading_error', { 
+            error: errorMessage 
+          });
+        }
+      };
+
+      loadData();
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, fetchMessages, logSecurityEvent]);
 
   if (!isLoggedIn) {
     return (
@@ -249,6 +361,8 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
           </div>
           
           <form onSubmit={handleLogin} className="space-y-6">
+            <input type="hidden" name="csrf_token" value={csrfToken} />
+            
             {loginError && (
               <div className="bg-red-500/20 text-red-400 p-3 rounded-lg text-sm">
                 {loginError}
@@ -276,15 +390,23 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                 required
+                minLength={8}
               />
             </div>
             
             <button
               type="submit"
               className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-colors duration-300 flex items-center justify-center"
+              disabled={isLoading}
             >
-              <Lock className="w-4 h-4 mr-2" />
-              Login
+              {isLoading ? (
+                <span className="animate-spin">↻</span>
+              ) : (
+                <>
+                  <Lock className="w-4 h-4 mr-2" />
+                  Login
+                </>
+              )}
             </button>
           </form>
         </div>
@@ -294,7 +416,6 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
 
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      {/* Delete Confirmation Modal */}
       {showDeleteConfirm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-gray-800 p-6 rounded-xl max-w-md w-full">
@@ -319,7 +440,6 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
       )}
 
       <div className="bg-gray-900 rounded-2xl w-full max-w-7xl h-[90vh] overflow-hidden border border-gray-700">
-        {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-700">
           <h2 className="text-2xl font-bold text-white">Omnia Admin Dashboard</h2>
           <button
@@ -331,7 +451,6 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
         </div>
 
         <div className="flex h-full">
-          {/* Sidebar */}
           <div className="w-64 bg-gray-800 border-r border-gray-700 p-4">
             <nav className="space-y-2">
               {tabs.map((tab) => (
@@ -356,13 +475,11 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
             </nav>
           </div>
 
-          {/* Main Content */}
           <div className="flex-1 overflow-y-auto">
             {activeTab === 'dashboard' && (
               <div className="p-6">
                 <h3 className="text-xl font-bold text-white mb-6">Real-Time Overview</h3>
                 
-                {/* Stats Grid */}
                 <div className="grid grid-cols-4 gap-6 mb-8">
                   <div className="bg-gray-800 p-6 rounded-xl">
                     <div className="flex items-center justify-between">
@@ -412,7 +529,6 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                   </div>
                 </div>
 
-                {/* Quick Actions */}
                 <div className="bg-gray-800 p-6 rounded-xl">
                   <h4 className="text-lg font-semibold text-white mb-4">Quick Actions</h4>
                   <div className="flex space-x-4">
