@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { X, Users, Globe, Clock, Download, Trash2, Ban, UserCheck, Eye, BarChart3, Shield, MapPin } from 'lucide-react';
+import { X, Users, Globe, Clock, Download, Trash2, Ban, UserCheck, Eye, BarChart3, Shield, MapPin, Lock } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = 'https://mldvuzkrcjnltzgwtpfc.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZHZ1emtyY2pubHR6Z3d0cGZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5Mjg4MjYsImV4cCI6MjA2NjUwNDgyNn0.idcUACM1z8IPkYdpV-oT_R1jZexmC25W7IMZaFvooUc';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+// تعريف الأنواع
 interface Message {
   id: number;
   created_at: string;
@@ -59,6 +60,10 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
   const [bannedIPs, setBannedIPs] = useState<BannedIP[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<number | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
 
   const unreadMessagesCount = messages.filter(m => m.status === 'unread').length;
 
@@ -98,6 +103,21 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
       icon: <Shield className="w-4 h-4" /> 
     },
   ];
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginError('');
+    
+    // بيانات تسجيل الدخول الثابتة
+    const correctEmail = 'omniaAbdo@gmail.com';
+    const correctPassword = '123456789Omnia';
+    
+    if (email === correctEmail && password === correctPassword) {
+      setIsLoggedIn(true);
+    } else {
+      setLoginError('Invalid email or password');
+    }
+  };
 
   const fetchMessages = async () => {
     const { data, error } = await supabase
@@ -208,14 +228,69 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
   };
 
   useEffect(() => {
-    fetchMessages();
+    if (isLoggedIn) {
+      fetchMessages();
 
-    const visitors: Visitor[] = JSON.parse(localStorage.getItem('omnia_secure_visitors') || '[]');
-    setRealTimeVisitors(visitors);
+      const visitors: Visitor[] = JSON.parse(localStorage.getItem('omnia_secure_visitors') || '[]');
+      setRealTimeVisitors(visitors);
 
-    const banned: BannedIP[] = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
-    setBannedIPs(banned);
-  }, []);
+      const banned: BannedIP[] = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
+      setBannedIPs(banned);
+    }
+  }, [isLoggedIn]);
+
+  if (!isLoggedIn) {
+    return (
+      <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="bg-gray-900 rounded-2xl p-8 w-full max-w-md border border-gray-700">
+          <div className="flex flex-col items-center mb-6">
+            <Lock className="w-12 h-12 text-purple-500 mb-4" />
+            <h2 className="text-2xl font-bold text-white">Admin Login</h2>
+          </div>
+          
+          <form onSubmit={handleLogin} className="space-y-6">
+            {loginError && (
+              <div className="bg-red-500/20 text-red-400 p-3 rounded-lg text-sm">
+                {loginError}
+              </div>
+            )}
+            
+            <div>
+              <label htmlFor="email" className="block text-gray-400 mb-2">Email</label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                required
+              />
+            </div>
+            
+            <div>
+              <label htmlFor="password" className="block text-gray-400 mb-2">Password</label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                required
+              />
+            </div>
+            
+            <button
+              type="submit"
+              className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-colors duration-300 flex items-center justify-center"
+            >
+              <Lock className="w-4 h-4 mr-2" />
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
