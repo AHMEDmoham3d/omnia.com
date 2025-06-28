@@ -19,15 +19,44 @@ interface Message {
   timestamp?: string;
 }
 
+interface Visitor {
+  id: string;
+  country: string;
+  city: string;
+  region?: string;
+  ip: string;
+  device: string;
+  browser: string;
+  isp?: string;
+  isActive: boolean;
+  visitTime: string;
+  timeOnSite: number;
+  screenResolution: string;
+  language: string;
+  pageViews?: string[];
+}
+
+interface BannedIP {
+  ip: string;
+  bannedAt: string;
+}
+
+interface VisitorData {
+  totalVisitors: number;
+  todayVisitors: number;
+  countries: string[];
+  pageViews: Record<string, number>;
+}
+
 interface AdminPanelProps {
   onClose: () => void;
-  visitorData: any;
+  visitorData: VisitorData;
 }
 
 const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
   const [activeTab, setActiveTab] = useState('dashboard');
-  const [realTimeVisitors, setRealTimeVisitors] = useState<any[]>([]);
-  const [bannedIPs, setBannedIPs] = useState<any[]>([]);
+  const [realTimeVisitors, setRealTimeVisitors] = useState<Visitor[]>([]);
+  const [bannedIPs, setBannedIPs] = useState<BannedIP[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
 
   const unreadMessagesCount = messages.filter(m => m.status === 'unread').length;
@@ -82,8 +111,8 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
     }
   };
 
-  const downloadData = (type: string) => {
-    let dataToExport: any;
+  const downloadData = (type: 'all' | 'messages' | 'visitors') => {
+    let dataToExport: unknown;
     let fileName = '';
 
     switch (type) {
@@ -103,8 +132,6 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
         dataToExport = realTimeVisitors;
         fileName = 'omnia-visitors.json';
         break;
-      default:
-        return;
     }
 
     const dataStr = JSON.stringify(dataToExport, null, 2);
@@ -149,7 +176,7 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
 
   const banVisitor = (ip: string) => {
     const bannedAt = new Date().toISOString();
-    const bannedIPs = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
+    const bannedIPs: BannedIP[] = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
     const updatedBannedIPs = [...bannedIPs, { ip, bannedAt }];
     
     localStorage.setItem('omnia_banned_ips', JSON.stringify(updatedBannedIPs));
@@ -157,8 +184,8 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
   };
 
   const unbanVisitor = (ip: string) => {
-    const bannedIPs = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
-    const updatedBannedIPs = bannedIPs.filter((banned: any) => banned.ip !== ip);
+    const bannedIPs: BannedIP[] = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
+    const updatedBannedIPs = bannedIPs.filter(banned => banned.ip !== ip);
     
     localStorage.setItem('omnia_banned_ips', JSON.stringify(updatedBannedIPs));
     setBannedIPs(updatedBannedIPs);
@@ -173,10 +200,10 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
   useEffect(() => {
     fetchMessages();
 
-    const visitors = JSON.parse(localStorage.getItem('omnia_secure_visitors') || '[]');
+    const visitors: Visitor[] = JSON.parse(localStorage.getItem('omnia_secure_visitors') || '[]');
     setRealTimeVisitors(visitors);
 
-    const banned = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
+    const banned: BannedIP[] = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
     setBannedIPs(banned);
   }, []);
 
@@ -399,7 +426,7 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                 </div>
 
                 <div className="space-y-4">
-                  {realTimeVisitors.map((visitor, index) => (
+                  {realTimeVisitors.map((visitor) => (
                     <div key={visitor.id} className="bg-gray-800 p-6 rounded-xl">
                       <div className="flex items-start justify-between mb-4">
                         <div>
@@ -460,9 +487,9 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                       <div>
                         <p className="text-gray-400 text-sm mb-2">Pages Viewed:</p>
                         <div className="flex space-x-2">
-                          {visitor.pageViews?.map((page: string, idx: number) => (
+                          {visitor.pageViews?.map((page) => (
                             <span
-                              key={idx}
+                              key={page}
                               className="bg-purple-600/20 text-purple-400 px-2 py-1 rounded text-xs"
                             >
                               {page}
@@ -496,8 +523,8 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                   <div className="bg-gray-800 p-6 rounded-xl">
                     <h4 className="text-lg font-semibold text-white mb-4">Top Countries</h4>
                     <div className="space-y-3">
-                      {visitorData.countries.slice(0, 5).map((country: string, idx: number) => {
-                        const countryVisitors = realTimeVisitors.filter((v: any) => v.country === country).length;
+                      {visitorData.countries.slice(0, 5).map((country) => {
+                        const countryVisitors = realTimeVisitors.filter(v => v.country === country).length;
                         return (
                           <div key={country} className="flex items-center justify-between">
                             <span className="text-gray-300">{country}</span>
@@ -514,19 +541,19 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                   <div className="grid grid-cols-3 gap-4">
                     <div className="text-center">
                       <p className="text-2xl font-bold text-purple-400">
-                        {realTimeVisitors.filter((v: any) => v.device === 'Mobile').length}
+                        {realTimeVisitors.filter(v => v.device === 'Mobile').length}
                       </p>
                       <p className="text-gray-400 text-sm">Mobile</p>
                     </div>
                     <div className="text-center">
                       <p className="text-2xl font-bold text-blue-400">
-                        {realTimeVisitors.filter((v: any) => v.device === 'Desktop').length}
+                        {realTimeVisitors.filter(v => v.device === 'Desktop').length}
                       </p>
                       <p className="text-gray-400 text-sm">Desktop</p>
                     </div>
                     <div className="text-center">
                       <p className="text-2xl font-bold text-green-400">
-                        {realTimeVisitors.filter((v: any) => v.isActive).length}
+                        {realTimeVisitors.filter(v => v.isActive).length}
                       </p>
                       <p className="text-gray-400 text-sm">Active Now</p>
                     </div>
@@ -546,8 +573,8 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                       <p className="text-gray-400">No banned IPs</p>
                     ) : (
                       <div className="space-y-2">
-                        {bannedIPs.map((banned, index) => (
-                          <div key={index} className="flex items-center justify-between bg-gray-700 p-3 rounded">
+                        {bannedIPs.map((banned) => (
+                          <div key={banned.ip} className="flex items-center justify-between bg-gray-700 p-3 rounded">
                             <div>
                               <span className="text-white font-mono">{banned.ip}</span>
                               <span className="text-gray-400 text-sm ml-2">
