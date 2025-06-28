@@ -30,12 +30,43 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
   const [bannedIPs, setBannedIPs] = useState<any[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
 
+  const unreadMessagesCount = messages.filter(m => m.status === 'unread').length;
+
   const tabs = [
-    { id: 'dashboard', name: 'Dashboard', icon: <BarChart3 className="w-4 h-4" /> },
-    { id: 'messages', name: 'Messages', icon: <Eye className="w-4 h-4" /> },
-    { id: 'visitors', name: 'Visitors', icon: <Users className="w-4 h-4" /> },
-    { id: 'analytics', name: 'Analytics', icon: <Globe className="w-4 h-4" /> },
-    { id: 'security', name: 'Security', icon: <Shield className="w-4 h-4" /> },
+    { 
+      id: 'dashboard', 
+      name: 'Dashboard', 
+      icon: <BarChart3 className="w-4 h-4" /> 
+    },
+    { 
+      id: 'messages', 
+      name: 'Messages', 
+      icon: (
+        <div className="relative">
+          <Eye className="w-4 h-4" />
+          {unreadMessagesCount > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+              {unreadMessagesCount}
+            </span>
+          )}
+        </div>
+      ) 
+    },
+    { 
+      id: 'visitors', 
+      name: 'Visitors', 
+      icon: <Users className="w-4 h-4" /> 
+    },
+    { 
+      id: 'analytics', 
+      name: 'Analytics', 
+      icon: <Globe className="w-4 h-4" /> 
+    },
+    { 
+      id: 'security', 
+      name: 'Security', 
+      icon: <Shield className="w-4 h-4" /> 
+    },
   ];
 
   const fetchMessages = async () => {
@@ -178,7 +209,12 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                   }`}
                 >
                   {tab.icon}
-                  <span>{tab.name}</span>
+                  <span className="flex-1">{tab.name}</span>
+                  {tab.id === 'messages' && unreadMessagesCount > 0 && (
+                    <span className="bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                      {unreadMessagesCount}
+                    </span>
+                  )}
                 </button>
               ))}
             </nav>
@@ -216,9 +252,16 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-gray-400 text-sm">New Messages</p>
-                        <p className="text-2xl font-bold text-white">{messages.filter(m => m.status === 'unread').length}</p>
+                        <p className="text-2xl font-bold text-white">{unreadMessagesCount}</p>
                       </div>
-                      <Users className="w-8 h-8 text-blue-400" />
+                      <div className="relative">
+                        <Users className="w-8 h-8 text-blue-400" />
+                        {unreadMessagesCount > 0 && (
+                          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                            {unreadMessagesCount}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
                   
@@ -266,7 +309,14 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
             {activeTab === 'messages' && (
               <div className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-bold text-white">Contact Messages ({messages.length})</h3>
+                  <h3 className="text-xl font-bold text-white">
+                    Contact Messages ({messages.length})
+                    {unreadMessagesCount > 0 && (
+                      <span className="ml-2 bg-red-500 text-white text-sm rounded-full px-2 py-1">
+                        {unreadMessagesCount} unread
+                      </span>
+                    )}
+                  </h3>
                   <button
                     onClick={() => downloadData('messages')}
                     className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors duration-300"
