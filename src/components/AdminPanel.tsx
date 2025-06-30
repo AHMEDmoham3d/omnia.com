@@ -884,7 +884,6 @@
 // ********************
 
 
-
 import React, { useState, useEffect } from 'react';
 import { X, Users, Globe, Clock, Download, Trash2, Ban, UserCheck, Eye, BarChart3, Shield, MapPin, Lock } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
@@ -893,7 +892,7 @@ const supabaseUrl = 'https://mldvuzkrcjnltzgwtpfc.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZHZ1emtyY2pubHR6Z3d0cGZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5Mjg4MjYsImV4cCI6MjA2NjUwNDgyNn0.idcUACM1z8IPkYdpV-oT_R1jZexmC25W7IMZaFvooUc';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// تعريف الأنواع
+// Type definitions
 interface Message {
   id: number;
   created_at: string;
@@ -991,18 +990,33 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
     },
   ];
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError('');
     
-    // بيانات تسجيل الدخول الثابتة
-    const correctEmail = 'omniaAbdo@gmail.com';
-    const correctPassword = '123456789Omnia';
-    
-    if (email === correctEmail && password === correctPassword) {
+    try {
+      // Check if email exists in the admins table
+      const { data: adminData, error: adminError } = await supabase
+        .from('admins')
+        .select('*')
+        .eq('email', email)
+        .single();
+
+      if (adminError || !adminData) {
+        setLoginError('Invalid email or password');
+        return;
+      }
+
+      // Verify password (in a real app, you would use proper password hashing)
+      if (password !== adminData.password) {
+        setLoginError('Invalid email or password');
+        return;
+      }
+
       setIsLoggedIn(true);
-    } else {
-      setLoginError('Invalid email or password');
+    } catch (error) {
+      console.error('Login error:', error);
+      setLoginError('An error occurred during login');
     }
   };
 
@@ -1385,7 +1399,7 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                               onClick={() => handleDeleteMessage(message.id)}
                               className="text-red-400 hover:text-red-300"
                               title="Delete Message"
-                            >
+                              >
                               <Trash2 className="w-4 h-4" />
                             </button>
                           </div>
@@ -1623,3 +1637,4 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
 };
 
 export default AdminPanel;
+    // OmniaAbdoTheFirstAdmin@gmail.com,
