@@ -878,10 +878,6 @@
 
 // export default AdminPanel;
 
-// ********************
-// ********************
-// ********************
-// ********************
 
 import React, { useState, useEffect } from 'react';
 import { X, Users, Globe, Clock, Download, Trash2, Ban, UserCheck, Eye, BarChart3, Shield, MapPin, Lock } from 'lucide-react';
@@ -891,6 +887,7 @@ const supabaseUrl = 'https://mldvuzkrcjnltzgwtpfc.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZHZ1emtyY2pubHR6Z3d0cGZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5Mjg4MjYsImV4cCI6MjA2NjUwNDgyNn0.idcUACM1z8IPkYdpV-oT_R1jZexmC25W7IMZaFvooUc';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+// تعريف الأنواع
 interface Message {
   id: number;
   created_at: string;
@@ -946,6 +943,7 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<number | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
 
   const unreadMessagesCount = messages.filter(m => m.status === 'unread').length;
@@ -987,76 +985,20 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
     },
   ];
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError('');
     
-    try {
-      // Attempt to sign in with OTP
-      const { error: signInError } = await supabase.auth.signInWithOtp({
-        email: email,
-        options: {
-          emailRedirectTo: window.location.origin
-        }
-      });
-
-      if (signInError) throw signInError;
-
-      // Verify access by trying to fetch messages
-      const { error: messagesError } = await supabase
-        .from('messages')
-        .select('*')
-        .limit(1);
-
-      if (messagesError) throw new Error('Unauthorized email');
-
-      setIsLoggedIn(true);
-    } catch (error) {
-      setLoginError(error instanceof Error ? error.message : 'An unknown error occurred');
-    }
-  };
-
-  const checkAuth = async () => {
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
-    if (userError || !user) {
-      setIsLoggedIn(false);
-      return;
-    }
-
-    try {
-      const { error } = await supabase
-        .from('messages')
-        .select('*')
-        .limit(1);
-
-      if (error) {
-        setIsLoggedIn(false);
-        await supabase.auth.signOut();
-      } else {
-        setIsLoggedIn(true);
-        setEmail(user.email || '');
-      }
-    } catch {
-      setIsLoggedIn(false);
-      await supabase.auth.signOut();
-    }
-  };
-
-
-  useEffect(() => {
-    checkAuth();
+    // بيانات تسجيل الدخول الثابتة
+    const correctEmail = 'omniaAbdo@gmail.com';
+    const correctPassword = '123456789Omnia';
     
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-      if (event === 'SIGNED_IN') {
-        checkAuth();
-      }
-      if (event === 'SIGNED_OUT') {
-        setIsLoggedIn(false);
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
+    if (email === correctEmail && password === correctPassword) {
+      setIsLoggedIn(true);
+    } else {
+      setLoginError('Invalid email or password');
+    }
+  };
 
   const fetchMessages = async () => {
     const { data, error } = await supabase
@@ -1067,7 +1009,7 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
     if (!error && data) {
       setMessages(data as Message[]);
     } else {
-      console.error("Failed to fetch messages:", error);
+      console.error("❌ Failed to fetch messages:", error);
     }
   };
 
@@ -1117,7 +1059,7 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
         msg.id === id ? { ...msg, status: 'read' } : msg
       ));
     } else {
-      console.error("Failed to update message:", error);
+      console.error("❌ Failed to update message:", error);
     }
   };
 
@@ -1134,7 +1076,7 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
     if (!error) {
       setMessages(messages.filter(msg => msg.id !== id));
     } else {
-      console.error("Failed to delete message:", error);
+      console.error("❌ Failed to delete message:", error);
     }
     setShowDeleteConfirm(null);
   };
@@ -1184,7 +1126,7 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
         <div className="bg-gray-900 rounded-2xl p-8 w-full max-w-md border border-gray-700">
           <div className="flex flex-col items-center mb-6">
             <Lock className="w-12 h-12 text-purple-500 mb-4" />
-            <h2 className="text-2xl font-bold text-white">Admin Verification</h2>
+            <h2 className="text-2xl font-bold text-white">Admin Login</h2>
           </div>
           
           <form onSubmit={handleLogin} className="space-y-6">
@@ -1195,7 +1137,7 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
             )}
             
             <div>
-              <label htmlFor="email" className="block text-gray-400 mb-2">Admin Email</label>
+              <label htmlFor="email" className="block text-gray-400 mb-2">Email</label>
               <input
                 id="email"
                 type="email"
@@ -1203,7 +1145,18 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                 required
-                placeholder="Enter admin email"
+              />
+            </div>
+            
+            <div>
+              <label htmlFor="password" className="block text-gray-400 mb-2">Password</label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                required
               />
             </div>
             
@@ -1212,7 +1165,7 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
               className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-colors duration-300 flex items-center justify-center"
             >
               <Lock className="w-4 h-4 mr-2" />
-              Verify Email
+              Login
             </button>
           </form>
         </div>
@@ -1222,6 +1175,7 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
 
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      {/* Delete Confirmation Modal */}
       {showDeleteConfirm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-gray-800 p-6 rounded-xl max-w-md w-full">
@@ -1246,6 +1200,7 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
       )}
 
       <div className="bg-gray-900 rounded-2xl w-full max-w-7xl h-[90vh] overflow-hidden border border-gray-700">
+        {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-700">
           <h2 className="text-2xl font-bold text-white">Omnia Admin Dashboard</h2>
           <button
@@ -1257,6 +1212,7 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
         </div>
 
         <div className="flex h-full">
+          {/* Sidebar */}
           <div className="w-64 bg-gray-800 border-r border-gray-700 p-4">
             <nav className="space-y-2">
               {tabs.map((tab) => (
@@ -1281,11 +1237,13 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
             </nav>
           </div>
 
+          {/* Main Content */}
           <div className="flex-1 overflow-y-auto">
             {activeTab === 'dashboard' && (
               <div className="p-6">
                 <h3 className="text-xl font-bold text-white mb-6">Real-Time Overview</h3>
                 
+                {/* Stats Grid */}
                 <div className="grid grid-cols-4 gap-6 mb-8">
                   <div className="bg-gray-800 p-6 rounded-xl">
                     <div className="flex items-center justify-between">
@@ -1335,6 +1293,7 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                   </div>
                 </div>
 
+                {/* Quick Actions */}
                 <div className="bg-gray-800 p-6 rounded-xl">
                   <h4 className="text-lg font-semibold text-white mb-4">Quick Actions</h4>
                   <div className="flex space-x-4">
@@ -1658,3 +1617,58 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
 };
 
 export default AdminPanel;
+// // export default AdminPanel;
+// import { useEffect, useState } from 'react';
+// import { createClient } from '@supabase/supabase-js';
+
+// // تعريف نوع الرسالة
+// interface Message {
+//   id: number;
+//   created_at: string;
+//   name: string;
+//   email: string;
+//   whatsapp: string;
+//   message: string;
+// }
+
+// const supabase = createClient(
+//   'https://mldvuzkrcjnltzgwtpfc.supabase.co',
+//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZHZ1emtyY2pubHR6Z3d0cGZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5Mjg4MjYsImV4cCI6MjA2NjUwNDgyNn0.idcUACM1z8IPkYdpV-oT_R1jZexmC25W7IMZaFvooUc'
+// );
+
+// export default function MessagesTest() {
+//   const [messages, setMessages] = useState<Message[]>([]);
+
+//   useEffect(() => {
+//     const fetchMessages = async () => {
+//       const { data, error } = await supabase.from('messages').select('*');
+
+//       if (error) {
+//         console.error('❌ Fetch error:', error.message);
+//       } else if (data) {
+//         setMessages(data as Message[]); // تأكيد أن البيانات من نوع Message[]
+//       }
+//     };
+
+//     fetchMessages();
+//   }, []);
+
+//   return (
+//     <div style={{ padding: '2rem', fontFamily: 'Arial, sans-serif' }}>
+//       <h2>📬 Messages:</h2>
+//       {messages.length === 0 ? (
+//         <p>No messages found.</p>
+//       ) : (
+//         messages.map((msg) => (
+//           <div key={msg.id} style={{ marginBottom: '1rem', border: '1px solid #ccc', padding: '1rem', borderRadius: '8px' }}>
+//             <p><strong>Name:</strong> {msg.name}</p>
+//             <p><strong>Email:</strong> {msg.email}</p>
+//             <p><strong>WhatsApp:</strong> {msg.whatsapp}</p>
+//             <p><strong>Message:</strong> {msg.message}</p>
+//             <p style={{ fontSize: '0.8rem', color: 'gray' }}>Sent: {new Date(msg.created_at).toLocaleString()}</p>
+//           </div>
+//         ))
+//       )}
+//     </div>
+//   );
+// }
