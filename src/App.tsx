@@ -13,6 +13,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import AdminPanel from './components/AdminPanel';
 import ParticleBackground from './components/ParticleBackground';
+import Blog from './Blog';
 
 function App() {
   const [visitorData, setVisitorData] = useState({
@@ -225,6 +226,7 @@ function App() {
                 <Hero />
                 <About />
                 <Services />
+                <Route path="/blog" element={<Blog />} />
                 <Contact onMessageSent={handleNewMessage} />
                 <Footer />
               </>
