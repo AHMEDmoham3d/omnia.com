@@ -13,6 +13,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import AdminPanel from './components/AdminPanel';
 import ParticleBackground from './components/ParticleBackground';
+import ParticleBackground from './components/blog';
 
 function App() {
   const [visitorData, setVisitorData] = useState({
