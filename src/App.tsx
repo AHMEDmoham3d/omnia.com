@@ -13,7 +13,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import AdminPanel from './components/AdminPanel';
 import ParticleBackground from './components/ParticleBackground';
-import Blog from './components/Blog';
+import Blog from './components/Blog'; // ✅ موجود
 
 function App() {
   const [visitorData, setVisitorData] = useState({
@@ -34,7 +34,6 @@ function App() {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    // Block right-click, copy, paste, and inspect tools
     const disableSecurityRisks = () => {
       document.addEventListener('contextmenu', e => e.preventDefault());
       document.addEventListener('keydown', e => {
@@ -231,6 +230,7 @@ function App() {
               </>
             }
           />
+
           <Route
             path="/omnia-admin-zx9H2k-4t93p"
             element={
@@ -242,6 +242,9 @@ function App() {
               />
             }
           />
+
+          {/* ✅ Blog route added here */}
+          <Route path="/blog" element={<Blog />} />
         </Routes>
       </div>
     </Router>
