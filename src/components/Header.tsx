@@ -61,6 +61,17 @@ const Header = () => {
               Blog
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 group-hover:w-full transition-all duration-300"></span>
             </Link>
+
+            {/* External Link */}
+            <a
+              href="https://www.google.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium relative group"
+            >
+              Google
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 group-hover:w-full transition-all duration-300"></span>
+            </a>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -95,6 +106,17 @@ const Header = () => {
               >
                 Blog
               </Link>
+
+              {/* External link for mobile */}
+              <a
+                href="https://www.google.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Google
+              </a>
             </nav>
           </div>
         )}
