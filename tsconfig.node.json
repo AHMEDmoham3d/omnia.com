@@ -18,5 +18,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["vite.config.ts"]
+  "include": [
+    "src", // ✅ أضف هذا السطر
+    "vite.config.ts"
+  ]
 }
