@@ -13,7 +13,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import AdminPanel from './components/AdminPanel';
 import ParticleBackground from './components/ParticleBackground';
-import Blog from './Blog';
+import BlogPage from './BlogPage'; // ✅ تم إضافته هنا
 
 function App() {
   const [visitorData, setVisitorData] = useState({
@@ -230,7 +230,10 @@ function App() {
               </>
             }
           />
-          <Route path="/Blog" element={<Blog />} />
+          {/* ✅ مسار صفحة البلوج الجديدة */}
+          <Route path="/blog" element={<BlogPage />} />
+
+          {/* صفحة الأدمن */}
           <Route
             path="/omnia-admin-zx9H2k-4t93p"
             element={
