@@ -214,24 +214,26 @@ function App() {
   };
 
   return (
-    <Router>
+   <Router>
       <div className="min-h-screen bg-gray-900 text-white overflow-x-hidden">
+        {/* Header يظهر دائمًا */}
+        <Header />
+
         <Routes>
           <Route
             path="/"
             element={
               <>
                 <ParticleBackground />
-                <Header />
                 <Hero />
                 <About />
                 <Services />
-                <Route path="/blog" element={<Blog />} />
                 <Contact onMessageSent={handleNewMessage} />
                 <Footer />
               </>
             }
           />
+
           <Route
             path="/omnia-admin-zx9H2k-4t93p"
             element={
