@@ -18,7 +18,8 @@ const Header = () => {
     { name: 'About', href: '#about' },
     { name: 'Services', href: '#services' },
     { name: 'Contact', href: '#contact' },
-    { name: 'Google', href: 'https://www.google.com' }, // ✅ Google link
+      { name: 'Google', href: 'https://www.google.com' } // فقط Google
+
   ];
 
   return (
