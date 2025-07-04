@@ -34,7 +34,6 @@ function App() {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    // Block right-click, copy, paste, and inspect tools
     const disableSecurityRisks = () => {
       document.addEventListener('contextmenu', e => e.preventDefault());
       document.addEventListener('keydown', e => {
@@ -226,12 +225,12 @@ function App() {
                 <Hero />
                 <About />
                 <Services />
-                <Route path="/Blog" element={<Blog />} />
                 <Contact onMessageSent={handleNewMessage} />
                 <Footer />
               </>
             }
           />
+          <Route path="/Blog" element={<Blog />} />
           <Route
             path="/omnia-admin-zx9H2k-4t93p"
             element={
