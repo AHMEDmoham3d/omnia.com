@@ -226,7 +226,7 @@ function App() {
                 <Hero />
                 <About />
                 <Services />
-                <Route path="/blog" element={<Blog />} />
+                <Route path="/Blog" element={<Blog />} />
                 <Contact onMessageSent={handleNewMessage} />
                 <Footer />
               </>
