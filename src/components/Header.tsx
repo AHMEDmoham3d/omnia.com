@@ -13,9 +13,12 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // ✅ فقط العناصر اللي عايزها تظهر
   const navItems = [
-    { name: 'Google', href: 'https://www.google.com' }
+    { name: 'Home', href: '#home' },
+    { name: 'About', href: '#about' },
+    { name: 'Services', href: '#services' },
+    { name: 'Contact', href: '#contact' },
+    { name: 'Google', href: 'https://www.google.com' }, // ✅ Google link
   ];
 
   return (
@@ -38,18 +41,29 @@ const Header = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-6">
-          {navItems.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium relative group"
-            >
-              {item.name}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 group-hover:w-full transition-all duration-300"></span>
-            </a>
-          ))}
+          {navItems.map((item) =>
+            item.href.startsWith('http') ? (
+              <a
+                key={item.name}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium relative group"
+              >
+                {item.name}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 group-hover:w-full transition-all duration-300"></span>
+              </a>
+            ) : (
+              <a
+                key={item.name}
+                href={item.href}
+                className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium relative group"
+              >
+                {item.name}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 group-hover:w-full transition-all duration-300"></span>
+              </a>
+            )
+          )}
         </nav>
 
         {/* Mobile Menu Button */}
@@ -65,18 +79,29 @@ const Header = () => {
       {isMenuOpen && (
         <div className="md:hidden mt-2 pb-4 border-t border-gray-700">
           <nav className="flex flex-col space-y-4 pt-4 px-4">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.name}
-              </a>
-            ))}
+            {navItems.map((item) =>
+              item.href.startsWith('http') ? (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </a>
+              )
+            )}
           </nav>
         </div>
       )}
