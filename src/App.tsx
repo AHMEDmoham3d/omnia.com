@@ -13,7 +13,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import AdminPanel from './components/AdminPanel';
 import ParticleBackground from './components/ParticleBackground';
-import BlogPage from './BlogPage';
+import BlogPage from './BlogPage.tsx';
 
 function App() {
   const [visitorData, setVisitorData] = useState({
