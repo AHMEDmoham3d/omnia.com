@@ -19,7 +19,7 @@ const Header = () => {
     { name: 'About', href: '#about' },
     { name: 'Services', href: '#services' },
     { name: 'Contact', href: '#contact' },
-    { name: 'Courses', action: () => setShowModal(true) }, // ✅ Courses with modal
+    { name: 'Courses', action: () => setShowModal(true) },
   ];
 
   return (
@@ -110,18 +110,40 @@ const Header = () => {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
-          <div className="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
-            <h2 className="text-xl font-semibold text-white mb-4">We're working on it!</h2>
-            <p className="text-gray-300 mb-6">Courses are coming soon. Stay tuned!</p>
-            <button
-              onClick={() => setShowModal(false)}
-              className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded"
-            >
-              Close
-            </button>
+          <div className="bg-gradient-to-br from-blue-900 to-purple-900 text-white p-8 rounded-2xl shadow-2xl w-[90%] max-w-md animate-fade-in">
+            <div className="flex flex-col items-center space-y-4">
+              <Sparkles className="w-12 h-12 text-purple-300 animate-pulse" />
+              <h2 className="text-2xl font-bold text-center">We're working on it!</h2>
+              <p className="text-center text-gray-200">
+                Our Courses section is under development.<br /> Stay tuned!
+              </p>
+              <button
+                onClick={() => setShowModal(false)}
+                className="mt-4 px-5 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-600 hover:to-purple-600 transition duration-300"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}
+
+      {/* Modal Animation Style */}
+      <style>{`
+        .animate-fade-in {
+          animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </>
   );
 };
