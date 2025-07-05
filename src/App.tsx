@@ -14,8 +14,58 @@ import Footer from './components/Footer';
 import AdminPanel from './components/AdminPanel';
 import ParticleBackground from './components/ParticleBackground';
 
+// Interfaces
+interface Visitor {
+  id: string;
+  ip: string;
+  country: string;
+  city: string;
+  region: string;
+  timezone: string;
+  isp: string;
+  device: string;
+  browser: string;
+  screenResolution: string;
+  language: string;
+  visitTime: string;
+  pageViews: string[];
+  timeOnSite: number;
+  isActive: boolean;
+  lastActivity: string;
+}
+
+interface Message {
+  id: number;
+  name: string;
+  email: string;
+  content: string;
+  timestamp: string;
+  status: string;
+  ip: string;
+}
+
+interface IPData {
+  ip: string;
+}
+
+interface LocationData {
+  country_name?: string;
+  city?: string;
+  region?: string;
+  timezone?: string;
+  org?: string;
+}
+
 function App() {
-  const [visitorData, setVisitorData] = useState({
+  const [visitorData, setVisitorData] = useState<{
+    totalVisitors: number;
+    uniqueVisitors: number;
+    todayVisitors: number;
+    countries: string[];
+    cities: string[];
+    pageViews: { [key: string]: number };
+    realTimeVisitors: Visitor[];
+  }>({
     totalVisitors: 0,
     uniqueVisitors: 0,
     todayVisitors: 0,
@@ -30,13 +80,13 @@ function App() {
     realTimeVisitors: []
   });
 
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
-    // Block right-click, copy, paste, and inspect tools
+    // Disable right click and dev tools
     const disableSecurityRisks = () => {
-      document.addEventListener('contextmenu', e => e.preventDefault());
-      document.addEventListener('keydown', e => {
+      document.addEventListener('contextmenu', (e: MouseEvent) => e.preventDefault());
+      document.addEventListener('keydown', (e: KeyboardEvent) => {
         if (
           e.key === 'F12' ||
           (e.ctrlKey && e.shiftKey && ['I', 'C', 'J'].includes(e.key.toUpperCase())) ||
@@ -53,20 +103,21 @@ function App() {
     const trackRealVisitor = async () => {
       try {
         const ipResponse = await fetch('https://api.ipify.org?format=json');
-        const ipData = await ipResponse.json();
+        const ipData = await ipResponse.json() as IPData;
+
         const locationResponse = await fetch(`https://ipapi.co/${ipData.ip}/json/`);
-        const locationData = await locationResponse.json();
+        const locationData = await locationResponse.json() as LocationData;
 
         const visitorId = btoa(
           ipData.ip +
-          (typeof navigator !== 'undefined' ? navigator.userAgent : '') +
-          (typeof screen !== 'undefined' ? screen.width + screen.height : '')
+          navigator.userAgent +
+          screen.width + screen.height
         );
 
-        const existingData = JSON.parse(localStorage.getItem('omnia_secure_visitors') || '[]');
-        const isUniqueVisitor = !existingData.find((v: { id: string }) => v.id === visitorId);
+        const existingData: Visitor[] = JSON.parse(localStorage.getItem('omnia_secure_visitors') || '[]');
+        const isUniqueVisitor = !existingData.find((v) => v.id === visitorId);
 
-        const visitorInfo = {
+        const visitorInfo: Visitor = {
           id: visitorId,
           ip: ipData.ip,
           country: locationData.country_name || 'Unknown',
@@ -85,9 +136,9 @@ function App() {
           lastActivity: new Date().toISOString()
         };
 
-        const updatedVisitors = isUniqueVisitor
+        const updatedVisitors: Visitor[] = isUniqueVisitor
           ? [...existingData, visitorInfo]
-          : existingData.map((v: any) =>
+          : existingData.map((v) =>
               v.id === visitorId
                 ? { ...v, visitTime: new Date().toISOString(), lastActivity: new Date().toISOString(), isActive: true }
                 : v
@@ -96,12 +147,12 @@ function App() {
         localStorage.setItem('omnia_secure_visitors', JSON.stringify(updatedVisitors));
 
         const today = new Date().toDateString();
-        const todayVisitors = updatedVisitors.filter((v: any) =>
-          new Date(v.visitTime).toDateString() === today
+        const todayVisitors = updatedVisitors.filter(
+          (v) => new Date(v.visitTime).toDateString() === today
         ).length;
 
-        const uniqueCountries = [...new Set(updatedVisitors.map((v: any) => v.country))];
-        const uniqueCities = [...new Set(updatedVisitors.map((v: any) => v.city))];
+        const uniqueCountries = [...new Set(updatedVisitors.map((v) => v.country))];
+        const uniqueCities = [...new Set(updatedVisitors.map((v) => v.city))];
 
         setVisitorData({
           totalVisitors: updatedVisitors.length,
@@ -110,12 +161,12 @@ function App() {
           countries: uniqueCountries,
           cities: uniqueCities,
           pageViews: {
-            home: updatedVisitors.reduce((acc: number, v: any) => acc + (v.pageViews.includes('home') ? 1 : 0), 0),
-            services: updatedVisitors.reduce((acc: number, v: any) => acc + (v.pageViews.includes('services') ? 1 : 0), 0),
-            about: updatedVisitors.reduce((acc: number, v: any) => acc + (v.pageViews.includes('about') ? 1 : 0), 0),
-            contact: updatedVisitors.reduce((acc: number, v: any) => acc + (v.pageViews.includes('contact') ? 1 : 0), 0)
+            home: updatedVisitors.reduce((acc, v) => acc + (v.pageViews.includes('home') ? 1 : 0), 0),
+            services: updatedVisitors.reduce((acc, v) => acc + (v.pageViews.includes('services') ? 1 : 0), 0),
+            about: updatedVisitors.reduce((acc, v) => acc + (v.pageViews.includes('about') ? 1 : 0), 0),
+            contact: updatedVisitors.reduce((acc, v) => acc + (v.pageViews.includes('contact') ? 1 : 0), 0)
           },
-          realTimeVisitors: updatedVisitors.filter((v: any) => v.isActive)
+          realTimeVisitors: updatedVisitors.filter((v) => v.isActive)
         });
       } catch (error) {
         console.error('Error tracking visitor:', error);
@@ -128,11 +179,11 @@ function App() {
     let currentPage = 'home';
 
     const trackPageView = (page: string) => {
-      const visitors = JSON.parse(localStorage.getItem('omnia_secure_visitors') || '[]');
+      const visitors: Visitor[] = JSON.parse(localStorage.getItem('omnia_secure_visitors') || '[]');
       const currentVisitorId = visitors[visitors.length - 1]?.id;
 
       if (currentVisitorId) {
-        const updatedVisitors = visitors.map((v: any) => {
+        const updatedVisitors = visitors.map((v) => {
           if (v.id === currentVisitorId) {
             const updatedPageViews = [...new Set([...v.pageViews, page])];
             return { ...v, pageViews: updatedPageViews, lastActivity: new Date().toISOString() };
@@ -162,12 +213,12 @@ function App() {
     };
 
     const handleVisibilityChange = () => {
-      const visitors = JSON.parse(localStorage.getItem('omnia_secure_visitors') || '[]');
+      const visitors: Visitor[] = JSON.parse(localStorage.getItem('omnia_secure_visitors') || '[]');
       const currentVisitorId = visitors[visitors.length - 1]?.id;
 
       if (document.hidden && currentVisitorId) {
         const timeSpent = Date.now() - startTime;
-        const updatedVisitors = visitors.map((v: any) => {
+        const updatedVisitors = visitors.map((v) => {
           if (v.id === currentVisitorId) {
             return {
               ...v,
@@ -194,12 +245,12 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const savedMessages = JSON.parse(localStorage.getItem('omnia_secure_messages') || '[]');
+    const savedMessages: Message[] = JSON.parse(localStorage.getItem('omnia_secure_messages') || '[]');
     setMessages(savedMessages);
   }, []);
 
-  const handleNewMessage = (messageData: any) => {
-    const newMessage = {
+  const handleNewMessage = (messageData: Omit<Message, 'id' | 'timestamp' | 'status' | 'ip'>) => {
+    const newMessage: Message = {
       id: Date.now(),
       ...messageData,
       timestamp: new Date().toISOString(),
@@ -213,9 +264,8 @@ function App() {
   };
 
   return (
-   <Router>
+    <Router>
       <div className="min-h-screen bg-gray-900 text-white overflow-x-hidden">
-        {/* Header يظهر دائمًا */}
         <Header />
 
         <Routes>
