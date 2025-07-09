@@ -2,25 +2,101 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Blog</title>
-  <link rel="stylesheet" href="blog-style.css" />
+  <title>Healing Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #13182A;
+      color: white;
+      overflow-x: hidden;
+      position: relative;
+      z-index: 1;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      opacity: 0.3;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      margin: 100px auto 50px auto;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: #a855f7;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    article {
+      background-color: #1F2937;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      animation: fade-in 1s ease-out;
+    }
+
+    article h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: #f472b6;
+      margin-bottom: 1rem;
+    }
+
+    article p {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: #e5e7eb;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
-<body style="background-color: #13182A;" class="text-white font-sans p-8">
+<body>
 
-  <canvas id="particles-canvas" style="position:fixed; inset:0; z-index:-1; opacity:0.3;"></canvas>
+  <!-- Background Canvas -->
+  <canvas id="particles-canvas"></canvas>
 
-  <h1 class="text-4xl font-bold text-purple-400 mb-8">Blog Articles</h1>
+  <!-- Main Content -->
+  <div class="container">
+    <h1>Healing Sessions & Your Mind</h1>
+    <article>
+      <h2>The Profound Impact of Healing Sessions on Focus, Productivity, and Perspective</h2>
+      <p>
+        Healing sessions offer more than just spiritual alignment—they are a gateway to mental clarity, emotional balance, and increased productivity. In a world filled with distractions and stress, healing helps calm the mind and bring focus back to the present moment.
+      </p>
+      <p>
+        Through practices like energy balancing and breathwork, these sessions help unlock internal blocks that often hold us back from our highest potential. By regularly engaging in healing, individuals find themselves more active, better able to manage stress, and far more equipped to handle daily tasks with intention.
+      </p>
+      <p>
+        One of the most profound effects of healing is the ability to see life from a renewed perspective. The noise of everyday life fades, allowing clarity, positivity, and confidence to take its place. It’s not just about inner peace—it’s about unlocking your power to thrive in both personal and professional life.
+      </p>
+    </article>
+  </div>
 
-  <article class="bg-gray-800 p-6 rounded-xl shadow-lg">
-    <h2 class="text-2xl font-semibold text-pink-400 mb-2">The Power of Energy Healing</h2>
-    <p>Energy healing activates the body’s subtle energy systems to remove blocks and allow self-healing.</p>
-  </article>
-
-  <article class="bg-gray-800 p-6 rounded-xl shadow-lg">
-    <h2 class="text-2xl font-semibold text-pink-400 mb-2">Spiritual Awakening Signs</h2>
-    <p>Awakening signs include emotional shifts, increased awareness, and a stronger connection to the universe.</p>
-  </article>
-
+  <!-- Particle Background Script -->
   <script>
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
@@ -29,11 +105,9 @@
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
-
     setCanvasSize();
 
     const particles = [];
-
     for (let i = 0; i < 100; i++) {
       particles.push({
         x: Math.random() * canvas.width,
@@ -56,9 +130,6 @@
 
         if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
         if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-        p.x = Math.max(0, Math.min(canvas.width, p.x));
-        p.y = Math.max(0, Math.min(canvas.height, p.y));
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
