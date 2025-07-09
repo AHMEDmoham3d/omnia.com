@@ -5,7 +5,7 @@
   <title>Blog</title>
   <link rel="stylesheet" href="blog-style.css" />
 </head>
-<body class="bg-gray-900 text-white font-sans p-8">
+<body style="background-color: #13182A;" class="text-white font-sans p-8">
 
   <canvas id="particles-canvas" style="position:fixed; inset:0; z-index:-1; opacity:0.3;"></canvas>
 
@@ -20,77 +20,74 @@
     <h2 class="text-2xl font-semibold text-pink-400 mb-2">Spiritual Awakening Signs</h2>
     <p>Awakening signs include emotional shifts, increased awareness, and a stronger connection to the universe.</p>
   </article>
-  <canvas id="particles-canvas" style="position:fixed; inset:0; z-index:-1; opacity:0.3;"></canvas>
 
-<script>
-  const canvas = document.getElementById('particles-canvas');
-  const ctx = canvas.getContext('2d');
+  <script>
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
 
-  const setCanvasSize = () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  };
+    const setCanvasSize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
 
-  setCanvasSize();
+    setCanvasSize();
 
-  const particles = [];
+    const particles = [];
 
-  for (let i = 0; i < 100; i++) {
-    particles.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      size: Math.random() * 2 + 0.5,
-      opacity: Math.random() * 0.6 + 0.2,
-      hue: Math.random() * 60 + 270
-    });
-  }
-
-  function animate() {
-    ctx.fillStyle = 'rgba(17, 24, 39, 0.05)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    particles.forEach((p, i) => {
-      p.x += p.vx;
-      p.y += p.vy;
-
-      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-      p.x = Math.max(0, Math.min(canvas.width, p.x));
-      p.y = Math.max(0, Math.min(canvas.height, p.y));
-
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      ctx.fillStyle = `hsla(${p.hue}, 70%, 60%, ${p.opacity})`;
-      ctx.fill();
-
-      particles.forEach((other, j) => {
-        if (i !== j) {
-          const dx = p.x - other.x;
-          const dy = p.y - other.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 100) {
-            const opacity = (1 - dist / 100) * 0.2;
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(other.x, other.y);
-            ctx.strokeStyle = `hsla(${p.hue}, 70%, 60%, ${opacity})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
+    for (let i = 0; i < 100; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        size: Math.random() * 2 + 0.5,
+        opacity: Math.random() * 0.6 + 0.2,
+        hue: Math.random() * 60 + 270
       });
-    });
+    }
 
-    requestAnimationFrame(animate);
-  }
+    function animate() {
+      ctx.fillStyle = 'rgba(19, 24, 42, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  animate();
+      particles.forEach((p, i) => {
+        p.x += p.vx;
+        p.y += p.vy;
 
-  window.addEventListener('resize', setCanvasSize);
-</script>
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
+        p.x = Math.max(0, Math.min(canvas.width, p.x));
+        p.y = Math.max(0, Math.min(canvas.height, p.y));
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${p.hue}, 70%, 60%, ${p.opacity})`;
+        ctx.fill();
+
+        particles.forEach((other, j) => {
+          if (i !== j) {
+            const dx = p.x - other.x;
+            const dy = p.y - other.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 100) {
+              const opacity = (1 - dist / 100) * 0.2;
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(other.x, other.y);
+              ctx.strokeStyle = `hsla(${p.hue}, 70%, 60%, ${opacity})`;
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
+          }
+        });
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+    window.addEventListener('resize', setCanvasSize);
+  </script>
 </body>
 </html>
