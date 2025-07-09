@@ -84,6 +84,35 @@
       line-height: 1.8;
       color: #e5e7eb;
     }
+    .reactions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .reaction {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      transition: background 0.2s;
+    }
+    .reaction:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .reaction span.count {
+      font-size: 0.9rem;
+      color: #ffd;
+    }
+    .reaction-records {
+      margin-top: 0.75rem;
+      font-size: 0.8rem;
+      color: #ccc;
+      border-top: 1px solid #444;
+      padding-top: 0.5rem;
+    }
     @keyframes fade-in {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
@@ -91,10 +120,8 @@
   </style>
 </head>
 <body>
-  <!-- Particle Background -->
   <canvas id="particles-canvas"></canvas>
 
-  <!-- Header Menu -->
   <header>
     <a href="#healing">Healing</a>
     <a href="#tarot">Tarot</a>
@@ -102,106 +129,86 @@
   </header>
 
   <div class="container">
-    <!-- Healing Section -->
     <section id="healing">
       <h1>Healing Articles</h1>
-      <article>
+      <article data-id="healing-1">
         <h2>The Profound Impact of Healing Sessions</h2>
-        <p>Healing sessions offer more than just spiritual alignment—they are a gateway to mental clarity, emotional balance, and increased productivity. In a world filled with distractions and stress, healing helps calm the mind and bring focus back to the present moment.</p>
-        <p>Through practices like energy balancing and breathwork, these sessions help unlock internal blocks that often hold us back from our highest potential. By regularly engaging in healing, individuals find themselves more active, better able to manage stress, and far more equipped to handle daily tasks with intention.</p>
-        <p>One of the most profound effects of healing is the ability to see life from a renewed perspective. The noise of everyday life fades, allowing clarity, positivity, and confidence to take its place. It’s not just about inner peace—it’s about unlocking your power to thrive in both personal and professional life.</p>
-      </article>
-    </section>
-
-    <!-- Tarot Section -->
-    <section id="tarot">
-      <h1>Tarot Articles</h1>
-      <article>
-        <h2>Understanding Tarot Readings</h2>
-        <p>Tarot readings offer a symbolic mirror of our lives. They help us gain insight into situations, uncover subconscious patterns, and find clarity in uncertain times. Each card tells a story, and when interpreted with intuition, it becomes a powerful guide.</p>
-      </article>
-      <article>
-        <h2>How Tarot Can Empower Your Journey</h2>
-        <p>Using tarot as a daily practice can improve decision-making, reduce anxiety, and connect you to your inner voice. It’s not about predicting the future—it's about empowering you to shape it consciously and wisely.</p>
-      </article>
-    </section>
-
-    <!-- Meditation Section -->
-    <section id="meditation">
-      <h1>Meditation Articles</h1>
-      <article>
-        <h2>Why Daily Meditation Matters</h2>
-        <p>Meditation has been scientifically proven to reduce stress, improve focus, and enhance emotional regulation. A few minutes each day can transform your mental clarity and bring lasting peace of mind.</p>
-      </article>
-      <article>
-        <h2>Different Types of Meditation You Can Practice</h2>
-        <p>From mindfulness and loving-kindness to transcendental and guided meditations, there are many styles to explore. Each offers unique benefits depending on your goals—be it inner calm, healing, or awareness.</p>
+        <p>Healing sessions offer more than just spiritual alignment—they are a gateway to mental clarity, emotional balance, and increased productivity.</p>
+        <div class="reactions">
+          <div class="reaction" data-reaction="love">❤️ <span class="count">0</span></div>
+          <div class="reaction" data-reaction="think">🤔 <span class="count">0</span></div>
+          <div class="reaction" data-reaction="dislike">👎 <span class="count">0</span></div>
+        </div>
+        <div class="reaction-records"></div>
       </article>
     </section>
   </div>
 
-  <!-- Particle Background Script -->
   <script>
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
-
     const setCanvasSize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
     setCanvasSize();
 
-    const particles = [];
-    for (let i = 0; i < 100; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        size: Math.random() * 2 + 0.5,
-        opacity: Math.random() * 0.6 + 0.2,
-        hue: Math.random() * 60 + 270
-      });
-    }
+    const particles = Array.from({length: 100}, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      size: Math.random() * 2 + 0.5,
+      opacity: Math.random() * 0.6 + 0.2,
+      hue: Math.random() * 60 + 270
+    }));
 
     function animate() {
       ctx.fillStyle = 'rgba(19, 24, 42, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-
       particles.forEach((p, i) => {
-        p.x += p.vx;
-        p.y += p.vy;
+        p.x += p.vx; p.y += p.vy;
         if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
         if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = `hsla(${p.hue}, 70%, 60%, ${p.opacity})`;
         ctx.fill();
-
-        particles.forEach((other, j) => {
-          if (i !== j) {
-            const dx = p.x - other.x;
-            const dy = p.y - other.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 100) {
-              const opacity = (1 - dist / 100) * 0.2;
-              ctx.beginPath();
-              ctx.moveTo(p.x, p.y);
-              ctx.lineTo(other.x, other.y);
-              ctx.strokeStyle = `hsla(${p.hue}, 70%, 60%, ${opacity})`;
-              ctx.lineWidth = 0.5;
-              ctx.stroke();
-            }
-          }
-        });
       });
-
       requestAnimationFrame(animate);
     }
-
     animate();
     window.addEventListener('resize', setCanvasSize);
+
+    document.querySelectorAll('article').forEach(article => {
+      const id = article.dataset.id;
+      const recordsEl = article.querySelector('.reaction-records');
+      const counts = { love: 0, think: 0, dislike: 0 };
+      const reactions = JSON.parse(localStorage.getItem(id) || '[]');
+
+      reactions.forEach(r => counts[r.type]++);
+      article.querySelectorAll('.reaction').forEach(btn => {
+        const type = btn.dataset.reaction;
+        btn.querySelector('.count').textContent = counts[type];
+      });
+
+      const renderRecords = () => {
+        recordsEl.innerHTML = reactions.map(r => `${r.type.toUpperCase()} - ${r.country} (${r.time})`).join('<br>');
+      };
+      renderRecords();
+
+      article.querySelectorAll('.reaction').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const type = btn.dataset.reaction;
+          const country = prompt("Your Country:") || "Unknown";
+          const time = new Date().toLocaleString();
+          const newReaction = { type, country, time };
+          reactions.push(newReaction);
+          localStorage.setItem(id, JSON.stringify(reactions));
+          location.reload();
+        });
+      });
+    });
   </script>
 </body>
 </html>
