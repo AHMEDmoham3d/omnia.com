@@ -2,158 +2,158 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <title>Healing Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Articles</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
       margin: 0;
       padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background-color: #111827;
-      color: #e5e7eb;
       font-family: 'Inter', sans-serif;
-      line-height: 1.6;
-      padding: 2rem;
+      background-color: #13182A;
+      color: white;
       overflow-x: hidden;
-      animation: fade-in 1s ease-out;
     }
-
-    h1, h2, h3, h4, h5, h6 {
-      font-family: 'Playfair Display', serif;
-      color: #a855f7;
-      margin-bottom: 1rem;
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      opacity: 0.3;
     }
-
-    h1 {
-      font-size: 2.5rem;
-      font-weight: bold;
-      margin-bottom: 2rem;
-      animation: fade-in-up 1s ease-out;
+    header {
+      background-color: rgba(15, 23, 42, 0.9);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 10;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
     }
-
-    h2 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      animation: fade-in-up-delayed 1s ease-out;
+    header a {
+      color: #ddd;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: background 0.3s;
     }
-
-    article {
-      margin-bottom: 2rem;
-      border-bottom: 1px solid #374151;
-      padding-bottom: 1.5rem;
-      animation: fade-in-up-more-delayed 1s ease-out;
-    }
-
-    p {
-      color: #d1d5db;
-      margin-top: 0.5rem;
-    }
-
-    /* Scrollbar styling */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: #1f2937;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #6b46c1;
-      border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: #7c3aed;
-    }
-
-    /* Selection styling */
-    ::selection {
-      background: #6b46c1;
+    header a:hover {
+      background: #a855f7;
       color: white;
     }
-
-    /* ===== Animations ===== */
+    .container {
+      max-width: 900px;
+      margin: 120px auto 50px auto;
+      padding: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+    section {
+      margin-bottom: 4rem;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: #a855f7;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #555;
+      padding-bottom: 0.5rem;
+    }
+    article {
+      background-color: #1F2937;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      animation: fade-in 1s ease-out;
+    }
+    article h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      color: #f472b6;
+      margin-bottom: 0.75rem;
+    }
+    article p {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: #e5e7eb;
+    }
+    .reactions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .reaction {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      transition: background 0.2s;
+    }
+    .reaction:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .reaction span.count {
+      font-size: 0.9rem;
+      color: #ffd;
+    }
+    .reaction-records {
+      margin-top: 0.75rem;
+      font-size: 0.8rem;
+      color: #ccc;
+      border-top: 1px solid #444;
+      padding-top: 0.5rem;
+    }
     @keyframes fade-in {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
-    @keyframes fade-in-up {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fade-in-up-delayed {
-      from { opacity: 0; transform: translateY(50px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fade-in-up-more-delayed {
-      from { opacity: 0; transform: translateY(60px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Glass effect (optional) */
-    .glass {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 1rem;
-      border-radius: 12px;
-    }
-
-    /* Float animation */
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(5deg); }
-    }
-
-    .animate-float {
-      animation: float 6s ease-in-out infinite;
-    }
   </style>
 </head>
 <body>
-  <h1>Articles</h1>
+  <canvas id="particles-canvas"></canvas>
 
-  <article class="glass animate-float">
-    <h2>The Power of Energy Healing</h2>
-    <p>Energy healing activates the body’s subtle energy systems to remove blocks and allow self-healing.</p>
-  </article>
+  <header>
+    <a href="#healing">Healing</a>
+    <a href="#tarot">Tarot</a>
+    <a href="#meditation">Meditation</a>
+  </header>
 
-  <article class="glass animate-float">
-    <h2>Spiritual Awakening Signs</h2>
-    <p>Awakening signs include emotional shifts, increased awareness, and a stronger connection to the universe.</p>
-  </article>
-  <canvas id="particles-canvas" style="position:fixed; inset:0; z-index:-1; opacity:0.3;"></canvas>
+  <div class="container">
+    <section id="healing">
+      <h1>Healing Articles</h1>
+      <article data-id="healing-1">
+        <h2>The Profound Impact of Healing Sessions</h2>
+        <p>Healing sessions offer more than just spiritual alignment—they are a gateway to mental clarity, emotional balance, and increased productivity.</p>
+        <div class="reactions">
+          <div class="reaction" data-reaction="love">❤️ <span class="count">0</span></div>
+          <div class="reaction" data-reaction="think">🤔 <span class="count">0</span></div>
+          <div class="reaction" data-reaction="dislike">👎 <span class="count">0</span></div>
+        </div>
+        <div class="reaction-records"></div>
+      </article>
+    </section>
+  </div>
 
-<script>
-  const canvas = document.getElementById('particles-canvas');
-  const ctx = canvas.getContext('2d');
+  <script>
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    const setCanvasSize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    setCanvasSize();
 
-  const setCanvasSize = () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  };
-
-  setCanvasSize();
-
-  const particles = [];
-
-  for (let i = 0; i < 100; i++) {
-    particles.push({
+    const particles = Array.from({length: 100}, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       vx: (Math.random() - 0.5) * 0.3,
@@ -161,53 +161,54 @@
       size: Math.random() * 2 + 0.5,
       opacity: Math.random() * 0.6 + 0.2,
       hue: Math.random() * 60 + 270
-    });
-  }
+    }));
 
-  function animate() {
-    ctx.fillStyle = 'rgba(17, 24, 39, 0.05)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    function animate() {
+      ctx.fillStyle = 'rgba(19, 24, 42, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, i) => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${p.hue}, 70%, 60%, ${p.opacity})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+    window.addEventListener('resize', setCanvasSize);
 
-    particles.forEach((p, i) => {
-      p.x += p.vx;
-      p.y += p.vy;
+    document.querySelectorAll('article').forEach(article => {
+      const id = article.dataset.id;
+      const recordsEl = article.querySelector('.reaction-records');
+      const counts = { love: 0, think: 0, dislike: 0 };
+      const reactions = JSON.parse(localStorage.getItem(id) || '[]');
 
-      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+      reactions.forEach(r => counts[r.type]++);
+      article.querySelectorAll('.reaction').forEach(btn => {
+        const type = btn.dataset.reaction;
+        btn.querySelector('.count').textContent = counts[type];
+      });
 
-      p.x = Math.max(0, Math.min(canvas.width, p.x));
-      p.y = Math.max(0, Math.min(canvas.height, p.y));
+      const renderRecords = () => {
+        recordsEl.innerHTML = reactions.map(r => `${r.type.toUpperCase()} - ${r.country} (${r.time})`).join('<br>');
+      };
+      renderRecords();
 
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      ctx.fillStyle = `hsla(${p.hue}, 70%, 60%, ${p.opacity})`;
-      ctx.fill();
-
-      particles.forEach((other, j) => {
-        if (i !== j) {
-          const dx = p.x - other.x;
-          const dy = p.y - other.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 100) {
-            const opacity = (1 - dist / 100) * 0.2;
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(other.x, other.y);
-            ctx.strokeStyle = `hsla(${p.hue}, 70%, 60%, ${opacity})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
+      article.querySelectorAll('.reaction').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const type = btn.dataset.reaction;
+          const country = prompt("Your Country:") || "Unknown";
+          const time = new Date().toLocaleString();
+          const newReaction = { type, country, time };
+          reactions.push(newReaction);
+          localStorage.setItem(id, JSON.stringify(reactions));
+          location.reload();
+        });
       });
     });
-
-    requestAnimationFrame(animate);
-  }
-
-  animate();
-
-  window.addEventListener('resize', setCanvasSize);
-</script>
-
+  </script>
 </body>
 </html>
