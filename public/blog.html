@@ -2,206 +2,212 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Healing Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <title>Articles</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
   <style>
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: #111827;
+      color: #e5e7eb;
       font-family: 'Inter', sans-serif;
-      background-color: #13182A;
-      color: white;
-      overflow-x: hidden;
-    }
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 0;
-      opacity: 0.3;
-    }
-    header {
-      background-color: rgba(15, 23, 42, 0.9);
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 10;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-    }
-    header a {
-      color: #ddd;
-      text-decoration: none;
-      font-weight: 500;
-      padding: 0.5rem 1rem;
-      border-radius: 0.5rem;
-      transition: background 0.3s;
-    }
-    header a:hover {
-      background: #a855f7;
-      color: white;
-    }
-    .container {
-      max-width: 900px;
-      margin: 120px auto 50px auto;
+      line-height: 1.6;
       padding: 2rem;
-      position: relative;
-      z-index: 2;
-    }
-    section {
-      margin-bottom: 4rem;
-    }
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      color: #a855f7;
-      margin-bottom: 1rem;
-      border-bottom: 2px solid #555;
-      padding-bottom: 0.5rem;
-    }
-    article {
-      background-color: #1F2937;
-      border-radius: 1rem;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      overflow-x: hidden;
       animation: fade-in 1s ease-out;
     }
-    article h2 {
+
+    h1, h2, h3, h4, h5, h6 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.75rem;
-      color: #f472b6;
-      margin-bottom: 0.75rem;
+      color: #a855f7;
+      margin-bottom: 1rem;
     }
-    article p {
-      font-size: 1.125rem;
-      line-height: 1.8;
-      color: #e5e7eb;
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
+      animation: fade-in-up 1s ease-out;
     }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      animation: fade-in-up-delayed 1s ease-out;
+    }
+
+    article {
+      margin-bottom: 2rem;
+      border-bottom: 1px solid #374151;
+      padding-bottom: 1.5rem;
+      animation: fade-in-up-more-delayed 1s ease-out;
+    }
+
+    p {
+      color: #d1d5db;
+      margin-top: 0.5rem;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #1f2937;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #6b46c1;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #7c3aed;
+    }
+
+    /* Selection styling */
+    ::selection {
+      background: #6b46c1;
+      color: white;
+    }
+
+    /* ===== Animations ===== */
     @keyframes fade-in {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    @keyframes fade-in-up {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fade-in-up-delayed {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fade-in-up-more-delayed {
+      from { opacity: 0; transform: translateY(60px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Glass effect (optional) */
+    .glass {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 1rem;
+      border-radius: 12px;
+    }
+
+    /* Float animation */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
   </style>
 </head>
 <body>
-  <!-- Particle Background -->
-  <canvas id="particles-canvas"></canvas>
+  <h1>Articles</h1>
 
-  <!-- Header Menu -->
-  <header>
-    <a href="#healing">Healing</a>
-    <a href="#tarot">Tarot</a>
-    <a href="#meditation">Meditation</a>
-  </header>
+  <article class="glass animate-float">
+    <h2>The Power of Energy Healing</h2>
+    <p>Energy healing activates the body’s subtle energy systems to remove blocks and allow self-healing.</p>
+  </article>
 
-  <div class="container">
-    <!-- Healing Section -->
-    <section id="healing">
-      <h1>Healing Articles</h1>
-      <article>
-        <h2>The Profound Impact of Healing Sessions</h2>
-        <p>Healing sessions offer more than just spiritual alignment—they are a gateway to mental clarity, emotional balance, and increased productivity. In a world filled with distractions and stress, healing helps calm the mind and bring focus back to the present moment.</p>
-        <p>Through practices like energy balancing and breathwork, these sessions help unlock internal blocks that often hold us back from our highest potential. By regularly engaging in healing, individuals find themselves more active, better able to manage stress, and far more equipped to handle daily tasks with intention.</p>
-        <p>One of the most profound effects of healing is the ability to see life from a renewed perspective. The noise of everyday life fades, allowing clarity, positivity, and confidence to take its place. It’s not just about inner peace—it’s about unlocking your power to thrive in both personal and professional life.</p>
-      </article>
-    </section>
+  <article class="glass animate-float">
+    <h2>Spiritual Awakening Signs</h2>
+    <p>Awakening signs include emotional shifts, increased awareness, and a stronger connection to the universe.</p>
+  </article>
+  <canvas id="particles-canvas" style="position:fixed; inset:0; z-index:-1; opacity:0.3;"></canvas>
 
-    <!-- Tarot Section -->
-    <section id="tarot">
-      <h1>Tarot Articles</h1>
-      <article>
-        <h2>Understanding Tarot Readings</h2>
-        <p>Tarot readings offer a symbolic mirror of our lives. They help us gain insight into situations, uncover subconscious patterns, and find clarity in uncertain times. Each card tells a story, and when interpreted with intuition, it becomes a powerful guide.</p>
-      </article>
-      <article>
-        <h2>How Tarot Can Empower Your Journey</h2>
-        <p>Using tarot as a daily practice can improve decision-making, reduce anxiety, and connect you to your inner voice. It’s not about predicting the future—it's about empowering you to shape it consciously and wisely.</p>
-      </article>
-    </section>
+<script>
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
 
-    <!-- Meditation Section -->
-    <section id="meditation">
-      <h1>Meditation Articles</h1>
-      <article>
-        <h2>Why Daily Meditation Matters</h2>
-        <p>Meditation has been scientifically proven to reduce stress, improve focus, and enhance emotional regulation. A few minutes each day can transform your mental clarity and bring lasting peace of mind.</p>
-      </article>
-      <article>
-        <h2>Different Types of Meditation You Can Practice</h2>
-        <p>From mindfulness and loving-kindness to transcendental and guided meditations, there are many styles to explore. Each offers unique benefits depending on your goals—be it inner calm, healing, or awareness.</p>
-      </article>
-    </section>
-  </div>
+  const setCanvasSize = () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  };
 
-  <!-- Particle Background Script -->
-  <script>
-    const canvas = document.getElementById('particles-canvas');
-    const ctx = canvas.getContext('2d');
+  setCanvasSize();
 
-    const setCanvasSize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    setCanvasSize();
+  const particles = [];
 
-    const particles = [];
-    for (let i = 0; i < 100; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        size: Math.random() * 2 + 0.5,
-        opacity: Math.random() * 0.6 + 0.2,
-        hue: Math.random() * 60 + 270
-      });
-    }
+  for (let i = 0; i < 100; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      size: Math.random() * 2 + 0.5,
+      opacity: Math.random() * 0.6 + 0.2,
+      hue: Math.random() * 60 + 270
+    });
+  }
 
-    function animate() {
-      ctx.fillStyle = 'rgba(19, 24, 42, 0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+  function animate() {
+    ctx.fillStyle = 'rgba(17, 24, 39, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      particles.forEach((p, i) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+    particles.forEach((p, i) => {
+      p.x += p.vx;
+      p.y += p.vy;
 
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${p.hue}, 70%, 60%, ${p.opacity})`;
-        ctx.fill();
+      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
-        particles.forEach((other, j) => {
-          if (i !== j) {
-            const dx = p.x - other.x;
-            const dy = p.y - other.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 100) {
-              const opacity = (1 - dist / 100) * 0.2;
-              ctx.beginPath();
-              ctx.moveTo(p.x, p.y);
-              ctx.lineTo(other.x, other.y);
-              ctx.strokeStyle = `hsla(${p.hue}, 70%, 60%, ${opacity})`;
-              ctx.lineWidth = 0.5;
-              ctx.stroke();
-            }
+      p.x = Math.max(0, Math.min(canvas.width, p.x));
+      p.y = Math.max(0, Math.min(canvas.height, p.y));
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(${p.hue}, 70%, 60%, ${p.opacity})`;
+      ctx.fill();
+
+      particles.forEach((other, j) => {
+        if (i !== j) {
+          const dx = p.x - other.x;
+          const dy = p.y - other.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 100) {
+            const opacity = (1 - dist / 100) * 0.2;
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(other.x, other.y);
+            ctx.strokeStyle = `hsla(${p.hue}, 70%, 60%, ${opacity})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
           }
-        });
+        }
       });
+    });
 
-      requestAnimationFrame(animate);
-    }
+    requestAnimationFrame(animate);
+  }
 
-    animate();
-    window.addEventListener('resize', setCanvasSize);
-  </script>
+  animate();
+
+  window.addEventListener('resize', setCanvasSize);
+</script>
+
 </body>
 </html>
