@@ -5,6 +5,109 @@
   <title>Healing Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #13182A;
+      color: white;
+      overflow-x: hidden;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      opacity: 0.3;
+    }
+    header {
+      background-color: rgba(15, 23, 42, 0.9);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 10;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+    header a {
+      color: #ddd;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: background 0.3s;
+    }
+    header a:hover {
+      background: #a855f7;
+      color: white;
+    }
+    .container {
+      max-width: 900px;
+      margin: 120px auto 50px auto;
+      padding: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+    section {
+      margin-bottom: 4rem;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: #a855f7;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #555;
+      padding-bottom: 0.5rem;
+    }
+    article {
+      background-color: #1F2937;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      animation: fade-in 1s ease-out;
+    }
+    article h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      color: #f472b6;
+      margin-bottom: 0.75rem;
+    }
+    article p {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: #e5e7eb;
+    }
+    .reactions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .reaction {
+      cursor: pointer;
+      background-color: #374151;
+      padding: 0.5rem 1rem;
+      border-radius: 1rem;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background 0.3s;
+    }
+    .reaction.active {
+      background-color: #a855f7;
+    }
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
   <!-- Particle Background -->
