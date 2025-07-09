@@ -19,7 +19,8 @@ const Header = () => {
     { name: 'About', href: '#about' },
     { name: 'Services', href: '#services' },
     { name: 'Contact', href: '#contact' },
-    { name: 'Courses', action: () => setShowModal(true) }, // ✅ Courses with modal
+    { name: 'Blog', href: '/article.html' }, // تم إضافة عنصر Blog
+    { name: 'Courses', action: () => setShowModal(true) }
   ];
 
   return (
@@ -57,6 +58,8 @@ const Header = () => {
                 key={item.name}
                 href={item.href}
                 className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium relative group"
+                target={item.href.startsWith('/') ? '_blank' : '_self'}
+                rel="noopener noreferrer"
               >
                 {item.name}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 group-hover:w-full transition-all duration-300"></span>
@@ -96,6 +99,8 @@ const Header = () => {
                   href={item.href}
                   className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
                   onClick={() => setIsMenuOpen(false)}
+                  target={item.href.startsWith('/') ? '_blank' : '_self'}
+                  rel="noopener noreferrer"
                 >
                   {item.name}
                 </a>
