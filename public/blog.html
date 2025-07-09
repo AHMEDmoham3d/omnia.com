@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       padding: 0;
@@ -13,10 +15,7 @@
       background-color: #13182A;
       color: white;
       overflow-x: hidden;
-      position: relative;
-      z-index: 1;
     }
-
     canvas {
       position: fixed;
       top: 0;
@@ -24,76 +23,121 @@
       z-index: 0;
       opacity: 0.3;
     }
-
+    header {
+      background-color: rgba(15, 23, 42, 0.9);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 10;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+    header a {
+      color: #ddd;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: background 0.3s;
+    }
+    header a:hover {
+      background: #a855f7;
+      color: white;
+    }
     .container {
+      max-width: 900px;
+      margin: 120px auto 50px auto;
+      padding: 2rem;
       position: relative;
       z-index: 2;
-      max-width: 900px;
-      margin: 100px auto 50px auto;
-      padding: 2rem;
     }
-
+    section {
+      margin-bottom: 4rem;
+    }
     h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 3rem;
+      font-size: 2.5rem;
       color: #a855f7;
-      margin-bottom: 1.5rem;
-      text-align: center;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #555;
+      padding-bottom: 0.5rem;
     }
-
     article {
       background-color: #1F2937;
       border-radius: 1rem;
-      padding: 2rem;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
       animation: fade-in 1s ease-out;
     }
-
     article h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 2rem;
+      font-size: 1.75rem;
       color: #f472b6;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
-
     article p {
       font-size: 1.125rem;
       line-height: 1.8;
       color: #e5e7eb;
     }
-
     @keyframes fade-in {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-
-  <!-- Background Canvas -->
+  <!-- Particle Background -->
   <canvas id="particles-canvas"></canvas>
 
-  <!-- Main Content -->
+  <!-- Header Menu -->
+  <header>
+    <a href="#healing">Healing</a>
+    <a href="#tarot">Tarot</a>
+    <a href="#meditation">Meditation</a>
+  </header>
+
   <div class="container">
-    <h1>Healing Sessions & Your Mind</h1>
-    <article>
-      <h2>The Profound Impact of Healing Sessions on Focus, Productivity, and Perspective</h2>
-      <p>
-        Healing sessions offer more than just spiritual alignment—they are a gateway to mental clarity, emotional balance, and increased productivity. In a world filled with distractions and stress, healing helps calm the mind and bring focus back to the present moment.
-      </p>
-      <p>
-        Through practices like energy balancing and breathwork, these sessions help unlock internal blocks that often hold us back from our highest potential. By regularly engaging in healing, individuals find themselves more active, better able to manage stress, and far more equipped to handle daily tasks with intention.
-      </p>
-      <p>
-        One of the most profound effects of healing is the ability to see life from a renewed perspective. The noise of everyday life fades, allowing clarity, positivity, and confidence to take its place. It’s not just about inner peace—it’s about unlocking your power to thrive in both personal and professional life.
-      </p>
-    </article>
+    <!-- Healing Section -->
+    <section id="healing">
+      <h1>Healing Articles</h1>
+      <article>
+        <h2>The Profound Impact of Healing Sessions</h2>
+        <p>Healing sessions offer more than just spiritual alignment—they are a gateway to mental clarity, emotional balance, and increased productivity. In a world filled with distractions and stress, healing helps calm the mind and bring focus back to the present moment.</p>
+        <p>Through practices like energy balancing and breathwork, these sessions help unlock internal blocks that often hold us back from our highest potential. By regularly engaging in healing, individuals find themselves more active, better able to manage stress, and far more equipped to handle daily tasks with intention.</p>
+        <p>One of the most profound effects of healing is the ability to see life from a renewed perspective. The noise of everyday life fades, allowing clarity, positivity, and confidence to take its place. It’s not just about inner peace—it’s about unlocking your power to thrive in both personal and professional life.</p>
+      </article>
+    </section>
+
+    <!-- Tarot Section -->
+    <section id="tarot">
+      <h1>Tarot Articles</h1>
+      <article>
+        <h2>Understanding Tarot Readings</h2>
+        <p>Tarot readings offer a symbolic mirror of our lives. They help us gain insight into situations, uncover subconscious patterns, and find clarity in uncertain times. Each card tells a story, and when interpreted with intuition, it becomes a powerful guide.</p>
+      </article>
+      <article>
+        <h2>How Tarot Can Empower Your Journey</h2>
+        <p>Using tarot as a daily practice can improve decision-making, reduce anxiety, and connect you to your inner voice. It’s not about predicting the future—it's about empowering you to shape it consciously and wisely.</p>
+      </article>
+    </section>
+
+    <!-- Meditation Section -->
+    <section id="meditation">
+      <h1>Meditation Articles</h1>
+      <article>
+        <h2>Why Daily Meditation Matters</h2>
+        <p>Meditation has been scientifically proven to reduce stress, improve focus, and enhance emotional regulation. A few minutes each day can transform your mental clarity and bring lasting peace of mind.</p>
+      </article>
+      <article>
+        <h2>Different Types of Meditation You Can Practice</h2>
+        <p>From mindfulness and loving-kindness to transcendental and guided meditations, there are many styles to explore. Each offers unique benefits depending on your goals—be it inner calm, healing, or awareness.</p>
+      </article>
+    </section>
   </div>
 
   <!-- Particle Background Script -->
@@ -127,7 +171,6 @@
       particles.forEach((p, i) => {
         p.x += p.vx;
         p.y += p.vy;
-
         if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
         if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
