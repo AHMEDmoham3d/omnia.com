@@ -19,7 +19,7 @@ const Header = () => {
     { name: 'About', href: '#about' },
     { name: 'Services', href: '#services' },
     { name: 'Contact', href: '#contact' },
-    { name: 'Blog', href: '/article.html' }, // Blog يفتح في نفس التاب
+    { name: 'Blog', href: '/blog.html' }, // ✅ تم التعديل هنا
     { name: 'Courses', action: () => setShowModal(true) }
   ];
 
