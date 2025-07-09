@@ -7,8 +7,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <!-- Particle Background -->
   <canvas id="particles-canvas"></canvas>
 
+  <!-- Header Menu -->
   <header>
     <a href="#healing">Healing</a>
     <a href="#tarot">Tarot</a>
@@ -16,6 +18,7 @@
   </header>
 
   <div class="container">
+    <!-- Healing Section -->
     <section id="healing">
       <h1>Healing Articles</h1>
       <article data-id="healing-1">
@@ -26,11 +29,11 @@
           <div class="reaction" data-reaction="think">🤔 <span class="count">0</span></div>
           <div class="reaction" data-reaction="dislike">👎 <span class="count">0</span></div>
         </div>
-        <div class="reaction-records"></div>
       </article>
     </section>
   </div>
 
+  <!-- Background Particles Script -->
   <script>
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
@@ -53,7 +56,7 @@
     function animate() {
       ctx.fillStyle = 'rgba(19, 24, 42, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p, i) => {
+      particles.forEach((p) => {
         p.x += p.vx; p.y += p.vy;
         if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
         if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
@@ -66,31 +69,43 @@
     }
     animate();
     window.addEventListener('resize', setCanvasSize);
+  </script>
 
+  <!-- Reaction System Script -->
+  <script>
     document.querySelectorAll('article').forEach(article => {
       const id = article.dataset.id;
-      const recordsEl = article.querySelector('.reaction-records');
-      const counts = { love: 0, think: 0, dislike: 0 };
-      const reactions = JSON.parse(localStorage.getItem(id) || '[]');
+      const reactions = JSON.parse(localStorage.getItem(id) || '{}');
 
-      reactions.forEach(r => counts[r.type]++);
+      // Initialize counts
+      const counts = { love: 0, think: 0, dislike: 0 };
+      for (const key in reactions) {
+        const val = reactions[key];
+        if (val) counts[val]++;
+      }
+
+      const userKey = `user-${id}`;
+      const userReaction = localStorage.getItem(userKey);
+
       article.querySelectorAll('.reaction').forEach(btn => {
         const type = btn.dataset.reaction;
         btn.querySelector('.count').textContent = counts[type];
-      });
+        if (userReaction === type) btn.classList.add('active');
 
-      const renderRecords = () => {
-        recordsEl.innerHTML = reactions.map(r => `${r.type.toUpperCase()} - ${r.country} (${r.time})`).join('<br>');
-      };
-      renderRecords();
-
-      article.querySelectorAll('.reaction').forEach(btn => {
         btn.addEventListener('click', () => {
-          const type = btn.dataset.reaction;
-          const country = prompt("Your Country:") || "Unknown";
-          const time = new Date().toLocaleString();
-          const newReaction = { type, country, time };
-          reactions.push(newReaction);
+          let newReaction = type;
+          let prevReaction = localStorage.getItem(userKey);
+
+          if (prevReaction === newReaction) {
+            // Remove reaction
+            localStorage.removeItem(userKey);
+            reactions[navigator.userAgent] = null;
+          } else {
+            // Update reaction
+            localStorage.setItem(userKey, newReaction);
+            reactions[navigator.userAgent] = newReaction;
+          }
+
           localStorage.setItem(id, JSON.stringify(reactions));
           location.reload();
         });
