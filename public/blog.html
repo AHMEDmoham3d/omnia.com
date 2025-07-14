@@ -23,19 +23,37 @@
       z-index: 0;
       opacity: 0.3;
     }
+
+    /* ========== Header ========== */
     header {
-      background-color: rgba(15, 23, 42, 0.9);
+      background-color: rgba(15, 23, 42, 0.95);
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       z-index: 10;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
+      padding: 1rem 1.5rem;
     }
-    header a {
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #f472b6;
+      font-family: 'Playfair Display', serif;
+    }
+
+    nav {
+      display: flex;
+      gap: 1rem;
+    }
+
+    nav a {
       color: #ddd;
       text-decoration: none;
       font-weight: 500;
@@ -43,10 +61,47 @@
       border-radius: 0.5rem;
       transition: background 0.3s;
     }
-    header a:hover {
+
+    nav a:hover {
       background: #a855f7;
       color: white;
     }
+
+    .menu-toggle {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    /* ========== Responsive Header ========== */
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav {
+        flex-direction: column;
+        width: 100%;
+        display: none;
+        margin-top: 1rem;
+      }
+
+      nav a {
+        width: 100%;
+      }
+
+      .menu-toggle {
+        display: block;
+        margin-top: 0.5rem;
+      }
+
+      nav.active {
+        display: flex;
+      }
+    }
+
     .container {
       max-width: 900px;
       margin: 120px auto 50px auto;
@@ -54,9 +109,11 @@
       position: relative;
       z-index: 2;
     }
+
     section {
       margin-bottom: 4rem;
     }
+
     h1 {
       font-family: 'Playfair Display', serif;
       font-size: 2.5rem;
@@ -65,6 +122,7 @@
       border-bottom: 2px solid #555;
       padding-bottom: 0.5rem;
     }
+
     article {
       background-color: #1F2937;
       border-radius: 1rem;
@@ -73,17 +131,20 @@
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
       animation: fade-in 1s ease-out;
     }
+
     article h2 {
       font-family: 'Playfair Display', serif;
       font-size: 1.75rem;
       color: #f472b6;
       margin-bottom: 0.75rem;
     }
+
     article p {
       font-size: 1.125rem;
       line-height: 1.8;
       color: #e5e7eb;
     }
+
     @keyframes fade-in {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
@@ -96,14 +157,19 @@
 
   <!-- Header Menu -->
   <header>
-    <a href="/">Home</a>
-    <a href="#healing">Healing</a>
-    <a href="#tarot">Tarot</a>
-    <a href="#meditation">Meditation</a>
+    <div class="header-container">
+      <div class="logo">Blog Page</div>
+      <div class="menu-toggle" onclick="toggleMenu()">&#9776; Menu</div>
+      <nav id="mainNav">
+        <a href="/">Home</a>
+        <a href="#healing">Healing</a>
+        <a href="#tarot">Tarot</a>
+        <a href="#meditation">Meditation</a>
+      </nav>
+    </div>
   </header>
 
   <div class="container">
-    <!-- Healing Section -->
     <section id="healing">
       <h1>Healing Articles</h1>
       <article>
@@ -114,7 +180,6 @@
       </article>
     </section>
 
-    <!-- Tarot Section -->
     <section id="tarot">
       <h1>Tarot Articles</h1>
       <article>
@@ -127,7 +192,6 @@
       </article>
     </section>
 
-    <!-- Meditation Section -->
     <section id="meditation">
       <h1>Meditation Articles</h1>
       <article>
@@ -141,7 +205,6 @@
     </section>
   </div>
 
-  <!-- Particle Background Script -->
   <script>
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
@@ -203,6 +266,11 @@
 
     animate();
     window.addEventListener('resize', setCanvasSize);
+
+    function toggleMenu() {
+      const nav = document.getElementById('mainNav');
+      nav.classList.toggle('active');
+    }
   </script>
 </body>
 </html>
