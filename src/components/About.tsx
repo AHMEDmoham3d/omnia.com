@@ -64,7 +64,7 @@ const About = () => {
               Your Journey to Inner Harmony
             </h3>
             <p className="text-gray-300 text-lg leading-relaxed">
-              Practicing since 2020, with a strong foundation in continuous study and a scientific approach, I combine my tools and techniques to help you find clarity, transformation and personal growth.
+              Practicing since 2020, with a strong foundation in continuous study and a scientific approach, I combine my tools and techniques to help you find clarity, transformation and personal growth, I hold sacred space for those who are ready to release what no longer serves them and reconnect with their inner light. Through sound therapy, tarot, energy healing
             </p>
             <p className="text-gray-300 text-lg leading-relaxed">
              Each session is personalized to your unique needs and spiritual path.
