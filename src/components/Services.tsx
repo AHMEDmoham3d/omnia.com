@@ -85,7 +85,7 @@ const Services = () => {
     },
     {
       icon: <Users className="w-7 h-7 text-white" />,
-      title: "How you are",
+      title: "How you are?",
       description: (
         <div className="flex flex-col items-center justify-center h-full text-center">
           <div className="flex items-center space-x-2 mb-4">
