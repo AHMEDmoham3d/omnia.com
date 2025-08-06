@@ -26,12 +26,7 @@ const Services = () => {
       features: ["Online (Video Call) or In person", "Duration 1 H"]
     },
     {
-      icon: (
-        <div className="relative">
-          {/* Tuning fork icon */}
-          <Music className="w-7 h-7 text-white transform rotate-90" />
-        </div>
-      ),
+      icon: <Music className="w-7 h-7 text-pink-400" />,
       title: "Sound Therapy (Tuning Forks)",
       description: "You will feel the shift within, I use a combination of frequencies that work directly on your nervous system that brings a deep relaxation, restore balance and peace. Its a journey back to your natural state of harmony.",
       features: ["Stress relief", "Energy alignment", "Chakra balancing", "Deep relaxation"]
@@ -56,7 +51,6 @@ const Services = () => {
     }
   ];
 
-  // ... rest of the component remains the same
   const testimonials = [
     {
       name: "Sarah M.",
