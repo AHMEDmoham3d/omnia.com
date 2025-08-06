@@ -83,25 +83,25 @@ const Services = () => {
       ),
       features: ["Online (Video Call) or In person ", "Duration from 60 min up to 90 min"]
     },
-  {
-  icon: <Users className="w-7 h-7 text-white" />,
-  title: "spiritual session, Who you are?",
-  description: (
-    <div className="flex flex-col items-center justify-center h-full text-center">
-      <div className="flex items-center space-x-2 mb-6 mt-4"> {/* Added mt-4 here */}
-        <div className="relative">
-          <Sparkles className="w-8 h-8 text-purple-400 animate-pulse" />
-          <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-ping"></div>
+    {
+      icon: <Users className="w-7 h-7 text-white" />,
+      title: "spiritual session, Who you are?",
+      description: (
+        <div className="flex flex-col items-center justify-center h-full text-center">
+          <div className="flex items-center space-x-2 mb-6 mt-4">
+            <div className="relative">
+              <Sparkles className="w-8 h-8 text-purple-400 animate-pulse" />
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-ping"></div>
+            </div>
+            <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              Coming Soon
+            </span>
+          </div>
+          <p>Currently preparing for a new session that will help you connect deeper with yourself and understand who you truly are.</p>
         </div>
-        <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-          Coming Soon
-        </span>
-      </div>
-      <p>Currently preparing for a new session that will help you connect deeper with yourself and understand who you truly are.</p>
-    </div>
-  ),
-  features: []
-}
+      ),
+      features: []
+    }
   ];
 
   const testimonials = [
@@ -162,7 +162,9 @@ const Services = () => {
                             ? "60 min, Online (Video Call) or In person"
                             : service.title === "Energy Healing Session" 
                               ? "60-90 min, Online (Video Call) or In person"
-                              : "60 min, In person Only"}
+                              : service.title === "spiritual session, Who you are?"
+                                ? "Online Only"
+                                : "60 min, In person Only"}
                         </span>
                       </span>
                     </div>
