@@ -4,27 +4,35 @@ import { Sun, Moon, Star, Users, Clock, Heart, Music } from 'lucide-react';
 
 const Services = () => {
   const services = [
-    {
-      icon: (
-        <div className="flex justify-center" style={{ gap: '2px' }}>
-          {/* Sun Card */}
-          <div className="w-6 h-10 bg-transparent rounded-sm transform rotate-2 border-2 border-pink-400 shadow-md flex items-center justify-center">
-            <Sun className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
-          </div>
-          {/* Moon Card */}
-          <div className="w-6 h-10 bg-transparent rounded-sm transform -rotate-1 border-2 border-pink-400 shadow-md flex items-center justify-center">
-            <Moon className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
-          </div>
-          {/* Star Card */}
-          <div className="w-6 h-10 bg-transparent rounded-sm transform rotate-3 border-2 border-pink-400 shadow-md flex items-center justify-center">
-            <Star className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
-          </div>
-        </div>
-      ),
-      title: "Tarot Reading",
-      description: "Tarot is a mirror of your energy each card holds a message for you, its like a heart to heart conversation with the universe  , we ask and the cards respond whether its love, career or personal growth. Each reading is personalized to your specific questions or your life situations and I leave you with guidance and clarity.",
-      features: []
-    },
+{
+  icon: (
+    <div className="flex justify-center" style={{ gap: '2px' }}>
+      {/* Sun Card */}
+      <div className="w-6 h-10 bg-transparent rounded-sm transform rotate-2 border-2 border-pink-400 shadow-md flex items-center justify-center">
+        <Sun className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
+      </div>
+      {/* Moon Card */}
+      <div className="w-6 h-10 bg-transparent rounded-sm transform -rotate-1 border-2 border-pink-400 shadow-md flex items-center justify-center">
+        <Moon className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
+      </div>
+      {/* Star Card */}
+      <div className="w-6 h-10 bg-transparent rounded-sm transform rotate-3 border-2 border-pink-400 shadow-md flex items-center justify-center">
+        <Star className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
+      </div>
+    </div>
+  ),
+  title: "Tarot Reading",
+  description: (
+    <>
+      Tarot is a mirror of your energy each card holds a message for you, its like a heart to heart conversation with the universe, we ask and the cards respond whether its love, career or personal growth.
+      <br /><br />
+      Each reading is personalized to your specific questions or your life situations
+      <br /><br />
+      I leave you with guidance, wisdom, clarity and the light to navigate your next steps
+    </>
+  ),
+  features: []
+},
     {
       icon: <Music className="w-7 h-7 text-pink-400" />,
       title: "Sound Therapy (Tuning Forks)",
