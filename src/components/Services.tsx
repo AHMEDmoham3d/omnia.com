@@ -22,7 +22,7 @@ const Services = () => {
         </div>
       ),
       title: "Tarot Reading",
-      description: "Tarot is a mirror of your energy each card holds a message for you, its like a heart to heart conversation with the universe .... Tarot is a heart to heart conversation with the universe, we ask and the cards respond whether its love, career or personal growth. Each reading is personalized to your specific questions or your life situations and I leave you with guidance and clarity.",
+      description: "Tarot is a mirror of your energy each card holds a message for you, its like a heart to heart conversation with the universe  , we ask and the cards respond whether its love, career or personal growth. Each reading is personalized to your specific questions or your life situations and I leave you with guidance and clarity.",
       features: []
     },
     {
