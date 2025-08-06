@@ -29,7 +29,37 @@ const Services = () => {
       icon: <Music className="w-7 h-7 text-pink-400" />,
       title: "Sound Therapy (Tuning Forks)",
       description: "You will feel the shift within, I use a combination of frequencies that work directly on your nervous system that brings a deep relaxation, restore balance and peace. Its a journey back to your natural state of harmony.",
-      features: ["Stress relief", "Energy alignment", "Chakra balancing", "Deep relaxation"]
+      features: [
+        "There are 3 different types of sessions:",
+        <div key="back-to-balance" className="mt-2">
+          <span className="font-semibold text-pink-300">- BACK TO BALANCE</span>
+          <ul className="list-disc pl-5 mt-1 space-y-1">
+            <li>Stress relief</li>
+            <li>Chakra Balancing</li>
+            <li>Energy Alignment</li>
+            <li>Deep Relaxation</li>
+          </ul>
+        </div>,
+        <div key="pain-to-peace" className="mt-2">
+          <span className="font-semibold text-pink-300">- PAIN TO PEACE</span>
+          <ul className="list-disc pl-5 mt-1 space-y-1">
+            <li>Back, shoulder, neck, knee tightness</li>
+            <li>Headaches and migraines</li>
+            <li>Joint inflammation</li>
+            <li>Panic/Anxiety Attack</li>
+            <li>Insomnia</li>
+          </ul>
+        </div>,
+        <div key="natural-beauty" className="mt-2">
+          <span className="font-semibold text-pink-300">- NATURAL BEAUTY</span>
+          <ul className="list-disc pl-5 mt-1 space-y-1">
+            <li>Natural glow</li>
+            <li>Stimulates Collagen</li>
+            <li>Reduce Facial Tension</li>
+            <li>Reduce signs and wrinkles</li>
+          </ul>
+        </div>
+      ]
     },
     {
       icon: <Heart className="w-7 h-7 text-pink-400" strokeWidth="2" fill="none" />,
@@ -116,11 +146,17 @@ const Services = () => {
               </p>
 
               {/* Features */}
-              <div className="grid grid-cols-2 gap-2 mb-6">
+              <div className="grid grid-cols-1 gap-2 mb-6">
                 {service.features.map((feature, idx) => (
-                  <div key={idx} className="flex items-center space-x-2 text-sm text-gray-400">
-                    <div className="w-1.5 h-1.5 bg-purple-400 rounded-full"></div>
-                    <span>{feature}</span>
+                  <div key={idx} className="text-sm text-gray-400">
+                    {typeof feature === 'string' ? (
+                      <div className="flex items-start space-x-2">
+                        <div className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-1.5"></div>
+                        <span>{feature}</span>
+                      </div>
+                    ) : (
+                      feature
+                    )}
                   </div>
                 ))}
               </div>
