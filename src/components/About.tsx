@@ -83,7 +83,7 @@ const About = () => {
                 <div className="text-gray-400">Taro Reading</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-pink-400 mb-2">3+</div>
+                <div className="text-3xl font-bold text-pink-400 mb-2">5+</div>
                 <div className="text-gray-400">Years Experience</div>
               </div>
             </div>
