@@ -1,38 +1,38 @@
 import React from 'react';
-import { Smile } from 'lucide-react';
+import { Smile, Sparkles } from 'lucide-react';
 import { Sun, Moon, Star, Users, Clock, Heart, Music } from 'lucide-react';
 
 const Services = () => {
   const services = [
-{
-  icon: (
-    <div className="flex justify-center" style={{ gap: '2px' }}>
-      {/* Sun Card */}
-      <div className="w-6 h-10 bg-transparent rounded-sm transform rotate-2 border-2 border-pink-400 shadow-md flex items-center justify-center">
-        <Sun className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
-      </div>
-      {/* Moon Card */}
-      <div className="w-6 h-10 bg-transparent rounded-sm transform -rotate-1 border-2 border-pink-400 shadow-md flex items-center justify-center">
-        <Moon className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
-      </div>
-      {/* Star Card */}
-      <div className="w-6 h-10 bg-transparent rounded-sm transform rotate-3 border-2 border-pink-400 shadow-md flex items-center justify-center">
-        <Star className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
-      </div>
-    </div>
-  ),
-  title: "Tarot Reading",
-  description: (
-    <>
-      Tarot is a mirror of your energy each card holds a message for you, its like a heart to heart conversation with the universe, we ask and the cards respond whether its love, career or personal growth.
-      <br /><br />
-      Each reading is personalized to your specific questions or your life situations.
-      <br /><br />
-      I leave you with guidance, wisdom, clarity and the light to navigate your next steps.
-    </>
-  ),
-  features: []
-},
+    {
+      icon: (
+        <div className="flex justify-center" style={{ gap: '2px' }}>
+          {/* Sun Card */}
+          <div className="w-6 h-10 bg-transparent rounded-sm transform rotate-2 border-2 border-pink-400 shadow-md flex items-center justify-center">
+            <Sun className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
+          </div>
+          {/* Moon Card */}
+          <div className="w-6 h-10 bg-transparent rounded-sm transform -rotate-1 border-2 border-pink-400 shadow-md flex items-center justify-center">
+            <Moon className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
+          </div>
+          {/* Star Card */}
+          <div className="w-6 h-10 bg-transparent rounded-sm transform rotate-3 border-2 border-pink-400 shadow-md flex items-center justify-center">
+            <Star className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
+          </div>
+        </div>
+      ),
+      title: "Tarot Reading",
+      description: (
+        <>
+          Tarot is a mirror of your energy each card holds a message for you, its like a heart to heart conversation with the universe, we ask and the cards respond whether its love, career or personal growth.
+          <br /><br />
+          Each reading is personalized to your specific questions or your life situations.
+          <br /><br />
+          I leave you with guidance, wisdom, clarity and the light to navigate your next steps.
+        </>
+      ),
+      features: []
+    },
     {
       icon: <Music className="w-7 h-7 text-pink-400" />,
       title: "Sound Therapy (Tuning Forks)",
@@ -86,8 +86,21 @@ const Services = () => {
     {
       icon: <Users className="w-7 h-7 text-white" />,
       title: "Group Meditation Circle",
-      description: "Join like-minded souls in a powerful group meditation experience. Amplify your spiritual practice through collective energy and intention.",
-      features: ["Group energy", "Guided meditation", "Spiritual community", "Shared healing"]
+      description: (
+        <div className="flex flex-col items-center justify-center h-full text-center">
+          <div className="flex items-center space-x-2 mb-4">
+            <div className="relative">
+              <Sparkles className="w-8 h-8 text-purple-400 animate-pulse" />
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-ping"></div>
+            </div>
+            <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              Coming Soon
+            </span>
+          </div>
+          <p>Currently preparing for a new session that will help you connect deeper with yourself and understand who you truly are.</p>
+        </div>
+      ),
+      features: []
     }
   ];
 
@@ -158,9 +171,9 @@ const Services = () => {
               </div>
 
               {/* Description */}
-              <p className="text-gray-300 mb-6 leading-relaxed">
+              <div className="text-gray-300 mb-6 leading-relaxed">
                 {service.description}
-              </p>
+              </div>
 
               {/* Features */}
               <div className="grid grid-cols-1 gap-2 mb-6">
