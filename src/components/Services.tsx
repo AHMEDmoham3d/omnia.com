@@ -18,8 +18,8 @@ const Services = () => {
         </div>
       ),
       title: "Tarot Reading",
-      description: "Tarot is a heart to heart converaation with the universe, we ask and the cards respond whether its love, career or personal growth. Each reading is personalized to your specific questions or your life situations and I leave you with guidance and clarity .",
-      features: ["Personal guidance", "Future insights", "Relationship advice", "Career direction"]
+      description: "Tarot is a heart to heart conversation with the universe, we ask and the cards respond whether its love, career or personal growth. Each reading is personalized to your specific questions or your life situations and I leave you with guidance and clarity.",
+      features: ["Online (Video Call) or In person", "Duration 1 H"]
     },
     {
       icon: <Headphones className="w-7 h-7 text-white" />,
@@ -28,10 +28,10 @@ const Services = () => {
       features: ["Stress relief", "Energy alignment", "Chakra balancing", "Deep relaxation"]
     },
     {
-      icon: <Heart className="w-7 h-7 text-red-400 fill-red-400" />,
+      icon: <Heart className="w-7 h-7 text-pink-400" strokeWidth="2" fill="none" />,
       title: "Energy Healing Session",
-      description: "Clear blockages and restore natural energy flow through hands-on healing techniques. Perfect for physical, emotional, and spiritual wellness.",
-      features: ["Chakra clearing", "Aura cleansing", "Emotional release", "Spiritual alignment"]
+      description: "A gentle yet powerful healing session designed to clear energetic blockages, restore your balance and help you to reconnect with your true self while finding the sacred parts of you that you have forgotten This healing session is perfect for releasing blockages related to relationships, family dynamics, grief or loss, money challenges, emotional struggles,...Its a safe space to let go and realign your energy.",
+      features: ["Online (Video Call) or In person ", "Duration from 60 min up to 90 min"]
     },
     {
       icon: <Users className="w-7 h-7 text-white" />,
