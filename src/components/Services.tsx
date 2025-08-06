@@ -136,7 +136,7 @@ const Services = () => {
                     <div className="flex items-center space-x-4 text-sm text-gray-400">
                       <span className="flex items-center space-x-1">
                         <Clock className="w-4 h-4" />
-                        <span>60 minute</span>
+                        <span>60 min, In person Only</span>
                       </span>
                     </div>
                   </div>
