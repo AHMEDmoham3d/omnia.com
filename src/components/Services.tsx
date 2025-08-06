@@ -1,57 +1,63 @@
 import React from 'react';
-import { Smile, BookOpen, Headphones, Zap, Users, Clock, Star, Heart } from 'lucide-react';
+import { Smile } from 'lucide-react';
+import { Headphones, Zap, Users, Clock, Star, Heart } from 'lucide-react';
 
 const Services = () => {
   const services = [
     {
-      icon: <BookOpen className="w-8 h-8" />,
+      icon: (
+        <div className="flex space-x-1">
+          <div className="w-6 h-10 bg-purple-600 rounded transform rotate-2 border border-purple-300"></div>
+          <div className="w-6 h-10 bg-pink-600 rounded transform -rotate-1 border border-pink-300"></div>
+          <div className="w-6 h-10 bg-yellow-600 rounded transform rotate-3 border border-yellow-300"></div>
+        </div>
+      ),
       title: "Tarot Card Reading",
       description: "Discover insights about your past, present, and future through the ancient art of tarot. Each reading is personalized to your specific questions and life situation.",
-      features: ["Personal guidance", "Future insights", "Relationship advice", "Career direction"],
-      isTarot: true, // <-- Mark this for special layout
+      features: ["Personal guidance", "Future insights", "Relationship advice", "Career direction"]
     },
     {
       icon: <Headphones className="w-8 h-8" />,
       title: "Sound Healing with Tuning Forks",
       description: "Experience deep relaxation and cellular healing through therapeutic sound frequencies. Tuning forks help restore balance and harmony to your energy field.",
-      features: ["Stress relief", "Energy alignment", "Chakra balancing", "Deep relaxation"],
+      features: ["Stress relief", "Energy alignment", "Chakra balancing", "Deep relaxation"]
     },
     {
       icon: <Zap className="w-8 h-8" />,
       title: "Energy Healing Session",
       description: "Clear blockages and restore natural energy flow through hands-on healing techniques. Perfect for physical, emotional, and spiritual wellness.",
-      features: ["Chakra clearing", "Aura cleansing", "Emotional release", "Spiritual alignment"],
+      features: ["Chakra clearing", "Aura cleansing", "Emotional release", "Spiritual alignment"]
     },
     {
       icon: <Users className="w-8 h-8" />,
       title: "Group Meditation Circle",
       description: "Join like-minded souls in a powerful group meditation experience. Amplify your spiritual practice through collective energy and intention.",
-      features: ["Group energy", "Guided meditation", "Spiritual community", "Shared healing"],
-    },
+      features: ["Group energy", "Guided meditation", "Spiritual community", "Shared healing"]
+    }
   ];
 
   const testimonials = [
     {
       name: "Sarah M.",
       text: "The tarot reading was incredibly accurate and gave me the clarity I needed to make important life decisions.",
-      rating: 5,
+      rating: 5
     },
     {
       name: "Michael R.",
       text: "The sound healing session was transformative. I felt deeply relaxed and energized for days afterward.",
-      rating: 5,
+      rating: 5
     },
     {
       name: "Elena K.",
       text: "Amazing energy healing experience. I could feel the positive changes in my body and mind immediately.",
-      rating: 5,
-    },
+      rating: 5
+    }
   ];
 
   return (
     <section id="services" className="py-20 px-4 relative">
       <div className="container mx-auto max-w-6xl">
-        {/* Header */}
+        {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent flex items-center justify-center gap-2 flex-wrap">
             Feel <Heart className="w-5 h-5 text-pink-400 inline" />
@@ -72,6 +78,7 @@ const Services = () => {
               key={index}
               className="group bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 hover:border-purple-400/50 transition-all duration-500 hover:transform hover:scale-105 hover:shadow-2xl"
             >
+              {/* Header */}
               <div className="flex items-start justify-between mb-6">
                 <div className="flex items-center space-x-4">
                   <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-3 rounded-xl group-hover:scale-110 transition-transform duration-300">
@@ -88,37 +95,29 @@ const Services = () => {
                 </div>
               </div>
 
-              <p className="text-gray-300 mb-6 leading-relaxed">{service.description}</p>
+              {/* Description */}
+              <p className="text-gray-300 mb-6 leading-relaxed">
+                {service.description}
+              </p>
 
-              {/* Tarot Cards Layout */}
-              {service.isTarot ? (
-                <div className="grid grid-cols-3 gap-4 mb-6">
-                  {[1, 2, 3].map((card) => (
-                    <div
-                      key={card}
-                      className="bg-gradient-to-b from-purple-700 to-pink-500 border-2 border-white/20 shadow-xl rounded-xl aspect-[2/3] flex flex-col items-center justify-center text-white text-lg font-semibold"
-                    >
-                      Card {card}
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="grid grid-cols-2 gap-2 mb-6">
-                  {service.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-center space-x-2 text-sm text-gray-400">
-                      <div className="w-1.5 h-1.5 bg-purple-400 rounded-full"></div>
-                      <span>{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
+              {/* Features */}
+              <div className="grid grid-cols-2 gap-2 mb-6">
+                {service.features.map((feature, idx) => (
+                  <div key={idx} className="flex items-center space-x-2 text-sm text-gray-400">
+                    <div className="w-1.5 h-1.5 bg-purple-400 rounded-full"></div>
+                    <span>{feature}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
 
         {/* Testimonials */}
         <div className="bg-gray-800/30 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/50">
-          <h3 className="text-3xl font-bold text-center text-white mb-8">What People Say</h3>
+          <h3 className="text-3xl font-bold text-center text-white mb-8">
+            What People Say
+          </h3>
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
               <div
