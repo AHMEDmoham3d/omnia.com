@@ -31,33 +31,35 @@ const Services = () => {
       description: "You will feel the shift within, I use a combination of frequencies that work directly on your nervous system that brings a deep relaxation, restore balance and peace. Its a journey back to your natural state of harmony.",
       features: [
         "There are 3 different types of sessions:",
-        <div key="back-to-balance" className="mt-2">
-          <span className="font-semibold text-pink-300">- BACK TO BALANCE</span>
-          <ul className="list-disc pl-5 mt-1 space-y-1">
-            <li>Stress relief</li>
-            <li>Chakra Balancing</li>
-            <li>Energy Alignment</li>
-            <li>Deep Relaxation</li>
-          </ul>
-        </div>,
-        <div key="pain-to-peace" className="mt-2">
-          <span className="font-semibold text-pink-300">- PAIN TO PEACE</span>
-          <ul className="list-disc pl-5 mt-1 space-y-1">
-            <li>Back, shoulder, neck, knee tightness</li>
-            <li>Headaches and migraines</li>
-            <li>Joint inflammation</li>
-            <li>Panic/Anxiety Attack</li>
-            <li>Insomnia</li>
-          </ul>
-        </div>,
-        <div key="natural-beauty" className="mt-2">
-          <span className="font-semibold text-pink-300">- NATURAL BEAUTY</span>
-          <ul className="list-disc pl-5 mt-1 space-y-1">
-            <li>Natural glow</li>
-            <li>Stimulates Collagen</li>
-            <li>Reduce Facial Tension</li>
-            <li>Reduce signs and wrinkles</li>
-          </ul>
+        <div key="sound-therapy-types" className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+          <div className="bg-gray-700/30 p-4 rounded-lg">
+            <span className="font-semibold text-pink-300">- BACK TO BALANCE</span>
+            <ul className="list-disc pl-5 mt-2 space-y-1">
+              <li>Stress relief</li>
+              <li>Chakra Balancing</li>
+              <li>Energy Alignment</li>
+              <li>Deep Relaxation</li>
+            </ul>
+          </div>
+          <div className="bg-gray-700/30 p-4 rounded-lg">
+            <span className="font-semibold text-pink-300">- PAIN TO PEACE</span>
+            <ul className="list-disc pl-5 mt-2 space-y-1">
+              <li>Back, shoulder, neck, knee tightness</li>
+              <li>Headaches and migraines</li>
+              <li>Joint inflammation</li>
+              <li>Panic/Anxiety Attack</li>
+              <li>Insomnia</li>
+            </ul>
+          </div>
+          <div className="bg-gray-700/30 p-4 rounded-lg">
+            <span className="font-semibold text-pink-300">- NATURAL BEAUTY</span>
+            <ul className="list-disc pl-5 mt-2 space-y-1">
+              <li>Natural glow</li>
+              <li>Stimulates Collagen</li>
+              <li>Reduce Facial Tension</li>
+              <li>Reduce signs and wrinkles</li>
+            </ul>
+          </div>
         </div>
       ]
     },
