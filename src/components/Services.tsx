@@ -138,9 +138,9 @@ const Services = () => {
                         <Clock className="w-4 h-4" />
                         <span>
                           {service.title === "Tarot Reading" 
-                            ? "60 min, Online or In person" 
+                            ? <>60 min, Online <span className="bg-pink-400/20 text-pink-300 px-2 py-0.5 rounded-md ml-1">Video Call</span> or In person</>
                             : service.title === "Energy Healing Session" 
-                              ? "60-90 min, Online or In person"
+                              ? <>60-90 min, Online <span className="bg-pink-400/20 text-pink-300 px-2 py-0.5 rounded-md ml-1">Video Call</span> or In person</>
                               : "60 min, In person Only"}
                         </span>
                       </span>
