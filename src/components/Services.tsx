@@ -26,9 +26,9 @@ const Services = () => {
     <>
       Tarot is a mirror of your energy each card holds a message for you, its like a heart to heart conversation with the universe, we ask and the cards respond whether its love, career or personal growth.
       <br /><br />
-      Each reading is personalized to your specific questions or your life situations
+      Each reading is personalized to your specific questions or your life situations.
       <br /><br />
-      I leave you with guidance, wisdom, clarity and the light to navigate your next steps
+      I leave you with guidance, wisdom, clarity and the light to navigate your next steps.
     </>
   ),
   features: []
