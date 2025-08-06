@@ -17,8 +17,8 @@ const Services = () => {
           </div>
         </div>
       ),
-      title: "Tarot Card Reading",
-      description: "Discover insights about your past, present, and future through the ancient art of tarot. Each reading is personalized to your specific questions and life situation.",
+      title: "Tarot Reading",
+      description: "Tarot is a heart to heart converaation with the universe, we ask and the cards respond whether its love, career or personal growth. Each reading is personalized to your specific questions or your life situations and I leave you with guidance and clarity .",
       features: ["Personal guidance", "Future insights", "Relationship advice", "Career direction"]
     },
     {
