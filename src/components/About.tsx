@@ -64,14 +64,10 @@ const About = () => {
               Your Journey to Inner Harmony
             </h3>
             <p className="text-gray-300 text-lg leading-relaxed">
-              With years of experience in spiritual healing and energy work, I combine traditional 
-              practices with intuitive guidance to help you discover your true potential. Each session 
-              is personalized to your unique needs and spiritual path.
+              Practicing since 2020, with a strong foundation in continuous study and a scientific approach, I combine my tools and techniques to help you find clarity, transformation and personal growth.
             </p>
             <p className="text-gray-300 text-lg leading-relaxed">
-              Whether you're seeking clarity through tarot readings, healing through sound therapy, 
-              or energy alignment through chakra work, you'll find a safe and nurturing environment 
-              to explore your inner wisdom.
+             Each session is personalized to your unique needs and spiritual path.
             </p>
             
             {/* Stats */}
