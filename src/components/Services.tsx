@@ -1,6 +1,6 @@
 import React from 'react';
 import { Smile } from 'lucide-react';
-import { Headphones, Sun, Moon, Star, Users, Clock, Heart } from 'lucide-react';
+import { Sun, Moon, Star, Users, Clock, Heart, Disc3 } from 'lucide-react';
 
 const Services = () => {
   const services = [
@@ -25,11 +25,10 @@ const Services = () => {
       description: "Tarot is a heart to heart conversation with the universe, we ask and the cards respond whether its love, career or personal growth. Each reading is personalized to your specific questions or your life situations and I leave you with guidance and clarity.",
       features: ["Online (Video Call) or In person", "Duration 1 H"]
     },
-    // ... rest of your services remain the same
     {
-      icon: <Headphones className="w-7 h-7 text-white" />,
-      title: "Sound Healing with Tuning Forks",
-      description: "Experience deep relaxation and cellular healing through therapeutic sound frequencies. Tuning forks help restore balance and harmony to your energy field.",
+      icon: <Disc3 className="w-7 h-7 text-white" />,
+      title: "Sound Therapy (Tuning Forks)",
+      description: "You will feel the shift within, I use a combination of frequencies that work directly on your nervous system that brings a deep relaxation, restore balance and peace. Its a journey back to your natural state of harmony.",
       features: ["Stress relief", "Energy alignment", "Chakra balancing", "Deep relaxation"]
     },
     {
@@ -52,7 +51,6 @@ const Services = () => {
     }
   ];
 
-  // ... rest of your component remains the same
   const testimonials = [
     {
       name: "Sarah M.",
