@@ -133,14 +133,14 @@ const Services = () => {
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold text-white mb-2">{service.title}</h3>
-                    <div className="flex items-center space-x-4 text-sm text-gray-400">
+                    <div className="flex items-center space-x-4 text-sm text-pink-300">
                       <span className="flex items-center space-x-1">
                         <Clock className="w-4 h-4" />
                         <span>
                           {service.title === "Tarot Reading" 
-                            ? <>60 min, Online <span className="bg-pink-400/20 text-pink-300 px-2 py-0.5 rounded-md ml-1">Video Call</span> or In person</>
+                            ? "60 min, Online (Video Call) or In person"
                             : service.title === "Energy Healing Session" 
-                              ? <>60-90 min, Online <span className="bg-pink-400/20 text-pink-300 px-2 py-0.5 rounded-md ml-1">Video Call</span> or In person</>
+                              ? "60-90 min, Online (Video Call) or In person"
                               : "60 min, In person Only"}
                         </span>
                       </span>
