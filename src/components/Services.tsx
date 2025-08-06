@@ -23,7 +23,7 @@ const Services = () => {
       ),
       title: "Tarot Reading",
       description: "Tarot is a heart to heart conversation with the universe, we ask and the cards respond whether its love, career or personal growth. Each reading is personalized to your specific questions or your life situations and I leave you with guidance and clarity.",
-      features: ["Online (Video Call) or In person", "Duration 1 H"]
+      features: ["Online (Video Call) or In person", "Duration 60 min"]
     },
     {
       icon: <Music className="w-7 h-7 text-pink-400" />,
@@ -136,7 +136,13 @@ const Services = () => {
                     <div className="flex items-center space-x-4 text-sm text-gray-400">
                       <span className="flex items-center space-x-1">
                         <Clock className="w-4 h-4" />
-                        <span>60 min, In person Only</span>
+                        <span>
+                          {service.title === "Tarot Reading" 
+                            ? "60 min, Online or In person" 
+                            : service.title === "Energy Healing Session" 
+                              ? "60-90 min, Online or In person"
+                              : "60 min, In person Only"}
+                        </span>
                       </span>
                     </div>
                   </div>
