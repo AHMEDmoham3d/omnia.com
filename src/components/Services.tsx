@@ -1,15 +1,20 @@
 import React from 'react';
 import { Smile } from 'lucide-react';
-import { Headphones, Zap, Users, Clock, Star, Heart } from 'lucide-react';
+import { Headphones, Zap, Users, Clock, Star, Heart, Hand } from 'lucide-react';
 
 const Services = () => {
   const services = [
     {
       icon: (
-        <div className="flex space-x-1">
-          <div className="w-6 h-10 bg-purple-600 rounded transform rotate-2 border border-purple-300"></div>
-          <div className="w-6 h-10 bg-pink-600 rounded transform -rotate-1 border border-pink-300"></div>
-          <div className="w-6 h-10 bg-yellow-600 rounded transform rotate-3 border border-yellow-300"></div>
+        <div className="relative">
+          {/* Hand holding the cards */}
+          <Hand className="absolute -bottom-3 -left-2 w-8 h-8 text-gray-300 rotate-45" />
+          {/* Tarot cards stack */}
+          <div className="flex space-x-1 relative z-10">
+            <div className="w-6 h-10 bg-purple-600 rounded transform rotate-2 border-2 border-purple-300 shadow-md"></div>
+            <div className="w-6 h-10 bg-pink-600 rounded transform -rotate-1 border-2 border-pink-300 shadow-md"></div>
+            <div className="w-6 h-10 bg-yellow-600 rounded transform rotate-3 border-2 border-yellow-300 shadow-md"></div>
+          </div>
         </div>
       ),
       title: "Tarot Card Reading",
@@ -17,19 +22,19 @@ const Services = () => {
       features: ["Personal guidance", "Future insights", "Relationship advice", "Career direction"]
     },
     {
-      icon: <Headphones className="w-8 h-8" />,
+      icon: <Headphones className="w-8 h-8 text-white" />,
       title: "Sound Healing with Tuning Forks",
       description: "Experience deep relaxation and cellular healing through therapeutic sound frequencies. Tuning forks help restore balance and harmony to your energy field.",
       features: ["Stress relief", "Energy alignment", "Chakra balancing", "Deep relaxation"]
     },
     {
-      icon: <Zap className="w-8 h-8" />,
+      icon: <Zap className="w-8 h-8 text-white" />,
       title: "Energy Healing Session",
       description: "Clear blockages and restore natural energy flow through hands-on healing techniques. Perfect for physical, emotional, and spiritual wellness.",
       features: ["Chakra clearing", "Aura cleansing", "Emotional release", "Spiritual alignment"]
     },
     {
-      icon: <Users className="w-8 h-8" />,
+      icon: <Users className="w-8 h-8 text-white" />,
       title: "Group Meditation Circle",
       description: "Join like-minded souls in a powerful group meditation experience. Amplify your spiritual practice through collective energy and intention.",
       features: ["Group energy", "Guided meditation", "Spiritual community", "Shared healing"]
@@ -81,7 +86,7 @@ const Services = () => {
               {/* Header */}
               <div className="flex items-start justify-between mb-6">
                 <div className="flex items-center space-x-4">
-                  <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-3 rounded-xl group-hover:scale-110 transition-transform duration-300">
+                  <div className="bg-gray-700/50 p-3 rounded-xl group-hover:scale-110 transition-transform duration-300">
                     {service.icon}
                   </div>
                   <div>
