@@ -6,14 +6,14 @@ const Services = () => {
   const services = [
     {
       icon: (
-        <div className="relative h-12 w-20">
-          {/* Hand holding the cards - clearly visible */}
-          <Hand className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-8 h-8 text-gray-300 rotate-[20deg] z-0" />
-          {/* Tarot cards stack - realistic style */}
-          <div className="flex relative z-10 justify-center" style={{ gap: '1px' }}>
-            <div className="w-5 h-12 bg-gradient-to-b from-gray-100 to-gray-300 rounded-sm transform rotate-2 border border-gray-400 shadow-md"></div>
-            <div className="w-5 h-12 bg-gradient-to-b from-gray-100 to-gray-300 rounded-sm transform -rotate-1 border border-gray-400 shadow-md"></div>
-            <div className="w-5 h-12 bg-gradient-to-b from-gray-100 to-gray-300 rounded-sm transform rotate-3 border border-gray-400 shadow-md"></div>
+        <div className="relative h-14 w-20">
+          {/* White hand holding the cards */}
+          <Hand className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-8 h-8 text-white rotate-[20deg] z-0" />
+          {/* Pink outlined tarot cards */}
+          <div className="flex relative z-10 justify-center" style={{ gap: '2px' }}>
+            <div className="w-6 h-10 bg-transparent rounded-sm transform rotate-2 border-2 border-pink-400 shadow-md"></div>
+            <div className="w-6 h-10 bg-transparent rounded-sm transform -rotate-1 border-2 border-pink-400 shadow-md"></div>
+            <div className="w-6 h-10 bg-transparent rounded-sm transform rotate-3 border-2 border-pink-400 shadow-md"></div>
           </div>
         </div>
       ),
@@ -30,7 +30,13 @@ const Services = () => {
     {
       icon: <Heart className="w-7 h-7 text-pink-400" strokeWidth="2" fill="none" />,
       title: "Energy Healing Session",
-      description: "A gentle yet powerful healing session designed to clear energetic blockages, restore your balance and help you to reconnect with your true self while finding the sacred parts of you that you have forgotten This healing session is perfect for releasing blockages related to relationships, family dynamics, grief or loss, money challenges, emotional struggles,...Its a safe space to let go and realign your energy.",
+      description: (
+        <>
+          A gentle yet powerful healing session designed to clear energetic blockages, restore your balance and help you to reconnect with your true self while finding the sacred parts of you that you have forgotten.
+          <br /><br />
+          This healing session is perfect for releasing blockages related to relationships, family dynamics, grief or loss, money challenges, emotional struggles,...Its a safe space to let go and realign your energy.
+        </>
+      ),
       features: ["Online (Video Call) or In person ", "Duration from 60 min up to 90 min"]
     },
     {
