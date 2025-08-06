@@ -1,4 +1,5 @@
 import React from 'react';
+import { Smile } from 'lucide-react';
 import { BookOpen, Headphones, Zap, Users, Clock, Star, Heart } from 'lucide-react';
 
 const Services = () => {
@@ -65,9 +66,11 @@ const Services = () => {
   Heal <Heart className="w-5 h-5 text-pink-400 inline" />
   Rise
 </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-Choose from a range of transformative sessions, each designef to support your personal journey, whether you are seeking clarity, balance, emotional or physicsl pain release - There is a space for you here :)
-          </p>
+<p className="text-xl text-gray-300 max-w-3xl mx-auto">
+  Choose from a range of transformative sessions, each designed to support your personal journey,
+  whether you are seeking clarity, balance, emotional or physical pain release — There is a space for you here{' '}
+  <Smile className="w-5 h-5 inline text-yellow-400" />
+</p>
         </div>
 
         {/* Services Grid */}
