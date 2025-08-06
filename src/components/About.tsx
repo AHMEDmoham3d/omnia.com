@@ -34,7 +34,9 @@ const About = () => {
             About Omnia
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-  Welcome to a sacred space where ancient wisdom meets modern healing. Iam dedicated to guiding you on your journey to awake your own consciousness to find your way in life through some practices that have been cherished for centuries.
+  Welcome to a sacred space where ancient wisdom meets modern healing.<br></br>
+ Iam dedicated to guiding you on your journey to awake your own consciousness to find your way in life
+  through some practices that have been cherished for centuries.
           </p>
         </div>
 
