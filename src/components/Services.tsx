@@ -7,12 +7,15 @@ const Services = () => {
     {
       icon: (
         <div className="flex justify-center" style={{ gap: '2px' }}>
+          {/* Sun Card */}
           <div className="w-6 h-10 bg-transparent rounded-sm transform rotate-2 border-2 border-pink-400 shadow-md flex items-center justify-center">
             <Sun className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
           </div>
+          {/* Moon Card */}
           <div className="w-6 h-10 bg-transparent rounded-sm transform -rotate-1 border-2 border-pink-400 shadow-md flex items-center justify-center">
             <Moon className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
           </div>
+          {/* Star Card */}
           <div className="w-6 h-10 bg-transparent rounded-sm transform rotate-3 border-2 border-pink-400 shadow-md flex items-center justify-center">
             <Star className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
           </div>
@@ -28,19 +31,19 @@ const Services = () => {
       description: "You will feel the shift within, I use a combination of frequencies that work directly on your nervous system that brings a deep relaxation, restore balance and peace. Its a journey back to your natural state of harmony.",
       features: [
         "There are 3 different types of sessions:",
-        <div key="types" className="flex flex-col md:flex-row gap-4 mt-4">
-          <div className="bg-gray-800 p-4 rounded-xl flex-1">
-            <span className="font-semibold text-pink-300 block mb-2">- BACK TO BALANCE</span>
-            <ul className="list-disc pl-5 text-sm text-gray-300 space-y-1">
+        <div key="sound-therapy-types" className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+          <div className="bg-gray-700/30 p-4 rounded-lg">
+            <span className="font-semibold text-pink-300">- BACK TO BALANCE</span>
+            <ul className="list-disc pl-5 mt-2 space-y-1">
               <li>Stress relief</li>
               <li>Chakra Balancing</li>
               <li>Energy Alignment</li>
               <li>Deep Relaxation</li>
             </ul>
           </div>
-          <div className="bg-gray-800 p-4 rounded-xl flex-1">
-            <span className="font-semibold text-pink-300 block mb-2">- PAIN TO PEACE</span>
-            <ul className="list-disc pl-5 text-sm text-gray-300 space-y-1">
+          <div className="bg-gray-700/30 p-4 rounded-lg">
+            <span className="font-semibold text-pink-300">- PAIN TO PEACE</span>
+            <ul className="list-disc pl-5 mt-2 space-y-1">
               <li>Back, shoulder, neck, knee tightness</li>
               <li>Headaches and migraines</li>
               <li>Joint inflammation</li>
@@ -48,9 +51,9 @@ const Services = () => {
               <li>Insomnia</li>
             </ul>
           </div>
-          <div className="bg-gray-800 p-4 rounded-xl flex-1">
-            <span className="font-semibold text-pink-300 block mb-2">- NATURAL BEAUTY</span>
-            <ul className="list-disc pl-5 text-sm text-gray-300 space-y-1">
+          <div className="bg-gray-700/30 p-4 rounded-lg">
+            <span className="font-semibold text-pink-300">- NATURAL BEAUTY</span>
+            <ul className="list-disc pl-5 mt-2 space-y-1">
               <li>Natural glow</li>
               <li>Stimulates Collagen</li>
               <li>Reduce Facial Tension</li>
@@ -101,6 +104,7 @@ const Services = () => {
   return (
     <section id="services" className="py-20 px-4 relative">
       <div className="container mx-auto max-w-6xl">
+        {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent flex items-center justify-center gap-2 flex-wrap">
             Feel <Heart className="w-5 h-5 text-pink-400 inline" />
@@ -114,12 +118,14 @@ const Services = () => {
           </p>
         </div>
 
+        {/* Services Grid */}
         <div className="grid md:grid-cols-2 gap-8 mb-20">
           {services.map((service, index) => (
             <div
               key={index}
               className="group bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 hover:border-purple-400/50 transition-all duration-500 hover:transform hover:scale-105 hover:shadow-2xl"
             >
+              {/* Header */}
               <div className="flex items-start justify-between mb-6">
                 <div className="flex items-center space-x-4">
                   <div className="bg-gray-700/50 p-3 rounded-xl group-hover:scale-110 transition-transform duration-300 flex items-center justify-center">
@@ -130,16 +136,19 @@ const Services = () => {
                     <div className="flex items-center space-x-4 text-sm text-gray-400">
                       <span className="flex items-center space-x-1">
                         <Clock className="w-4 h-4" />
+                        <span>60 min, In person Only</span>
                       </span>
                     </div>
                   </div>
                 </div>
               </div>
 
+              {/* Description */}
               <p className="text-gray-300 mb-6 leading-relaxed">
                 {service.description}
               </p>
 
+              {/* Features */}
               <div className="grid grid-cols-1 gap-2 mb-6">
                 {service.features.map((feature, idx) => (
                   <div key={idx} className="text-sm text-gray-400">
@@ -158,6 +167,7 @@ const Services = () => {
           ))}
         </div>
 
+        {/* Testimonials */}
         <div className="bg-gray-800/30 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/50">
           <h3 className="text-3xl font-bold text-center text-white mb-8">
             What People Say
