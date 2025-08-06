@@ -34,9 +34,9 @@ const About = () => {
             About Omnia
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-  Welcome to a sacred space where ancient wisdom meets modern healing.<br></br>
- Iam dedicated to guiding you on your journey to awake your own consciousness to find your way in life
-  through some practices that have been cherished for centuries.
+            Welcome to a sacred space where ancient wisdom meets modern healing.<br />
+            I am dedicated to guiding you on your journey to awake your own consciousness to find your way in life
+            through some practices that have been cherished for centuries.
           </p>
         </div>
 
@@ -45,13 +45,12 @@ const About = () => {
           {/* Image */}
           <div className="relative">
             <div className="aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-purple-900/30 to-pink-900/30 p-2">
-<img
-  src="/omnia.jpg"
-  alt="Spiritual healing session with tarot cards and crystals"
-  className="w-full h-full object-cover rounded-2xl shadow-2xl"
-  loading="lazy"
-/>
-
+              <img
+                src="/omnia.jpg"
+                alt="Spiritual healing session with tarot cards and crystals"
+                className="w-full h-full object-cover rounded-2xl shadow-2xl"
+                loading="lazy"
+              />
             </div>
             {/* Floating Elements */}
             <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full opacity-20 animate-pulse"></div>
@@ -64,14 +63,17 @@ const About = () => {
               Your Journey to Inner Harmony
             </h3>
             <p className="text-gray-300 text-lg leading-relaxed">
-              Practicing since 2020, with a strong foundation in continuous study and a scientific approach, I combine my tools and techniques to help you find clarity, transformation and personal growth, I hold sacred space for those who are ready to release what no longer serves them and reconnect with their inner light. Through sound therapy, tarot, energy healing
+              Practicing since 2020, with a strong foundation in continuous study and a scientific approach, I combine my tools and techniques to help you find clarity, transformation and personal growth.
             </p>
             <p className="text-gray-300 text-lg leading-relaxed">
-             Each session is personalized to your unique needs and spiritual path.
+              I hold sacred space for those who are ready to release what no longer serves them and reconnect with their inner light. Through sound therapy, tarot, energy healing
             </p>
-            
+            <p className="text-gray-300 text-lg leading-relaxed">
+              Each session is personalized to your unique needs and spiritual path.
+            </p>
+
             {/* Stats */}
-            <div className="grid grid-cols-2 gap-6 pt-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-6">
               <div className="text-center">
                 <div className="text-3xl font-bold text-purple-400 mb-2">1500+</div>
                 <div className="text-gray-400">Healing Sessions</div>
