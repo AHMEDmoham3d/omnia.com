@@ -66,8 +66,7 @@ const Services = () => {
   Rise
 </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Choose from our range of transformative spiritual services, each designed to guide you 
-            on your journey to inner peace and enlightenment.
+Choose from a range of transformative sessions, each designef to support your personal journey, whether you are seeking clarity, balance, emotional or physicsl pain release - There is a space for you here :)
           </p>
         </div>
 
