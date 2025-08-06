@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookOpen, Headphones, Zap, Users, Clock, Star } from 'lucide-react';
+import { BookOpen, Headphones, Zap, Users, Clock, Star, Heart } from 'lucide-react';
 
 const Services = () => {
   const services = [
@@ -60,9 +60,11 @@ const Services = () => {
       <div className="container mx-auto max-w-6xl">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-            Sacred Services
-          </h2>
+<h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent flex items-center justify-center gap-2 flex-wrap">
+  Feel <Heart className="w-5 h-5 text-pink-400 inline" />
+  Heal <Heart className="w-5 h-5 text-pink-400 inline" />
+  Rise
+</h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Choose from our range of transformative spiritual services, each designed to guide you 
             on your journey to inner peace and enlightenment.
