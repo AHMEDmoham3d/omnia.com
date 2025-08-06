@@ -23,7 +23,7 @@ const Services = () => {
       ),
       title: "Tarot Reading",
       description: "Tarot is a heart to heart conversation with the universe, we ask and the cards respond whether its love, career or personal growth. Each reading is personalized to your specific questions or your life situations and I leave you with guidance and clarity.",
-      features: ["Online (Video Call) or In person", "Duration 60 min"]
+      features: []
     },
     {
       icon: <Music className="w-7 h-7 text-pink-400" />,
