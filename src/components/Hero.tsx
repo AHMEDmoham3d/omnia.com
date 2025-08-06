@@ -68,10 +68,10 @@ const Hero = () => {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Animated Background */}
-      <canvas
+      {/* <canvas
         ref={canvasRef}
         className="absolute inset-0 pointer-events-none opacity-30"
-      />
+      /> */}
       
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-gray-900 to-indigo-900/20"></div>
