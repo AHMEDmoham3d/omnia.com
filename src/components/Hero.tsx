@@ -68,10 +68,10 @@ const Hero = () => {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Animated Background */}
-      {/* <canvas
+      <canvas
         ref={canvasRef}
         className="absolute inset-0 pointer-events-none opacity-30"
-      /> */}
+      />
       
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-gray-900 to-indigo-900/20"></div>
@@ -95,9 +95,9 @@ const Hero = () => {
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 bg-clip-text text-transparent animate-fade-in">
             Omnia Abdo
           </h1>
-          <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+          {/* <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
             <div className="w-24 h-24 border border-purple-400/30 rounded-full animate-spin-slow"></div>
-          </div>
+          </div> */}
         </div>
         
         <p className="text-xl md:text-2xl text-gray-300 mb-8 font-light animate-fade-in-up">
