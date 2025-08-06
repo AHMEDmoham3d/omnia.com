@@ -6,16 +6,14 @@ const Services = () => {
   const services = [
     {
       icon: (
-        <div className="relative h-16 w-24">
-          {/* Hand holding the cards - now clearly visible */}
-          <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 z-0">
-            <Hand className="w-10 h-10 text-gray-300 rotate-[20deg]" />
-          </div>
-          {/* Tarot cards stack - professional style */}
-          <div className="flex relative z-10 justify-center" style={{ gap: '2px' }}>
-            <div className="w-7 h-16 bg-gradient-to-b from-purple-700 to-purple-500 rounded-sm transform rotate-2 border border-purple-300 shadow-lg"></div>
-            <div className="w-7 h-16 bg-gradient-to-b from-pink-700 to-pink-500 rounded-sm transform -rotate-1 border border-pink-300 shadow-lg"></div>
-            <div className="w-7 h-16 bg-gradient-to-b from-yellow-600 to-yellow-400 rounded-sm transform rotate-3 border border-yellow-300 shadow-lg"></div>
+        <div className="relative h-12 w-20">
+          {/* Hand holding the cards - clearly visible */}
+          <Hand className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-8 h-8 text-gray-300 rotate-[20deg] z-0" />
+          {/* Tarot cards stack - realistic style */}
+          <div className="flex relative z-10 justify-center" style={{ gap: '1px' }}>
+            <div className="w-5 h-12 bg-gradient-to-b from-gray-100 to-gray-300 rounded-sm transform rotate-2 border border-gray-400 shadow-md"></div>
+            <div className="w-5 h-12 bg-gradient-to-b from-gray-100 to-gray-300 rounded-sm transform -rotate-1 border border-gray-400 shadow-md"></div>
+            <div className="w-5 h-12 bg-gradient-to-b from-gray-100 to-gray-300 rounded-sm transform rotate-3 border border-gray-400 shadow-md"></div>
           </div>
         </div>
       ),
@@ -24,19 +22,19 @@ const Services = () => {
       features: ["Personal guidance", "Future insights", "Relationship advice", "Career direction"]
     },
     {
-      icon: <Headphones className="w-8 h-8 text-white" />,
+      icon: <Headphones className="w-7 h-7 text-white" />,
       title: "Sound Healing with Tuning Forks",
       description: "Experience deep relaxation and cellular healing through therapeutic sound frequencies. Tuning forks help restore balance and harmony to your energy field.",
       features: ["Stress relief", "Energy alignment", "Chakra balancing", "Deep relaxation"]
     },
     {
-      icon: <Heart className="w-8 h-8 text-red-400 fill-red-400" />,
+      icon: <Heart className="w-7 h-7 text-red-400 fill-red-400" />,
       title: "Energy Healing Session",
       description: "Clear blockages and restore natural energy flow through hands-on healing techniques. Perfect for physical, emotional, and spiritual wellness.",
       features: ["Chakra clearing", "Aura cleansing", "Emotional release", "Spiritual alignment"]
     },
     {
-      icon: <Users className="w-8 h-8 text-white" />,
+      icon: <Users className="w-7 h-7 text-white" />,
       title: "Group Meditation Circle",
       description: "Join like-minded souls in a powerful group meditation experience. Amplify your spiritual practice through collective energy and intention.",
       features: ["Group energy", "Guided meditation", "Spiritual community", "Shared healing"]
