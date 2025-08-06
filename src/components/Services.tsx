@@ -6,14 +6,14 @@ const Services = () => {
   const services = [
     {
       icon: (
-        <div className="relative">
-          {/* Hand holding the cards */}
-          <Hand className="absolute -bottom-3 -left-2 w-8 h-8 text-gray-300 rotate-45" />
-          {/* Tarot cards stack */}
-          <div className="flex space-x-1 relative z-10">
-            <div className="w-6 h-10 bg-purple-600 rounded transform rotate-2 border-2 border-purple-300 shadow-md"></div>
-            <div className="w-6 h-10 bg-pink-600 rounded transform -rotate-1 border-2 border-pink-300 shadow-md"></div>
-            <div className="w-6 h-10 bg-yellow-600 rounded transform rotate-3 border-2 border-yellow-300 shadow-md"></div>
+        <div className="relative h-14 w-20">
+          {/* Hand holding the cards - now more visible */}
+          <Hand className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-10 h-10 text-gray-400 rotate-[30deg] z-0" />
+          {/* Tarot cards stack - now closer together */}
+          <div className="flex relative z-10" style={{ gap: '0.15rem' }}>
+            <div className="w-5 h-14 bg-purple-600 rounded transform rotate-2 border-2 border-purple-300 shadow-lg"></div>
+            <div className="w-5 h-14 bg-pink-600 rounded transform -rotate-1 border-2 border-pink-300 shadow-lg"></div>
+            <div className="w-5 h-14 bg-yellow-500 rounded transform rotate-3 border-2 border-yellow-300 shadow-lg"></div>
           </div>
         </div>
       ),
@@ -86,7 +86,7 @@ const Services = () => {
               {/* Header */}
               <div className="flex items-start justify-between mb-6">
                 <div className="flex items-center space-x-4">
-                  <div className="bg-gray-700/50 p-3 rounded-xl group-hover:scale-110 transition-transform duration-300">
+                  <div className="bg-gray-700/50 p-3 rounded-xl group-hover:scale-110 transition-transform duration-300 flex items-center justify-center">
                     {service.icon}
                   </div>
                   <div>
