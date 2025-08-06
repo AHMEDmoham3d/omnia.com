@@ -1,19 +1,23 @@
 import React from 'react';
 import { Smile } from 'lucide-react';
-import { Headphones, Zap, Users, Clock, Star, Heart, Hand } from 'lucide-react';
+import { Headphones, Sun, Moon, Star, Users, Clock, Heart } from 'lucide-react';
 
 const Services = () => {
   const services = [
     {
       icon: (
-        <div className="relative h-14 w-20">
-          {/* White hand holding the cards */}
-          <Hand className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-8 h-8 text-white rotate-[20deg] z-0" />
-          {/* Pink outlined tarot cards */}
-          <div className="flex relative z-10 justify-center" style={{ gap: '2px' }}>
-            <div className="w-6 h-10 bg-transparent rounded-sm transform rotate-2 border-2 border-pink-400 shadow-md"></div>
-            <div className="w-6 h-10 bg-transparent rounded-sm transform -rotate-1 border-2 border-pink-400 shadow-md"></div>
-            <div className="w-6 h-10 bg-transparent rounded-sm transform rotate-3 border-2 border-pink-400 shadow-md"></div>
+        <div className="flex justify-center" style={{ gap: '2px' }}>
+          {/* Sun Card */}
+          <div className="w-6 h-10 bg-transparent rounded-sm transform rotate-2 border-2 border-pink-400 shadow-md flex items-center justify-center">
+            <Sun className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
+          </div>
+          {/* Moon Card */}
+          <div className="w-6 h-10 bg-transparent rounded-sm transform -rotate-1 border-2 border-pink-400 shadow-md flex items-center justify-center">
+            <Moon className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
+          </div>
+          {/* Star Card */}
+          <div className="w-6 h-10 bg-transparent rounded-sm transform rotate-3 border-2 border-pink-400 shadow-md flex items-center justify-center">
+            <Star className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
           </div>
         </div>
       ),
@@ -21,6 +25,7 @@ const Services = () => {
       description: "Tarot is a heart to heart conversation with the universe, we ask and the cards respond whether its love, career or personal growth. Each reading is personalized to your specific questions or your life situations and I leave you with guidance and clarity.",
       features: ["Online (Video Call) or In person", "Duration 1 H"]
     },
+    // ... rest of your services remain the same
     {
       icon: <Headphones className="w-7 h-7 text-white" />,
       title: "Sound Healing with Tuning Forks",
@@ -47,6 +52,7 @@ const Services = () => {
     }
   ];
 
+  // ... rest of your component remains the same
   const testimonials = [
     {
       name: "Sarah M.",
