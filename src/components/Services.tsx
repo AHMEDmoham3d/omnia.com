@@ -81,7 +81,7 @@ const Services = () => {
           This healing session is perfect for releasing blockages related to relationships, family dynamics, grief or loss, money challenges, emotional struggles,...Its a safe space to let go and realign your energy.
         </>
       ),
-      features: ["Online (Video Call) or In person ", "Duration from 60 min up to 90 min"]
+      features: []
     },
     {
       icon: <Users className="w-7 h-7 text-white" />,
