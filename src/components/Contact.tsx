@@ -9,7 +9,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
+    gender: '',
     whatsapp: '',
     message: ''
   });
@@ -17,7 +17,7 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -32,7 +32,7 @@ const Contact = () => {
       const { error } = await supabase.from('messages').insert([
         {
           name: formData.name,
-          email: formData.email,
+          gender: formData.gender,
           whatsapp: formData.whatsapp,
           message: formData.message
         }
@@ -41,7 +41,7 @@ const Contact = () => {
       if (error) throw error;
 
       setSubmitStatus('success');
-      setFormData({ name: '', email: '', whatsapp: '', message: '' });
+      setFormData({ name: '', gender: '', whatsapp: '', message: '' });
 
       setTimeout(() => setSubmitStatus('idle'), 5000);
     } catch {
@@ -141,25 +141,27 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-gray-300 mb-2 font-medium">
-                      Email Address *
+                    <label htmlFor="gender" className="block text-gray-300 mb-2 font-medium">
+                      Gender *
                     </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
+                    <select
+                      id="gender"
+                      name="gender"
+                      value={formData.gender}
                       onChange={handleChange}
                       required
                       className="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all duration-300"
-                      placeholder="your@email.com"
-                    />
+                    >
+                      <option value="">Select Gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
                   </div>
                 </div>
 
                 <div>
                   <label htmlFor="whatsapp" className="block text-gray-300 mb-2 font-medium">
-                    WhatsApp Number
+                    WhatsApp Number *
                   </label>
                   <input
                     type="tel"
@@ -167,6 +169,7 @@ const Contact = () => {
                     name="whatsapp"
                     value={formData.whatsapp}
                     onChange={handleChange}
+                    required
                     className="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all duration-300"
                     placeholder="+20 10 09058159"
                   />
@@ -234,5 +237,4 @@ const Contact = () => {
     </section>
   );
 };
-
 export default Contact;
