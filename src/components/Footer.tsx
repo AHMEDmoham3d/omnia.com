@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Mail, Phone, MapPin, Heart } from 'lucide-react';
+import { Sparkles, Mail, Phone, MapPin, Heart, Instagram, Music } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -22,16 +22,36 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <a
-                href="#"
+                href="mailto:ms.omnia.o@hotmail.com"
                 className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-purple-400 hover:bg-gray-700 transition-all duration-300"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Mail className="w-5 h-5" />
               </a>
               <a
-                href="#"
+                href="https://wa.me/+201009058159"
                 className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-purple-400 hover:bg-gray-700 transition-all duration-300"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Phone className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.instagram.com/your-instagram-username"
+                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-purple-400 hover:bg-gray-700 transition-all duration-300"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.tiktok.com/@your-tiktok-username"
+                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-purple-400 hover:bg-gray-700 transition-all duration-300"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Music className="w-5 h-5" />
               </a>
             </div>
           </div>
