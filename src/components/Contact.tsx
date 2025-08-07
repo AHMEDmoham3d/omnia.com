@@ -10,6 +10,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     gender: '',
+    nationality: '',
     whatsapp: '',
     message: ''
   });
@@ -33,6 +34,7 @@ const Contact = () => {
         {
           name: formData.name,
           gender: formData.gender,
+          nationality: formData.nationality,
           whatsapp: formData.whatsapp,
           message: formData.message
         }
@@ -41,7 +43,7 @@ const Contact = () => {
       if (error) throw error;
 
       setSubmitStatus('success');
-      setFormData({ name: '', gender: '', whatsapp: '', message: '' });
+      setFormData({ name: '', gender: '', nationality: '', whatsapp: '', message: '' });
 
       setTimeout(() => setSubmitStatus('idle'), 5000);
     } catch {
@@ -71,6 +73,14 @@ const Contact = () => {
       value: "Available Worldwide",
       link: "#"
     }
+  ];
+
+  // قائمة الجنسيات الشائعة
+  const nationalities = [
+    "Egyptian", "Saudi", "Emirati", "Kuwaiti", "Qatari", 
+    "Bahraini", "Omani", "Jordanian", "Lebanese", "Syrian",
+    "Iraqi", "Yemeni", "Palestinian", "Moroccan", "Algerian",
+    "Tunisian", "Libyan", "Sudanese", "Other"
   ];
 
   return (
@@ -159,20 +169,41 @@ const Contact = () => {
                   </div>
                 </div>
 
-                <div>
-                  <label htmlFor="whatsapp" className="block text-gray-300 mb-2 font-medium">
-                    WhatsApp Number *
-                  </label>
-                  <input
-                    type="tel"
-                    id="whatsapp"
-                    name="whatsapp"
-                    value={formData.whatsapp}
-                    onChange={handleChange}
-                    required
-                    className="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all duration-300"
-                    placeholder="+20 10 09058159"
-                  />
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="nationality" className="block text-gray-300 mb-2 font-medium">
+                      Nationality *
+                    </label>
+                    <select
+                      id="nationality"
+                      name="nationality"
+                      value={formData.nationality}
+                      onChange={handleChange}
+                      required
+                      className="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all duration-300"
+                    >
+                      <option value="">Select Nationality</option>
+                      {nationalities.map((nation) => (
+                        <option key={nation} value={nation}>{nation}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label htmlFor="whatsapp" className="block text-gray-300 mb-2 font-medium">
+                      WhatsApp Number *
+                    </label>
+                    <input
+                      type="tel"
+                      id="whatsapp"
+                      name="whatsapp"
+                      value={formData.whatsapp}
+                      onChange={handleChange}
+                      required
+                      className="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all duration-300"
+                      placeholder="+20 10 09058159"
+                    />
+                  </div>
                 </div>
 
                 <div>
