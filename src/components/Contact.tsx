@@ -162,7 +162,8 @@ const Contact = () => {
                 <li>✨ Scientific base over 5+ years experience</li>
                 <li>🔒 100% confidential and secure sessions</li>
                 <li>🌟 Personalized approach for every client</li>
-                <li>💫 Trusted by 500+ satisfied clients worldwide</li>
+                <li>✨Holding a space and non- judgment</li>
+                <li>💫 Sees beyond the surface</li>
               </ul>
             </div>
           </div>
