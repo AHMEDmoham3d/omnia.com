@@ -73,7 +73,7 @@ const Services = () => {
     },
     {
       icon: <Heart className="w-7 h-7 text-pink-400" strokeWidth="2" fill="none" />,
-      title: "Energy Healing Session",
+      title: "Healing Sessions",
       description: (
         <>
           A gentle yet powerful healing session designed to clear energetic blockages, restore your balance and help you to reconnect with your true self while finding the sacred parts of you that you have forgotten.
