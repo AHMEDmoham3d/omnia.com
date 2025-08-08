@@ -159,7 +159,7 @@ const Contact = () => {
             <div className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-xl p-6 border border-purple-400/20">
               <h4 className="text-white font-semibold mb-3">Why Choose Omnia?</h4>
               <ul className="space-y-2 text-gray-300 text-sm">
-                <li>✨ Certified spiritual healer with 5+ years experience</li>
+                <li>✨ Scientific base over 5+ years experience</li>
                 <li>🔒 100% confidential and secure sessions</li>
                 <li>🌟 Personalized approach for every client</li>
                 <li>💫 Trusted by 500+ satisfied clients worldwide</li>

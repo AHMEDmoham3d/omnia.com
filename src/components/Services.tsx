@@ -36,7 +36,7 @@ const Services = () => {
     {
       icon: <Music className="w-7 h-7 text-pink-400" />,
       title: "Sound Therapy (Tuning Forks)",
-      description: "You will feel the shift within, I use a combination of frequencies that work directly on your nervous system that brings a deep relaxation, restore balance and peace. Its a journey back to your natural state of harmony.",
+      description: "You will feel the shift within. I use a combination of frequencies and ancient techniques that work directly on your nervous system to bring deep relaxation, restore balance, and promote healing. It's a journey back to your natural state of harmony.",
       features: [
         "There are 3 different types of sessions:",
         <div key="sound-therapy-types" className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
