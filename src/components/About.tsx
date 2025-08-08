@@ -10,8 +10,8 @@ const About = () => {
     },
     {
       icon: <Eye className="w-12 h-12 text-purple-400" />,
-      title: "Intuitive Readings",
-      description: "Gain clarity on your life's path through personalized tarot and oracle card readings."
+      title: "Tarot Readings",
+      description: "Gain clarity on your life's path Whether (love, career or personal growth) through personalized tarot and oracle card ."
     },
     {
       icon: <Waves className="w-12 h-12 text-blue-400" />,
