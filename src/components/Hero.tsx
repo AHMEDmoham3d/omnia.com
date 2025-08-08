@@ -76,63 +76,28 @@ const Hero = () => {
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-gray-900 to-indigo-900/20"></div>
       
-      {/* Floating Elements - Replaced with your logo */}
+      {/* Floating Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 left-10 animate-float">
-          <img 
-            src="/beyond-holistic-logo.png" // Update with your actual logo path
-            alt="Beyond Holistic Logo"
-            className="w-32 h-auto opacity-80" // Adjust size as needed
-          />
+          <Moon className="w-12 h-12 text-purple-300 opacity-60" />
         </div>
         <div className="absolute top-40 right-20 animate-float-delayed">
-          <img 
-            src="/beyond-holistic-logo.png" // Update with your actual logo path
-            alt="Beyond Holistic Logo"
-            className="w-24 h-auto opacity-70" // Adjust size as needed
-          />
+          <Star className="w-8 h-8 text-yellow-300 opacity-70" />
         </div>
         <div className="absolute bottom-40 left-20 animate-float">
-          <img 
-            src="/beyond-holistic-logo.png" // Update with your actual logo path
-            alt="Beyond Holistic Logo"
-            className="w-28 h-auto opacity-60" // Adjust size as needed
-          />
+          <Sparkles className="w-10 h-10 text-pink-300 opacity-50" />
         </div>
       </div>
 
       {/* Hero Content */}
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
         <div className="mb-8 relative">
-          {/* Hollow Candle with White Edges */}
-          <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
-            <div className="relative w-16 h-24">
-              {/* Hollow candle body with white border */}
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-8 h-20 border-2 border-white/80 rounded-sm bg-transparent"></div>
-              
-              {/* Stylish flame effect */}
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2">
-                <div className="relative w-10 h-16">
-                  {/* Outer glow */}
-                  <div className="absolute inset-0 bg-pink-400/30 rounded-full blur-[10px]"></div>
-                  {/* Middle layer */}
-                  <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-6 h-12 bg-gradient-to-b from-yellow-200 to-pink-400 rounded-full blur-[1px]"></div>
-                  {/* Inner core */}
-                  <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-4 h-10 bg-gradient-to-b from-white to-yellow-200 rounded-full"></div>
-                  {/* Sparkle effect */}
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                </div>
-              </div>
-              
-              {/* Wax drips */}
-              <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-2 h-3 border-l-2 border-r-2 border-b-2 border-white/80 rounded-b-full"></div>
-              <div className="absolute top-12 left-1/2 transform -translate-x-1/2 -ml-1 w-3 h-4 border-l-2 border-r-2 border-b-2 border-white/80 rounded-b-full"></div>
-            </div>
-          </div>
-          
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 bg-clip-text text-transparent animate-fade-in">
             Omnia Abdo
           </h1>
+          <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+            <div className="w-24 h-24 border border-purple-400/30 rounded-full animate-spin-slow"></div>
+          </div>
         </div>
         
         <p className="text-xl md:text-2xl text-gray-300 mb-8 font-light animate-fade-in-up">
