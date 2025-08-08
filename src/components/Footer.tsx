@@ -107,7 +107,7 @@ const Footer = () => {
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
           <div className="text-gray-400 text-sm mb-4 md:mb-0">
             © {currentYear} Omnia. All rights reserved. Made with{' '}
-            <Heart className="w-4 h-4 inline text-pink-400" /> for spiritual souls.
+            <Heart className="w-4 h-4 inline text-pink-400" /> for Beautiful souls.
           </div>
           <div className="flex space-x-6 text-sm text-gray-400">
             <a href="#" className="hover:text-pink-400 transition-colors duration-300">
