@@ -70,7 +70,12 @@ const Contact = () => {
     {
       icon: <MapPin className="w-6 h-6" />,
       title: "Location",
-      value: "Available Worldwide",
+      value: (
+        <>
+          Based in Egypt<br />
+          Available Worldwide
+        </>
+      ),
       link: "#"
     }
   ];
