@@ -92,26 +92,29 @@ const Hero = () => {
       {/* Hero Content */}
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
         <div className="mb-8 relative">
-          {/* Enhanced Candle behind the name */}
-          <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
-            <div className="relative w-20 h-40">
-              {/* Thicker candle stick with more transparency */}
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-10 h-32 bg-gradient-to-b from-pink-100/70 to-pink-200/70 rounded-sm backdrop-blur-sm"></div>
+          {/* Hollow Candle with White Edges */}
+          <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
+            <div className="relative w-16 h-24">
+              {/* Hollow candle body with white border */}
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-8 h-20 border-2 border-white/80 rounded-sm bg-transparent"></div>
               
-              {/* Enhanced flame with more glow */}
+              {/* Stylish flame effect */}
               <div className="absolute top-0 left-1/2 transform -translate-x-1/2">
-                <div className="relative w-12 h-24">
-                  {/* Flame glow with more transparency */}
-                  <div className="absolute inset-0 bg-pink-400/40 rounded-full blur-xl"></div>
-                  {/* Flame core */}
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-6 h-16 bg-gradient-to-b from-yellow-200/90 to-pink-400/90 rounded-full"></div>
+                <div className="relative w-10 h-16">
+                  {/* Outer glow */}
+                  <div className="absolute inset-0 bg-pink-400/30 rounded-full blur-[10px]"></div>
+                  {/* Middle layer */}
+                  <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-6 h-12 bg-gradient-to-b from-yellow-200 to-pink-400 rounded-full blur-[1px]"></div>
+                  {/* Inner core */}
+                  <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-4 h-10 bg-gradient-to-b from-white to-yellow-200 rounded-full"></div>
+                  {/* Sparkle effect */}
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-white rounded-full animate-pulse"></div>
                 </div>
               </div>
               
-              {/* Wax drips - thicker and more transparent */}
-              <div className="absolute top-10 left-1/2 transform -translate-x-1/2 w-3 h-6 bg-pink-300/70 rounded-b-full"></div>
-              <div className="absolute top-14 left-1/2 transform -translate-x-1/2 -ml-3 w-4 h-7 bg-pink-300/70 rounded-b-full"></div>
-              <div className="absolute top-20 left-1/2 transform -translate-x-1/2 ml-2 w-3 h-5 bg-pink-300/70 rounded-b-full"></div>
+              {/* Wax drips */}
+              <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-2 h-3 border-l-2 border-r-2 border-b-2 border-white/80 rounded-b-full"></div>
+              <div className="absolute top-12 left-1/2 transform -translate-x-1/2 -ml-1 w-3 h-4 border-l-2 border-r-2 border-b-2 border-white/80 rounded-b-full"></div>
             </div>
           </div>
           
