@@ -11,18 +11,39 @@ const Contact = () => {
     name: '',
     gender: '',
     nationality: '',
+    customNationality: '',
     whatsapp: '',
     message: ''
   });
+
+  const [showCustomNationality, setShowCustomNationality] = useState(false);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    
+    if (name === 'nationality' && value === 'Other') {
+      setShowCustomNationality(true);
+      setFormData({
+        ...formData,
+        nationality: value,
+        customNationality: ''
+      });
+    } else if (name === 'nationality') {
+      setShowCustomNationality(false);
+      setFormData({
+        ...formData,
+        [name]: value,
+        customNationality: ''
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value
+      });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -30,11 +51,15 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
+      const nationalityToSave = formData.nationality === 'Other' 
+        ? formData.customNationality 
+        : formData.nationality;
+
       const { error } = await supabase.from('messages').insert([
         {
           name: formData.name,
           gender: formData.gender,
-          nationality: formData.nationality,
+          nationality: nationalityToSave,
           whatsapp: formData.whatsapp,
           message: formData.message
         }
@@ -43,7 +68,15 @@ const Contact = () => {
       if (error) throw error;
 
       setSubmitStatus('success');
-      setFormData({ name: '', gender: '', nationality: '', whatsapp: '', message: '' });
+      setFormData({ 
+        name: '', 
+        gender: '', 
+        nationality: '', 
+        customNationality: '',
+        whatsapp: '', 
+        message: '' 
+      });
+      setShowCustomNationality(false);
 
       setTimeout(() => setSubmitStatus('idle'), 5000);
     } catch {
@@ -80,12 +113,13 @@ const Contact = () => {
     }
   ];
 
-  // قائمة الجنسيات الشائعة
+  // قائمة الجنسيات الشائعة مع الدول المضافة
   const nationalities = [
     "Egyptian", "Saudi", "Emirati", "Kuwaiti", "Qatari", 
     "Bahraini", "Omani", "Jordanian", "Lebanese", "Syrian",
     "Iraqi", "Yemeni", "Palestinian", "Moroccan", "Algerian",
-    "Tunisian", "Libyan", "Sudanese", "Other"
+    "Tunisian", "Libyan", "Sudanese", "Austrian", "Spanish",
+    "Italian", "Turkish", "Other"
   ];
 
   return (
@@ -192,6 +226,24 @@ const Contact = () => {
                         <option key={nation} value={nation}>{nation}</option>
                       ))}
                     </select>
+
+                    {showCustomNationality && (
+                      <div className="mt-3">
+                        <label htmlFor="customNationality" className="block text-gray-300 mb-2 font-medium">
+                          Specify Your Nationality *
+                        </label>
+                        <input
+                          type="text"
+                          id="customNationality"
+                          name="customNationality"
+                          value={formData.customNationality}
+                          onChange={handleChange}
+                          required
+                          className="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all duration-300"
+                          placeholder="Enter your nationality"
+                        />
+                      </div>
+                    )}
                   </div>
 
                   <div>
