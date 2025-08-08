@@ -76,16 +76,28 @@ const Hero = () => {
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-gray-900 to-indigo-900/20"></div>
       
-      {/* Floating Elements */}
+      {/* Floating Elements - Replaced with your logo */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 left-10 animate-float">
-          <Moon className="w-12 h-12 text-white opacity-60" strokeWidth={1.5} />
+          <img 
+            src="/beyond-holistic-logo.png" // Update with your actual logo path
+            alt="Beyond Holistic Logo"
+            className="w-32 h-auto opacity-80" // Adjust size as needed
+          />
         </div>
         <div className="absolute top-40 right-20 animate-float-delayed">
-          <Star className="w-8 h-8 text-white opacity-70" strokeWidth={1.5} />
+          <img 
+            src="/beyond-holistic-logo.png" // Update with your actual logo path
+            alt="Beyond Holistic Logo"
+            className="w-24 h-auto opacity-70" // Adjust size as needed
+          />
         </div>
         <div className="absolute bottom-40 left-20 animate-float">
-          <Sparkles className="w-10 h-10 text-white opacity-50" strokeWidth={1.5} />
+          <img 
+            src="/beyond-holistic-logo.png" // Update with your actual logo path
+            alt="Beyond Holistic Logo"
+            className="w-28 h-auto opacity-60" // Adjust size as needed
+          />
         </div>
       </div>
 
