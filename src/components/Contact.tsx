@@ -130,7 +130,7 @@ const Contact = () => {
             Connect With Me
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Ready to begin your spiritual journey? Reach out to schedule a consultation 
+           Are you ready to take the first step towards your inner light ? Ready to begin your spiritual journey? Reach out to schedule a consultation 
             or ask any questions about my services.
           </p>
         </div>
