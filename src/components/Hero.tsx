@@ -95,8 +95,18 @@ const Hero = () => {
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 bg-clip-text text-transparent animate-fade-in">
             Omnia Abdo
           </h1>
-          <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-            <div className="w-24 h-24 border border-purple-400/30 rounded-full animate-spin-slow"></div>
+          {/* Logo container - replaces the circle */}
+          <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-24 h-24 flex items-center justify-center">
+            <div className="relative w-full h-full">
+              {/* Logo image with styling */}
+              <img 
+                src="/logo0.1.jpg" 
+                alt="Beyond Holistic Logo"
+                className="w-full h-full object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity"
+              />
+              {/* Optional decorative border (can be removed) */}
+              <div className="absolute inset-0 border border-purple-400/30 rounded-full animate-spin-slow pointer-events-none"></div>
+            </div>
           </div>
         </div>
         
