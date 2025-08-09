@@ -132,7 +132,7 @@ const Hero = () => {
             href="#contact"
             className="group border-2 border-purple-400 text-purple-400 px-8 py-4 rounded-full font-semibold hover:bg-purple-400 hover:text-white transform hover:scale-105 transition-all duration-300"
           >
-            Book Consultation
+            Book Session
             <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300">✨</span>
           </a>
         </div>
