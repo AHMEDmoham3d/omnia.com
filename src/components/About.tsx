@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, Eye, Waves, Star } from 'lucide-react';
+import { Heart, Eye, Waves, Star, Sun, Moon } from 'lucide-react';
 
 const About = () => {
   const features = [
@@ -9,7 +9,22 @@ const About = () => {
       description: "Connect with your inner energy and find emotional balance through ancient healing practices."
     },
     {
-      icon: <Eye className="w-12 h-12 text-purple-400" />,
+      icon: (
+        <div className="flex justify-center" style={{ gap: '2px' }}>
+          {/* Sun Card */}
+          <div className="w-6 h-10 bg-transparent rounded-sm transform rotate-2 border-2 border-pink-400 shadow-md flex items-center justify-center">
+            <Sun className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
+          </div>
+          {/* Moon Card */}
+          <div className="w-6 h-10 bg-transparent rounded-sm transform -rotate-1 border-2 border-pink-400 shadow-md flex items-center justify-center">
+            <Moon className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
+          </div>
+          {/* Star Card */}
+          <div className="w-6 h-10 bg-transparent rounded-sm transform rotate-3 border-2 border-pink-400 shadow-md flex items-center justify-center">
+            <Star className="w-4 h-4 text-pink-400" strokeWidth="2" fill="none" />
+          </div>
+        </div>
+      ),
       title: "Tarot Readings",
       description: "Gain clarity on your life's path Whether (love, career or personal growth) through personalized tarot and oracle card ."
     },
@@ -97,7 +112,7 @@ const About = () => {
               key={index}
               className="group bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50 hover:border-purple-400/50 transition-all duration-300 hover:transform hover:scale-105"
             >
-              <div className="mb-4 group-hover:scale-110 transition-transform duration-300">
+              <div className="mb-4 group-hover:scale-110 transition-transform duration-300 flex justify-center">
                 {feature.icon}
               </div>
               <h4 className="text-xl font-semibold text-white mb-3">
