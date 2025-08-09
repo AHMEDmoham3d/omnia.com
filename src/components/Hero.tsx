@@ -107,7 +107,7 @@ const Hero = () => {
           {/* Name with spacing between words */}
           <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
             <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Omnia</span>
-            <span className="mx-4 md:mx-6"></span> {/* Spacer between names */}
+            <span className="mx-6 md:mx-6"></span> {/* Spacer between names */}
             <span className="bg-gradient-to-r from-pink-400 to-yellow-400 bg-clip-text text-transparent">Abdo</span>
           </h1>
         </div>
