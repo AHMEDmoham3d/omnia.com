@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, Eye, Waves, Star, Sun, Moon } from 'lucide-react';
+import { Heart, Eye, Waves, Star, Sun, Moon, Music } from 'lucide-react';
 
 const About = () => {
   const features = [
@@ -29,7 +29,7 @@ const About = () => {
       description: "Gain clarity on your life's path Whether (love, career or personal growth) through personalized tarot and oracle card ."
     },
     {
-      icon: <Waves className="w-12 h-12 text-blue-400" />,
+      icon: <Music className="w-12 h-12 text-blue-400" />,
       title: "Sound Therapy",
       description: "Experience deep relaxation and healing through therapeutic tuning fork sessions."
     },
