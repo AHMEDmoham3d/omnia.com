@@ -91,25 +91,25 @@ const Hero = () => {
       {/* Hero Content */}
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
         <div className="mb-8 relative">
-          {/* Name with wider container to prevent logo overlap */}
-          <div className="relative px-16"> {/* Added horizontal padding */}
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 bg-clip-text text-transparent animate-fade-in">
-              Omnia Abdo
-            </h1>
-            
-            {/* Logo positioned absolutely but constrained by parent padding */}
-            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24">
-              <div className="relative w-full h-full flex items-center justify-center">
-                <img 
-                  src="/logo0.1.jpg" 
-                  alt="Beyond Holistic Logo"
-                  className="w-full h-full object-contain rounded-full bg-white/5 p-1 border border-purple-400/30"
-                  loading="eager"
-                />
-                <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-purple-400/40 border-r-pink-400/40 animate-spin-slow pointer-events-none"></div>
-              </div>
+          {/* Logo Container */}
+          <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-24 h-24 flex items-center justify-center">
+            <div className="relative w-full h-full">
+              <img 
+                src="/logo0.1.jpg" 
+                alt="Beyond Holistic Logo"
+                className="w-full h-full object-contain rounded-full bg-white/5 p-1 border border-purple-400/30"
+                loading="eager"
+              />
+              <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-purple-400/40 border-r-pink-400/40 animate-spin-slow pointer-events-none"></div>
             </div>
           </div>
+          
+          {/* Name with spacing between words */}
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
+            <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Omnia</span>
+            <span className="mx-4 md:mx-6"></span> {/* Spacer between names */}
+            <span className="bg-gradient-to-r from-pink-400 to-yellow-400 bg-clip-text text-transparent">Abdo</span>
+          </h1>
         </div>
         
         <p className="text-xl md:text-2xl text-gray-300 mb-8 font-light animate-fade-in-up">
