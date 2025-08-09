@@ -91,22 +91,22 @@ const Hero = () => {
       {/* Hero Content */}
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
         <div className="mb-8 relative">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 bg-clip-text text-transparent animate-fade-in">
-            Omnia Abdo
-          </h1>
-          
-          {/* Logo Container - Optimized Version */}
-          <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-28 h-28 flex items-center justify-center">
-            <div className="relative w-full h-full">
+          {/* Logo Container - Updated with better spacing */}
+          <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-32 h-32 flex items-center justify-center mx-auto px-4">
+            <div className="relative w-full h-full flex items-center justify-center">
               <img 
                 src="/logo0.1.jpg" 
                 alt="Beyond Holistic Logo"
-                className="w-full h-full object-contain rounded-full bg-white/5 p-1 border border-purple-400/30"
+                className="max-w-[80%] max-h-[80%] object-contain rounded-full bg-white/5 p-1 border border-purple-400/30"
                 loading="eager"
               />
               <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-purple-400/40 border-r-pink-400/40 animate-spin-slow pointer-events-none"></div>
             </div>
           </div>
+          
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 bg-clip-text text-transparent animate-fade-in pt-6">
+            Omnia Abdo
+          </h1>
         </div>
         
         <p className="text-xl md:text-2xl text-gray-300 mb-8 font-light animate-fade-in-up">
