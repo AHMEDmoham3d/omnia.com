@@ -98,13 +98,14 @@ const Hero = () => {
           {/* Logo in place of the circle */}
           <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-24 h-24 flex items-center justify-center">
             <div className="relative w-full h-full">
-              {/* Logo with transparent background and white text */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center font-bold text-white">
-                <div className="text-2xl leading-none">BEYOND</div>
-                <div className="text-xs mt-1">HOLISTIC.EG</div>
-              </div>
+              {/* Logo image with transparent background */}
+              <img 
+                src="/logo0.1.jpg" 
+                alt="Beyond Holistic Logo"
+                className="w-full h-full object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity"
+              />
               {/* Optional decorative circle around the logo */}
-              <div className="absolute inset-0 border border-purple-400/30 rounded-full animate-spin-slow"></div>
+              <div className="absolute inset-0 border border-purple-400/30 rounded-full animate-spin-slow pointer-events-none"></div>
             </div>
           </div>
         </div>
