@@ -91,8 +91,8 @@ const Hero = () => {
       {/* Hero Content */}
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
         <div className="mb-8 relative">
-          {/* Logo Container */}
-          <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-24 h-24 flex items-center justify-center">
+          {/* Logo Container - Positioned above the name */}
+          <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 w-24 h-24 flex items-center justify-center">
             <div className="relative w-full h-full">
               <img 
                 src="/logo0.1.jpg" 
@@ -104,11 +104,9 @@ const Hero = () => {
             </div>
           </div>
           
-          {/* Name with spacing between words */}
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
-            <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Omnia</span>
-            <span className="mx-8 md:mx-12 lg:mx-16"></span> {/* Increased spacing */}
-            <span className="bg-gradient-to-r from-pink-400 to-yellow-400 bg-clip-text text-transparent">Abdo</span>
+          {/* Name with default spacing */}
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 bg-clip-text text-transparent animate-fade-in pt-16">
+            Omnia Abdo
           </h1>
         </div>
         
