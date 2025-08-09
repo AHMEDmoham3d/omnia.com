@@ -61,7 +61,7 @@ const About = () => {
           <div className="relative">
             <div className="aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-purple-900/30 to-pink-900/30 p-2">
               <img
-                src="/hero.jpeg"
+                src="/omnia-logo.jpg"
                 alt="Spiritual healing session with tarot cards and crystals"
                 className="w-full h-full object-cover rounded-2xl shadow-2xl"
                 loading="lazy"
