@@ -95,7 +95,7 @@ const Hero = () => {
           <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 w-24 h-24 flex items-center justify-center">
             <div className="relative w-full h-full">
               <img 
-                src="/logo0.1.jpg" 
+                src="/BEYOND HILIST.png" 
                 alt="Beyond Holistic Logo"
                 className="w-full h-full object-contain rounded-full bg-white/5 p-1 border border-purple-400/30"
                 loading="eager"
