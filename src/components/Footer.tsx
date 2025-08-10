@@ -45,7 +45,7 @@ const Footer = () => {
                 <Phone className="w-5 h-5" />
               </a>
               <a
-                href="https://www.instagram.com/your-instagram-username"
+                href="https://www.instagram.com/beyondholistic.eg?igsh=MTQ5Z3k2MDZma3Vocg=="
                 className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-pink-400 hover:bg-gray-700 transition-all duration-300"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -53,7 +53,7 @@ const Footer = () => {
                 <Instagram className="w-5 h-5" />
               </a>
               <a
-                href="https://www.tiktok.com/@your-tiktok-username"
+                href="https://www.tiktok.com/@beyondholistic.eg?_t=ZS-8yhoRbytf55&_r=1"
                 className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-pink-400 hover:bg-gray-700 transition-all duration-300"
                 target="_blank"
                 rel="noopener noreferrer"
