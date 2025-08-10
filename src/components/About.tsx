@@ -6,7 +6,7 @@ const About = () => {
     {
       icon: <Heart className="w-12 h-12 text-pink-400" />,
       title: "Spiritual Healing",
-      description: "Connect with your inner energy and find emotional balance through ancient healing practices."
+      description: "Clear your repeated patterns or energy blockages , restore your balance and find the sacred parts of you that you have forgotten."
     },
     {
       icon: (
@@ -26,12 +26,12 @@ const About = () => {
         </div>
       ),
       title: "Tarot Readings",
-      description: "Gain clarity on your life's path Whether (love, career or personal growth) through personalized tarot and oracle card ."
+      description: "Gain clarity on your life's path whether its (love, career or personal growth) through personalized Tarot and oracle cards."
     },
     {
       icon: <Music className="w-12 h-12 text-blue-400" />,
       title: "Sound Therapy",
-      description: "Experience deep relaxation and healing through therapeutic tuning fork sessions."
+      description: "In this session, your nervous system calms,  your breath deepens and your energy begins to flow freely again. Its a return to your natural harmony."
     },
     {
       icon: <Star className="w-12 h-12 text-yellow-400" />,
