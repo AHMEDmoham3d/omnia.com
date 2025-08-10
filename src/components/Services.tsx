@@ -97,7 +97,7 @@ const Services = () => {
               Coming Soon
             </span>
           </div>
-          <p>Currently preparing for a new session that will help you connect deeper with yourself and understand who you truly are.</p>
+  <p>Upcoming spiritual session, Light within Guiding you back to the truth of who you are ?</p>
         </div>
       ),
       features: []
