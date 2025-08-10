@@ -105,8 +105,8 @@ const Contact = () => {
       title: "Location",
       value: (
         <>
-          Based in Egypt<br />
-          Available Worldwide
+          Based in Egypt, Cairo<br />
+          Avaliable (online) worldwide
         </>
       ),
       link: "#"
