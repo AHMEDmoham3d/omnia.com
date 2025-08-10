@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, Eye, Waves, Star, Sun, Moon, Music } from 'lucide-react';
+import { Heart, Eye, Waves, Star, Sun, Moon, Music, Sparkles } from 'lucide-react';
 
 const About = () => {
   const features = [
@@ -34,9 +34,29 @@ const About = () => {
       description: "In this session, your nervous system calms,  your breath deepens and your energy begins to flow freely again. Its a return to your natural harmony."
     },
     {
-      icon: <Star className="w-12 h-12 text-yellow-400" />,
+      icon: (
+        <div className="flex flex-col items-center justify-center">
+          <div className="flex items-center space-x-2">
+            <div className="relative">
+              <Sparkles className="w-8 h-8 text-purple-400 animate-pulse" />
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-ping"></div>
+            </div>
+          </div>
+        </div>
+      ),
       title: "Energy Alignment",
-      description: "Balance your chakras and restore harmony to your mind, body, and spirit."
+      description: (
+        <div className="text-center">
+          <p className="mb-2">Upcoming spiritual session</p>
+          <p className="font-semibold mb-2">Light within</p>
+          <p className="mb-4">Guiding you back to the truth of who you are?</p>
+          <div className="flex items-center justify-center space-x-2">
+            <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              Coming Soon
+            </span>
+          </div>
+        </div>
+      )
     }
   ];
 
