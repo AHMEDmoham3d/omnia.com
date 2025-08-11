@@ -33,6 +33,12 @@ const Certificates = () => {
       pdf: '/Tuning Fork Therapy L1.pdf',
       thumbnail: '/tuning-fork-therapy.png' 
     },
+    { 
+      id: 6, 
+      title: 'Access Bars', 
+      pdf: '/Access Bars.pdf',
+      thumbnail: '/Access-bars.png' 
+    },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
