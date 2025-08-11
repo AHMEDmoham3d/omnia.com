@@ -15,7 +15,18 @@ const Certificates = () => {
       pdf: '/Somatic Wisdom.pdf',
       thumbnail: '/Somatic-wisdom.png' 
     },
-    // ... add more certificates up to 11
+    { 
+      id: 3, 
+      title: 'Healing Module', 
+      pdf: '/Somatic Art.pdf',
+      thumbnail: '/Healing-module.png' 
+    },
+    { 
+      id: 4, 
+      title: 'Reiki Teacher', 
+      pdf: '/Reiki Master.pdf',
+      thumbnail: '/Reiki-teacher.png' 
+    },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
