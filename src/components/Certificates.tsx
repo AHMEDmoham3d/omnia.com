@@ -27,6 +27,12 @@ const Certificates = () => {
       pdf: '/Reiki Master.pdf',
       thumbnail: '/Reiki-teacher.png' 
     },
+    { 
+      id: 5, 
+      title: 'Tuning Fork Therapy', 
+      pdf: '/Tuning Fork Therapy L1.pdf',
+      thumbnail: '/tuning-fork-therapy.png' 
+    },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
