@@ -11,9 +11,9 @@ const Certificates = () => {
     },
     { 
       id: 2, 
-      title: 'Advanced Tarot Reading', 
-      pdf: '/certificates/cert2.pdf',
-      thumbnail: '/certificates/thumb2.jpg' 
+      title: 'Somatic Wisdom', 
+      pdf: '/Somatic Wisdom.pdf',
+      thumbnail: '/Somatic-wisdom.png' 
     },
     // ... add more certificates up to 11
   ];
