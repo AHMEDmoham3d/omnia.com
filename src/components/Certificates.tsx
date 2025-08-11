@@ -6,7 +6,7 @@ const Certificates = () => {
     { 
       id: 1, 
       title: 'Energy Healing Certification', 
-      pdf: '/certificates/cert1.pdf',
+      pdf: './Reiki Master.pdf',
       thumbnail: '/certificates/thumb1.jpg' 
     },
     { 
