@@ -106,7 +106,7 @@ const Contact = () => {
       value: (
         <>
           Based in Egypt, Cairo<br />
-          Avaliable (online) worldwide
+          Avaliable (online) worldwide 
         </>
       ),
       link: "#"
