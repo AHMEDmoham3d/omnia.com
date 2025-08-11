@@ -39,6 +39,36 @@ const Certificates = () => {
       pdf: '/Access Bars.pdf',
       thumbnail: '/Access-bars.png' 
     },
+    { 
+      id: 7, 
+      title: 'Forks-Workshop', 
+      pdf: '/Angel Forks.pdf',
+      thumbnail: '/forks-workshop.png' 
+    },
+    { 
+      id: 8, 
+      title: 'Emotional Release', 
+      pdf: '/Emotional Release.pdf',
+      thumbnail: '/Emotional.png' 
+    },
+    { 
+      id: 9, 
+      title: 'Facial Beauty', 
+      pdf: '/Facial Beauty.pdf',
+      thumbnail: '/facail.png' 
+    },
+    { 
+      id: 10, 
+      title: 'Pain Relief (Tuning Fork)', 
+      pdf: '/Pain Relief (Tuning Fork).pdf',
+      thumbnail: '/pain.png' 
+    },
+    { 
+      id: 11, 
+      title: 'Family Constellation', 
+      pdf: '/Family Constellation.pdf',
+      thumbnail: '/decalaration.png' 
+    },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
