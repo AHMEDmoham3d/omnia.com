@@ -5,9 +5,9 @@ const Certificates = () => {
   const certificates = [
     { 
       id: 1, 
-      title: 'Energy Healing Certification', 
-      pdf: './Reiki Master.pdf',
-      thumbnail: '/certificates/thumb1.jpg' 
+      title: 'Sound Healing', 
+      pdf: './Sound with Tereza Omnia Abdo.pdf',
+      thumbnail: './Sound-Healing.png' 
     },
     { 
       id: 2, 
