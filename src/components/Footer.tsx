@@ -86,9 +86,9 @@ const Footer = () => {
             <ul className="space-y-2">
               {[
                 'Tarot Reading',
-                'Therapy Healing',
+                'Therapy sound',
                 'Healing Sessions',
-                'Group Meditation'
+                'course Meditation'
               ].map((service) => (
                 <li key={service}>
                   <a
