@@ -115,8 +115,7 @@ const Hero = () => {
         </p>
         
         <p className="text-lg text-gray-400 mb-12 max-w-2xl mx-auto animate-fade-in-up-delayed">
-          Experience the transformative power of tarot reading, spiritual energy healing, 
-          and sound therapy with tuning forks. Discover your path to inner harmony and enlightenment.
+          Experience the transformative power Of your energy and discover your path to inner harmony and enlightenment.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in-up-more-delayed">
