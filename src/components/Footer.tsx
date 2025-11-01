@@ -20,7 +20,7 @@ const Footer = () => {
             <div className="flex items-center space-x-2 mb-4">
               <Sparkles className="w-8 h-8 text-pink-400" />
               <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Omnia
+                Beyond Holistic
               </span>
             </div>
             <p className="text-gray-400 mb-4 max-w-md">
@@ -106,7 +106,7 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
           <div className="text-gray-400 text-sm mb-4 md:mb-0">
-            © {currentYear} Omnia. All rights reserved. Made with{' '}
+            © {currentYear} Beyond Holistic. All rights reserved. Made with{' '}
             <Heart className="w-4 h-4 inline text-pink-400 animate-pulse [animation-duration:1.5s] drop-shadow-[0_0_4px_rgba(244,114,182,0.7)] hover:drop-shadow-[0_0_8px_rgba(244,114,182,0.9)] transition-all" />{' '}
             for Beautiful souls.
           </div>

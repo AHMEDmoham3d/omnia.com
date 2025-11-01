@@ -9,7 +9,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
 import Services from './components/Services';
-import Certificates from './components/Certificates';
+
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import AdminPanel from './components/AdminPanel';
@@ -278,7 +278,6 @@ function App() {
                 <Hero />
                 <About />
                 <Services />
-                <Certificates />
                 <Contact onMessageSent={handleNewMessage} />
                 <Footer />
               </>

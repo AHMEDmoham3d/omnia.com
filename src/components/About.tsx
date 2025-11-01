@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Heart, Eye, Waves, Star, Sun, Moon, Music, Sparkles } from 'lucide-react';
 
 const About = () => {
+  const images = ['/omnia-logo.jpg', '/ooo.jpeg'];
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 3000); // Change image every 3 seconds
+
+    return () => clearInterval(interval);
+  }, [images.length]);
+
   const features = [
     {
       icon: <Heart className="w-12 h-12 text-pink-400" />,
@@ -66,12 +79,13 @@ const About = () => {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-            About Omnia
+            Beyond Holistic 
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Welcome to a sacred space where ancient wisdom meets modern healing.<br />
+            {/* Welcome to a sacred space where ancient wisdom meets modern healing.<br />
             I am dedicated to guiding you on your journey to awake your own consciousness to find your way in life
-            through some practices that have been cherished for centuries.
+            through some practices that have been cherished for centuries. */}
+            Welcome to a saced space , no matter what you are going through you will find guidance here.
           </p>
         </div>
 
@@ -80,12 +94,15 @@ const About = () => {
           {/* Image */}
           <div className="relative">
             <div className="aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-purple-900/30 to-pink-900/30 p-2">
-              <img
-                src="/omnia-logo.jpg"
-                alt="Spiritual healing session with tarot cards and crystals"
-                className="w-full h-full object-cover rounded-2xl shadow-2xl"
-                loading="lazy"
-              />
+              <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl">
+                <img
+                  key={currentImageIndex}
+                  src={images[currentImageIndex]}
+                  alt={currentImageIndex === 0 ? "Spiritual healing session with tarot cards and crystals" : "Beyond Holistic spiritual services"}
+                  className="w-full h-full object-cover animate-fade-in"
+                  loading="lazy"
+                />
+              </div>
             </div>
             {/* Floating Elements */}
             <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full opacity-20 animate-pulse"></div>
@@ -95,13 +112,15 @@ const About = () => {
           {/* Content */}
           <div className="space-y-6">
             <h3 className="text-3xl font-bold text-white mb-4">
-              Your Journey to Inner Harmony
+              About Omnia
+
             </h3>
             <p className="text-gray-300 text-lg leading-relaxed">
               Practicing since 2020, with a strong foundation in continuous study and a scientific approach, I combine my tools and techniques to help you find clarity, transformation and personal growth.
             </p>
             <p className="text-gray-300 text-lg leading-relaxed">
-              I hold sacred space for those who are ready to release what no longer serves them and reconnect with their inner light. Through sound therapy, tarot, energy healing
+              {/* I hold sacred space for those who are ready to release what no longer serves them and reconnect with their inner light. Through sound therapy, tarot, energy healing */}
+              Iam dedicated to guiding you through your journey to awake your own consciousness to find your way in life.
             </p>
             <p className="text-gray-300 text-lg leading-relaxed">
               Each session is personalized to your unique needs and spiritual path.

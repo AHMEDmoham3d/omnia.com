@@ -104,23 +104,7 @@ const Services = () => {
     }
   ];
 
-  const testimonials = [
-    {
-      name: "Sarah M.",
-      text: "The tarot reading was incredibly accurate and gave me the clarity I needed to make important life decisions.",
-      rating: 5
-    },
-    {
-      name: "Michael R.",
-      text: "The sound healing session was transformative. I felt deeply relaxed and energized for days afterward.",
-      rating: 5
-    },
-    {
-      name: "Elena K.",
-      text: "Amazing energy healing experience. I could feel the positive changes in my body and mind immediately.",
-      rating: 5
-    }
-  ];
+
 
   return (
     <section id="services" className="py-20 px-4 relative">
@@ -196,28 +180,7 @@ const Services = () => {
           ))}
         </div>
 
-        {/* Testimonials */}
-        <div className="bg-gray-800/30 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/50">
-          <h3 className="text-3xl font-bold text-center text-white mb-8">
-            What People Say
-          </h3>
-          <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={index}
-                className="bg-gray-900/50 rounded-xl p-6 border border-gray-700/30"
-              >
-                <div className="flex items-center mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                  ))}
-                </div>
-                <p className="text-gray-300 mb-4 italic">"{testimonial.text}"</p>
-                <p className="text-purple-400 font-semibold">- {testimonial.name}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+
       </div>
     </section>
   );
