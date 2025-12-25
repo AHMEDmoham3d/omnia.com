@@ -85,8 +85,9 @@ const About = () => {
             {/* Welcome to a sacred space where ancient wisdom meets modern healing.<br />
             I am dedicated to guiding you on your journey to awake your own consciousness to find your way in life
             through some practices that have been cherished for centuries. */}
-            Welcome to a saced space , no matter what you are going through you will find guidance here.
-          </p>
+              Welcome to a saced space , no matter what you are going through <br />
+              you will find guidance here.
+            </p>
         </div>
 
         {/* Main Content */}
