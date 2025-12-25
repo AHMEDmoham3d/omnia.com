@@ -45,7 +45,7 @@ const Services = () => {
             <ul className="list-disc pl-5 mt-2 space-y-1">
               <li>Stress relief</li>
               <li>Chakra Balancing</li>
-              <li>Soul Print </li>
+              <li>Soul Print</li>
               <li>Deep Relaxation</li>
             </ul>
           </div>
