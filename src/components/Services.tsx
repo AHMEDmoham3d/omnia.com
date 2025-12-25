@@ -85,7 +85,7 @@ const Services = () => {
     },
     {
       icon: <Users className="w-7 h-7 text-white" />,
-      title: "spiritual session, Who you are?",
+      title: "Soul Print",
       description: (
         <div className="flex flex-col items-center justify-center h-full text-center">
           <div className="flex items-center space-x-2 mb-6 mt-4">
@@ -97,7 +97,7 @@ const Services = () => {
               Coming Soon
             </span>
           </div>
-  <p>Upcoming spiritual session, Light within Guiding you back to the truth of who you are ?</p>
+  {/* <p>Upcoming spiritual session, Light within Guiding you back to the truth of who you are ?</p> */}
         </div>
       ),
       features: []
