@@ -35,7 +35,7 @@ const Services = () => {
     },
     {
       icon: <Music className="w-7 h-7 text-pink-400" />,
-      title: "Sound Therapy (Tuning Forks)",
+      title: "Sound Therapy",
       description: "You will feel the shift within. I use a combination of frequencies and ancient techniques that work directly on your nervous system to bring deep relaxation, restore balance, and promote healing. It's a journey back to your natural state of harmony.",
       features: [
         "There are 3 different types of sessions:",
@@ -144,8 +144,8 @@ const Services = () => {
                         <span>
                           {service.title === "Tarot Reading" 
                             ? "60 min, Online (Video Call) or In person"
-                            : service.title === "Energy Healing Session" 
-                              ? "60-90 min, Online (Video Call) or In person"
+                            : service.title === "Healing Sessions" 
+                              ? "60 min, Online (Video Call) or In person"
                               : service.title === "spiritual session, Who you are?"
                                 ? "Online Only"
                                 : "60 min, In person Only"}
