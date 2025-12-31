@@ -107,8 +107,9 @@ const Services = () => {
     {
       icon: <Users className="w-7 h-7 text-white" />,
       title: "Soul Print",
-      description: (
-        <div className="flex flex-col items-center justify-center h-full text-center">
+      description: "",
+      features: [
+        <div className="flex flex-col items-center justify-center text-center">
           <div className="flex items-center space-x-2 mb-6 mt-4">
             <div className="relative">
               <Sparkles className="w-8 h-8 text-purple-400 animate-pulse" />
@@ -119,8 +120,7 @@ const Services = () => {
             </span>
           </div>
         </div>
-      ),
-      features: []
+      ]
     }
   ];
 
