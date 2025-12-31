@@ -97,14 +97,11 @@ const Services = () => {
               Coming Soon
             </span>
           </div>
-  {/* <p>Upcoming spiritual session, Light within Guiding you back to the truth of who you are ?</p> */}
         </div>
       ),
       features: []
     }
   ];
-
-
 
   return (
     <section id="services" className="py-20 px-4 relative">
@@ -146,7 +143,7 @@ const Services = () => {
                             ? "60 min, Online (Video Call) or In person"
                             : service.title === "Healing Sessions" 
                               ? "60 min, Online (Video Call) or In person"
-                              : service.title === "spiritual session, Who you are?"
+                              : service.title === "Soul Print"
                                 ? "Online Only"
                                 : "60 min, In person Only"}
                         </span>
@@ -179,8 +176,6 @@ const Services = () => {
             </div>
           ))}
         </div>
-
-
       </div>
     </section>
   );
