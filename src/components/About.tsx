@@ -57,12 +57,12 @@ const About = () => {
           </div>
         </div>
       ),
-      title: "Energy Alignment",
+      title: "Soul Print",
       description: (
         <div className="text-center">
-          <p className="mb-2">Upcoming spiritual session</p>
-          <p className="font-semibold mb-2">Light within</p>
-          <p className="mb-4">Guiding you back to the truth of who you are?</p>
+          {/* <p className="mb-2">Upcoming spiritual session</p> */}
+          {/* <p className="font-semibold mb-2">Light within</p> */}
+          {/* <p className="mb-4">Guiding you back to the truth of who you are?</p> */}
           <div className="flex items-center justify-center space-x-2">
             <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
               Coming Soon
