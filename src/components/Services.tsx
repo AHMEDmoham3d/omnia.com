@@ -22,16 +22,37 @@ const Services = () => {
         </div>
       ),
       title: "Tarot Reading",
-      description: (
-        <>
-          Tarot is a mirror of your energy each card holds a message for you, its like a heart to heart conversation with the universe, we ask and the cards respond whether its love, career or personal growth.
-          <br /><br />
-          Each reading is personalized to your specific questions or your life situations.
-          <br /><br />
-          I leave you with guidance, wisdom, clarity and the light to navigate your next steps.
-        </>
-      ),
-      features: []
+      description: "",
+      features: [
+        <div key="tarot-types" className="grid grid-cols-1 gap-4 mt-4">
+          <div className="bg-gray-700/30 p-4 rounded-lg">
+            <span className="font-semibold text-xl text-pink-300">2026 Reading<br/>(available till end of January only)</span>
+            <p className="mt-2 text-gray-300">
+              An exclusive reading that covers your personal energy in details for the year of 2026 including: (your major highlights, Opportunities, Warnings, Lessons and guidance)
+            </p>
+            <p className="mt-2 text-green-300">
+              🔮plus: PDF file as a reference to you + 20% discount on Private reading valid for 3 months.
+            </p>
+          </div>
+          
+          <div className="bg-gray-700/30 p-4 rounded-lg">
+            <span className="font-semibold text-xl text-pink-300">Private Reading - one to one, video Call, 60 min</span>
+            <p className="mt-2 text-gray-300">
+              Its a private reading that covers your topics, answering your questions clarify your situations and clear all your doubts
+            </p>
+          </div>
+          
+          <div className="bg-gray-700/30 p-4 rounded-lg">
+            <span className="font-semibold text-xl text-pink-300">Daily Tiktok Live Reading</span>
+            <ul className="list-disc pl-5 mt-2 space-y-1 text-gray-300">
+              <li>Yes/No questions</li>
+              <li>Detailed Questions</li>
+              <li>Mini Readings</li>
+              <li>Vip Readings</li>
+            </ul>
+          </div>
+        </div>
+      ]
     },
     {
       icon: <Music className="w-7 h-7 text-pink-400" />,
@@ -154,9 +175,11 @@ const Services = () => {
               </div>
 
               {/* Description */}
-              <div className="text-gray-300 mb-6 leading-relaxed">
-                {service.description}
-              </div>
+              {service.description && (
+                <div className="text-gray-300 mb-6 leading-relaxed">
+                  {service.description}
+                </div>
+              )}
 
               {/* Features */}
               <div className="grid grid-cols-1 gap-2 mb-6">
