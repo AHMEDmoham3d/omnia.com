@@ -1,19 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Heart, Eye, Waves, Star, Sun, Moon, Music, Sparkles } from 'lucide-react';
 
 const About = () => {
-  const images = ['/omnia-logo.jpg', '/ooo.jpeg'];
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const videoCallback = useCallback((entries: IntersectionObserverEntry[]) => {
+    entries.forEach((entry) => {
+      const isInView = entry.isIntersecting && entry.intersectionRatio >= 0.5;
+      setIsVisible(isInView);
+      const video = videoRef.current;
+      if (video) {
+        if (isInView) {
+          video.muted = false;
+          video.play().catch(e => console.log('Play failed:', e));
+        } else {
+          video.pause();
+          video.muted = true;
+        }
+      }
+    });
+  }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex === images.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 3000); // Change image every 3 seconds
+    const observer = new IntersectionObserver(videoCallback, {
+      root: null,
+      rootMargin: '0px',
+      threshold: [0.2, 0.5]
+    });
 
-    return () => clearInterval(interval);
-  }, [images.length]);
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [videoCallback]);
 
   const features = [
     {
@@ -74,7 +96,7 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-20 px-4 relative">
+<section ref={sectionRef} id="about" className="py-20 px-4 relative">
       <div className="container mx-auto max-w-6xl">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -93,16 +115,25 @@ const About = () => {
         {/* Main Content */}
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
           {/* Image */}
-          <div className="relative">
+<div className="relative">
             <div className="aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-purple-900/30 to-pink-900/30 p-2">
               <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl">
-                <img
-                  key={currentImageIndex}
-                  src={images[currentImageIndex]}
-                  alt={currentImageIndex === 0 ? "Spiritual healing session with tarot cards and crystals" : "Beyond Holistic spiritual services"}
-                  className="w-full h-full object-cover animate-fade-in"
-                  loading="lazy"
-                />
+                <video
+                  ref={videoRef}
+                  muted={!isVisible}
+                  loop
+                  playsInline
+                  preload="metadata"
+                  className="w-full h-full object-cover"
+                  onLoadedData={() => {
+                    if (isVisible && videoRef.current) {
+                      videoRef.current.play().catch(e => console.log('Initial play failed:', e));
+                    }
+                  }}
+                >
+                  <source src="/mony.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
               </div>
             </div>
             {/* Floating Elements */}

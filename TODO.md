@@ -1,8 +1,11 @@
-# TODO: Add Automatic Image Slideshow to About Section
+# Video in About Section Task
 
-## Tasks
-- [x] Modify src/components/About.tsx to add automatic image slideshow
-  - Create slideshow component that switches between omnia-logo.jpg and ooo.jpeg every 5 seconds
-  - Keep the existing image container styling and layout
-  - Add smooth transition effects between images
-  - Ensure images maintain aspect ratio and fit properly
+Status: ✅ COMPLETED
+
+## Steps
+- [x] Plan approved by user
+- [x] Create TODO.md ✅
+- [x] Edit src/components/About.tsx: replace images with scroll-controlled video (imports, state, observer logic, video JSX, section ref)
+- [x] Update TODO.md with completion
+- [ ] Test: Run `npm run dev` in terminal, scroll to About section - video should auto play with sound at ~50% view, pause/mute when scrolling away
+- [x] Complete task
