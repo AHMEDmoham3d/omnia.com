@@ -8,19 +8,22 @@ const About = () => {
 
   const videoCallback = useCallback((entries: IntersectionObserverEntry[]) => {
     entries.forEach((entry) => {
-      const isInView = entry.isIntersecting && entry.intersectionRatio >= 0.3;
+      const isInView = entry.isIntersecting;
       setIsVisible(isInView);
       const video = videoRef.current;
       if (video) {
         if (isInView) {
-          video.volume = 0.7; // Reasonable volume
+          video.volume = 1;
           video.muted = false;
-          requestAnimationFrame(() => {
-            video.play().catch(e => console.log('Play failed:', e));
+          video.play().then(() => {
+            console.log('Video playing');
+          }).catch(e => {
+            console.log('Play promise rejected:', e.message);
+            // Fallback attempt
+            setTimeout(() => video.play(), 100);
           });
         } else {
           video.pause();
-          video.currentTime = 0; // Optional: restart on re-enter
           video.muted = true;
           video.volume = 0;
         }
@@ -31,12 +34,13 @@ const About = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(videoCallback, {
       root: null,
-      rootMargin: '-10% 0px -20% 0px', // Trigger earlier
-      threshold: [0.1, 0.3, 0.5, 0.7]
+      rootMargin: '-50% 0px -50% 0px',
+      threshold: 0.01
     });
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    const video = videoRef.current;
+    if (video) {
+      observer.observe(video);
     }
 
     return () => observer.disconnect();
@@ -129,8 +133,7 @@ const About = () => {
                   loop
                   playsInline
                   preload="auto"
-                  poster="/hero.jpeg"
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain bg-gradient-to-br from-gray-900/50 to-transparent"
                   onLoadedMetadata={(e) => {
                     const video = e.currentTarget;
                     if (isVisible && !video.paused) {
