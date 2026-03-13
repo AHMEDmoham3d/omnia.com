@@ -8,16 +8,21 @@ const About = () => {
 
   const videoCallback = useCallback((entries: IntersectionObserverEntry[]) => {
     entries.forEach((entry) => {
-      const isInView = entry.isIntersecting && entry.intersectionRatio >= 0.5;
+      const isInView = entry.isIntersecting && entry.intersectionRatio >= 0.3;
       setIsVisible(isInView);
       const video = videoRef.current;
       if (video) {
         if (isInView) {
+          video.volume = 0.7; // Reasonable volume
           video.muted = false;
-          video.play().catch(e => console.log('Play failed:', e));
+          requestAnimationFrame(() => {
+            video.play().catch(e => console.log('Play failed:', e));
+          });
         } else {
           video.pause();
+          video.currentTime = 0; // Optional: restart on re-enter
           video.muted = true;
+          video.volume = 0;
         }
       }
     });
@@ -26,8 +31,8 @@ const About = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(videoCallback, {
       root: null,
-      rootMargin: '0px',
-      threshold: [0.2, 0.5]
+      rootMargin: '-10% 0px -20% 0px', // Trigger earlier
+      threshold: [0.1, 0.3, 0.5, 0.7]
     });
 
     if (sectionRef.current) {
@@ -116,23 +121,25 @@ const About = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
           {/* Image */}
 <div className="relative">
-            <div className="aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-purple-900/30 to-pink-900/30 p-2">
-              <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl">
+            <div className="h-[450px] sm:h-[500px] md:h-[550px] lg:h-[650px] max-w-lg mx-auto rounded-3xl overflow-hidden bg-gradient-to-br from-purple-900/30 to-pink-900/30 p-2">
+              <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl">
                 <video
                   ref={videoRef}
-                  muted={!isVisible}
+                  muted
                   loop
                   playsInline
-                  preload="metadata"
-                  className="w-full h-full object-cover"
-                  onLoadedData={() => {
-                    if (isVisible && videoRef.current) {
-                      videoRef.current.play().catch(e => console.log('Initial play failed:', e));
+                  preload="auto"
+                  poster="/hero.jpeg"
+                  className="w-full h-full object-contain"
+                  onLoadedMetadata={(e) => {
+                    const video = e.currentTarget;
+                    if (isVisible && !video.paused) {
+                      video.play().catch(e => console.log(e));
                     }
                   }}
                 >
                   <source src="/mony.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
+                  Your browser does not support the video tag. Use hero image as fallback.
                 </video>
               </div>
             </div>
