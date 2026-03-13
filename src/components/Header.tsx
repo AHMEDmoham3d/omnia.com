@@ -5,6 +5,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState<'shopping' | 'courses'>('shopping');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,8 +21,8 @@ const Header = () => {
     { name: 'Services', href: '#services' },
     { name: 'Contact', href: '#contact' },
     { name: 'Blog', href: '/blog.html' }, 
-    { name: 'Shopping', action: () => setShowModal(true) },
-    { name: 'Shopping', action: () => setShowModal(true) }
+    { name: 'Shopping', action: () => { setModalType('shopping'); setShowModal(true); } },
+    { name: 'Courses', action: () => { setModalType('courses'); setShowModal(true); } }
 
   ];
 
@@ -114,9 +115,9 @@ const Header = () => {
           <div className="bg-[#16182F] text-white p-8 rounded-2xl shadow-2xl w-[90%] max-w-md animate-fade-in">
             <div className="flex flex-col items-center space-y-4">
               <Sparkles className="w-12 h-12 text-purple-300 animate-pulse" />
-              <h2 className="text-2xl font-bold text-center">Shopping</h2>
+              <h2 className="text-2xl font-bold text-center">{modalType === 'courses' ? 'Courses' : 'Shopping'}</h2>
               <p className="text-center text-gray-300">
-                Our Shopping section is under development.<br /> Stay tuned!
+                Our {modalType === 'courses' ? 'Courses' : 'Shopping'} section is under development.<br /> Stay tuned!
               </p>
               <button
                 onClick={() => setShowModal(false)}
