@@ -1,11 +1,14 @@
-# Video in About Section Task
+# Video Fix Plan Progress
 
-Status: ✅ COMPLETED
+## Current Status
+✅ File verified: public/mony.mp4 exists (~6.4MB, reasonable size)
 
-## Steps
-- [x] Plan approved by user
-- [x] Create TODO.md ✅
-- [x] Edit src/components/About.tsx: replace images with scroll-controlled video (imports, state, observer logic, video JSX, section ref)
-- [x] Update TODO.md with completion
-- [x] Test: Dev server running at http://localhost:5173/ - scroll to About: video auto plays with sound when >=50% visible, pauses/mutes on scroll away ✅
-- [x] Complete task
+## Steps from Plan
+1. [ ] User confirm production URL & Network errors for /mony.mp4
+2. [ ] Simplify About.tsx video logic (basic autoplay + controls)
+3. [ ] Update vercel.json for video headers (MIME/cache)
+4. [ ] Deploy & test
+5. [ ] Optimize if needed
+
+## Next Action
+Awaiting user: Vercel URL, devtools Network/Console errors, direct /mony.mp4 test.

@@ -3,70 +3,9 @@ import { Heart, Eye, Waves, Star, Sun, Moon, Music, Sparkles } from 'lucide-reac
 
 const About = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  // const videoRef = useRef<HTMLVideoElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [userInteracted, setUserInteracted] = useState(false);
-
-  useEffect(() => {
-    const handleInteraction = () => {
-      setUserInteracted(true);
-      document.removeEventListener('click', handleInteraction);
-      document.removeEventListener('touchstart', handleInteraction);
-    };
-
-    document.addEventListener('click', handleInteraction);
-    document.addEventListener('touchstart', handleInteraction);
-
-    return () => {
-      document.removeEventListener('click', handleInteraction);
-      document.removeEventListener('touchstart', handleInteraction);
-    };
-  }, []);
-
-  const videoCallback = useCallback((entries: IntersectionObserverEntry[]) => {
-    entries.forEach((entry) => {
-      const isInView = entry.isIntersecting;
-      setIsVisible(isInView);
-      const video = videoRef.current;
-      if (video) {
-        if (isInView && userInteracted) {
-          video.volume = 1;
-          video.muted = false;
-          video.play().then(() => {
-            console.log('Video playing');
-          }).catch(e => {
-            console.log('Play promise rejected:', e.message);
-            // Fallback
-            setTimeout(() => video.play(), 100);
-          });
-        } else if (isInView) {
-          // Muted play first
-          video.muted = true;
-          video.volume = 0;
-          video.play().catch(e => console.log('Muted play failed:', e));
-        } else {
-          video.pause();
-          video.muted = true;
-          video.volume = 0;
-        }
-      }
-    });
-  }, [userInteracted]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(videoCallback, {
-      root: null,
-      rootMargin: '-50% 0px -50% 0px',
-      threshold: 0.01
-    });
-
-    const video = videoRef.current;
-    if (video) {
-      observer.observe(video);
-    }
-
-    return () => observer.disconnect();
-  }, [videoCallback]);
 
   const features = [
     {
@@ -150,21 +89,19 @@ const About = () => {
             <div className="h-[450px] sm:h-[500px] md:h-[550px] lg:h-[650px] max-w-lg mx-auto rounded-3xl overflow-hidden bg-gradient-to-br from-purple-900/30 to-pink-900/30 p-2">
               <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl">
                 <video
-                  ref={videoRef}
                   muted
+                  autoPlay
                   loop
                   playsInline
-                  preload="auto"
+                  preload="metadata"
+                  controls
+                  poster="/hero.jpeg"
                   className="w-full h-full object-contain bg-gradient-to-br from-gray-900/50 to-transparent"
-                  onLoadedMetadata={(e) => {
-                    const video = e.currentTarget;
-                    if (isVisible && !video.paused) {
-                      video.play().catch(e => console.log(e));
-                    }
-                  }}
+                  onError={(e) => console.error('Video load error:', e)}
+                  onLoadedData={() => console.log('Video loaded')}
                 >
                   <source src="/mony.mp4" type="video/mp4" />
-                  Your browser does not support the video tag. Use hero image as fallback.
+                  Your browser does not support the video tag.
                 </video>
               </div>
             </div>
