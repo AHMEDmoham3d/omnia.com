@@ -110,8 +110,13 @@ const Hero = () => {
           </h1>
         </div>
         
-<p>This space was created for those who are seeking clarity, healing, guiding and a deeper connection with themselves. 
-I support people in understanding their path, releasing blockages, and reconnecting with their inner strength and intuition.</p>
+        <p className="text-xl md:text-2xl text-gray-300 mb-8 font-light animate-fade-in-up">
+          This space was created for those who are seeking clarity, healing, guiding and a deeper connection with themselves. 
+        </p>
+        
+        <p className="text-lg text-gray-400 mb-12 max-w-2xl mx-auto animate-fade-in-up-delayed">
+          I support people in understanding their path, releasing blockages, and reconnecting with their inner strength and intuition.
+        </p>
 
         <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in-up-more-delayed">
           <a
