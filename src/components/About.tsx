@@ -5,6 +5,23 @@ const About = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [userInteracted, setUserInteracted] = useState(false);
+
+  useEffect(() => {
+    const handleInteraction = () => {
+      setUserInteracted(true);
+      document.removeEventListener('click', handleInteraction);
+      document.removeEventListener('touchstart', handleInteraction);
+    };
+
+    document.addEventListener('click', handleInteraction);
+    document.addEventListener('touchstart', handleInteraction);
+
+    return () => {
+      document.removeEventListener('click', handleInteraction);
+      document.removeEventListener('touchstart', handleInteraction);
+    };
+  }, []);
 
   const videoCallback = useCallback((entries: IntersectionObserverEntry[]) => {
     entries.forEach((entry) => {
@@ -12,16 +29,21 @@ const About = () => {
       setIsVisible(isInView);
       const video = videoRef.current;
       if (video) {
-        if (isInView) {
+        if (isInView && userInteracted) {
           video.volume = 1;
           video.muted = false;
           video.play().then(() => {
             console.log('Video playing');
           }).catch(e => {
             console.log('Play promise rejected:', e.message);
-            // Fallback attempt
+            // Fallback
             setTimeout(() => video.play(), 100);
           });
+        } else if (isInView) {
+          // Muted play first
+          video.muted = true;
+          video.volume = 0;
+          video.play().catch(e => console.log('Muted play failed:', e));
         } else {
           video.pause();
           video.muted = true;
@@ -29,7 +51,7 @@ const About = () => {
         }
       }
     });
-  }, []);
+  }, [userInteracted]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(videoCallback, {
