@@ -21,7 +21,7 @@ const Header = () => {
     { name: 'Contact', href: '#contact' },
     { name: 'Blog', href: '/blog.html' }, 
     { name: 'Shopping', action: () => setShowModal(true) },
-    { name: 'Courses', action: () => setShowModal(true) }
+    { name: 'Shopping', action: () => setShowModal(true) }
 
   ];
 
@@ -114,9 +114,9 @@ const Header = () => {
           <div className="bg-[#16182F] text-white p-8 rounded-2xl shadow-2xl w-[90%] max-w-md animate-fade-in">
             <div className="flex flex-col items-center space-y-4">
               <Sparkles className="w-12 h-12 text-purple-300 animate-pulse" />
-              <h2 className="text-2xl font-bold text-center">We're working on it!</h2>
+              <h2 className="text-2xl font-bold text-center">Shopping</h2>
               <p className="text-center text-gray-300">
-                Our Courses section is under development.<br /> Stay tuned!
+                Our Shopping section is under development.<br /> Stay tuned!
               </p>
               <button
                 onClick={() => setShowModal(false)}
