@@ -21,7 +21,7 @@ const Header = () => {
     { name: 'Services', href: '#services' },
     { name: 'Contact', href: '#contact' },
     { name: 'Blog', href: '/blog.html' }, 
-    { name: 'Shopping', action: () => { window.open('https://beyondholisticstore.vercel.app/', '_blank'); } },
+{ name: 'Shopping', href: 'https://beyondholisticstore.vercel.app/' },
     { name: 'Courses', action: () => { setModalType('courses'); setShowModal(true); } }
 
   ];

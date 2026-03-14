@@ -1,9 +1,7 @@
-# Task Progress: Update Shopping Button to Open External Link
+# Task Progress: Update Shopping Button to Open External Link (Updated per feedback)
 
 ## Steps:
-- [x] Understand files and create edit plan
-- [x] Create TODO.md with steps
-- [x] Edit Header.tsx to update Shopping action
-- [x] Verify change
+- [x] Initial plan and edit (new tab)
+- [x] Update to same tab (href)
 - [x] Complete task
 
