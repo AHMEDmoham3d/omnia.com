@@ -57,7 +57,7 @@ const Services = () => {
     {
       icon: <Music className="w-7 h-7 text-pink-400" />,
       title: "Sound Therapy",
-      description: "You will feel the shift within. I use a combination of frequencies and ancient techniques that work directly on your nervous system to bring deep relaxation, restore balance, and promote healing. It's a journey back to your natural state of harmony.",
+      description: "A gentle yet powerful healing session that. I use a combination of frequencies and ancient techniques that work directly on your nervous system to bring deep relaxation, restore balance, and promote healing. It's a journey back to your natural state of harmony.",
       features: [
         "There are 3 different types of sessions:",
         <div key="sound-therapy-types" className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
@@ -97,9 +97,11 @@ const Services = () => {
       title: "Healing Sessions",
       description: (
         <>
-          A gentle yet powerful healing session designed to clear energetic blockages, restore your balance and help you to reconnect with your true self while finding the sacred parts of you that you have forgotten.
+          These sessions are designed to support your journey toward clarity, emotional balance, and inner harmony.
+          Through intuitive guidance and energetic awareness, we 
+          open a safe space for transformation and deeper connection with yourself.
           <br /><br />
-          This healing session is perfect for releasing blockages related to relationships, family dynamics, grief or loss, money challenges, emotional struggles,...Its a safe space to let go and realign your energy.
+          It is perfect for releasing blockages related to relationships, family dynamics, grief or loss, money challenges, emotional struggles,...Its a safe space to let go and realign your energy.
         </>
       ),
       features: []
@@ -159,15 +161,17 @@ const Services = () => {
                     <div className="flex items-center space-x-4 text-sm text-pink-300">
                       <span className="flex items-center space-x-1">
                         <Clock className="w-4 h-4" />
-                        <span>
-                          {service.title === "Tarot Reading" 
+                      <span>
+                        {service.title === "Tarot Reading" 
+                          ? "60 min, Online (Video Call) or In person"
+                          : service.title === "Sound Therapy"
+                            ? "90 min, In person Only"
+                          : service.title === "Healing Sessions" 
                             ? "60 min, Online (Video Call) or In person"
-                            : service.title === "Healing Sessions" 
-                              ? "60 min, Online (Video Call) or In person"
-                              : service.title === "Soul Print"
-                                ? "Online Only"
-                                : "60 min, In person Only"}
-                        </span>
+                            : service.title === "Soul Print"
+                              ? "Online Only"
+                              : ""}
+                      </span>
                       </span>
                     </div>
                   </div>

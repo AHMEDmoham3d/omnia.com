@@ -130,7 +130,7 @@ const Contact = () => {
             Connect With Me
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-           Are you ready to take the first step towards your inner light ? Ready to begin your spiritual journey? Reach out to schedule a consultation 
+           Are you ready to take the first step towards your inner light ? Ready to begin your spiritual journey? Reach out to schedule a  session 
             or ask any questions about my services.
           </p>
         </div>
@@ -162,7 +162,7 @@ const Contact = () => {
                 <li>✨ Scientific base over 5+ years experience</li>
                 <li>🔒 100% confidential and secure sessions</li>
                 <li>🌟 Personalized approach for every client</li>
-                <li>✨Holding a space and non- judgment</li>
+                <li>✨Holding a space of non- judgment</li>
                 <li>💫 Sees beyond the surface</li>
               </ul>
             </div>
