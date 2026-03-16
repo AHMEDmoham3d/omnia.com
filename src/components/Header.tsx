@@ -5,7 +5,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState<'shopping' | 'courses'>('shopping');
+  const [modalType, setModalType] = useState<'shopping' | 'courses' | 'blog'>('shopping');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,7 +20,7 @@ const Header = () => {
     { name: 'About', href: '#about' },
     { name: 'Services', href: '#services' },
     { name: 'Contact', href: '#contact' },
-    { name: 'Blog', href: '/blog.html' }, 
+    { name: 'Blog', action: () => { setModalType('blog'); setShowModal(true); } }, 
     { name: 'Shopping', href: 'https://beyond-holistic-store-eg.vercel.app/' },
     { name: 'Courses', action: () => { setModalType('courses'); setShowModal(true); } }
   ];
@@ -110,21 +110,22 @@ const Header = () => {
         )}
       </header>
 
-      {/* Modal for Courses */}
+      {/* Unified Modal for Courses/Blog */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
-          <div className="bg-[#16182F] text-white p-8 rounded-2xl shadow-2xl w-[90vw] max-w-md animate-in fade-in scale-in duration-200">
-            <div className="flex flex-col items-center space-y-4">
+          <div className="bg-[#16182F] text-white p-8 rounded-2xl shadow-2xl w-[90vw] max-w-md mx-auto animate-in fade-in scale-in duration-200">
+            <div className="flex flex-col items-center space-y-4 text-center">
               <Sparkles className="w-12 h-12 text-purple-300 animate-pulse" />
-              <h2 className="text-2xl font-bold text-center">{modalType === 'courses' ? 'Courses' : 'Shopping'}</h2>
-              <p className="text-center text-gray-300">
-                Our {modalType === 'courses' ? 'Courses' : 'Shopping'} section is under development.<br /> Stay tuned!
+              <h2 className="text-2xl font-bold">{modalType === 'blog' ? 'Blog' : modalType.charAt(0).toUpperCase() + modalType.slice(1)}</h2>
+              <p className="text-gray-300 max-w-sm">
+                Our {modalType === 'blog' ? 'Blog' : modalType.charAt(0).toUpperCase() + modalType.slice(1)} section is under development right now.<br />
+                Stay tuned for amazing content coming soon!
               </p>
               <button
                 onClick={() => setShowModal(false)}
-                className="mt-4 px-5 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-600 hover:to-purple-600 transition duration-300"
+                className="px-6 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-600 hover:to-purple-600 transition-all duration-300 font-medium shadow-lg hover:shadow-xl"
               >
-                Close
+                Got it!
               </button>
             </div>
           </div>
