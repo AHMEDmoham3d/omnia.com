@@ -21,25 +21,26 @@ const Header = () => {
     { name: 'Services', href: '#services' },
     { name: 'Contact', href: '#contact' },
     { name: 'Blog', href: '/blog.html' }, 
-{ name: 'Shopping', href: 'https://beyond-holistic-store-eg.vercel.app/' },
+    { name: 'Shopping', href: 'https://beyond-holistic-store-eg.vercel.app/' },
     { name: 'Courses', action: () => { setModalType('courses'); setShowModal(true); } }
-
   ];
 
   return (
     <header
-      className={`fixed top-0 w-full z-40 transition-all duration-300 ${
-        isScrolled ? 'bg-gray-900/95 backdrop-blur-sm shadow-xl' : 'bg-transparent'
+      className={`fixed top-0 w-full z-50 transition-all duration-300 supports-[backdrop-filter:blur(20px)]:backdrop-blur-md shadow-lg ${
+        isScrolled 
+          ? 'bg-gray-900/95 shadow-xl border-b border-gray-800/50 backdrop-blur-md' 
+          : 'bg-white/10 shadow-lg border-b border-white/20 backdrop-blur-sm'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2 sm:py-3 md:py-4 flex justify-between items-center relative">
         {/* Logo */}
         <div className="flex items-center space-x-2">
           <div className="relative">
-            <Sparkles className="w-8 h-8 text-purple-400 animate-pulse" />
+            <Sparkles className="w-7 h-7 sm:w-8 sm:h-8 text-purple-400 animate-pulse" />
             <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-ping"></div>
           </div>
-          <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+          <span className="text-xl sm:text-2xl md:text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent leading-tight">
             Beyond Holistic
           </span>
         </div>
@@ -72,7 +73,7 @@ const Header = () => {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="md:hidden text-white"
+          className="md:hidden text-white p-1 rounded-lg hover:bg-gray-800/50 transition-colors"
         >
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -80,8 +81,8 @@ const Header = () => {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden mt-2 pb-4 border-t border-gray-700">
-          <nav className="flex flex-col space-y-4 pt-4 px-4">
+        <div className="md:hidden bg-gray-900/95 backdrop-blur-md border-t border-gray-700 rounded-t-xl shadow-2xl mx-3 sm:mx-4 -mt-2 animate-slide-down">
+          <nav className="flex flex-col space-y-3 pt-3 pb-4 px-3 sm:px-4 max-h-80 overflow-y-auto">
             {navItems.map((item) =>
               item.action ? (
                 <button
@@ -90,7 +91,7 @@ const Header = () => {
                     setIsMenuOpen(false);
                     item.action();
                   }}
-                  className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium text-left"
+                  className="text-gray-300 hover:text-purple-400 hover:bg-gray-800/50 transition-all duration-200 font-medium text-left py-2 px-2 rounded-lg"
                 >
                   {item.name}
                 </button>
@@ -98,7 +99,7 @@ const Header = () => {
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-gray-300 hover:text-purple-400 transition-colors duration-300 font-medium"
+                  className="text-gray-300 hover:text-purple-400 hover:bg-gray-800/50 transition-all duration-200 font-medium py-2 px-2 rounded-lg block"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
@@ -134,3 +135,4 @@ const Header = () => {
 };
 
 export default Header;
+

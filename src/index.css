@@ -58,6 +58,17 @@ h1, h2, h3, h4, h5, h6 {
   to { transform: rotate(360deg); }
 }
 
+@keyframes slide-down {
+  from { 
+    opacity: 0; 
+    transform: translateY(-10px) scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
@@ -84,6 +95,18 @@ h1, h2, h3, h4, h5, h6 {
 
 .animate-spin-slow {
   animation: spin-slow 20s linear infinite;
+}
+
+.animate-slide-down {
+  animation: slide-down 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Mobile header improvements */
+@media (max-width: 768px) {
+  header .max-w-7xl {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
 }
 
 /* Scrollbar styling */
@@ -157,3 +180,4 @@ h1, h2, h3, h4, h5, h6 {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
