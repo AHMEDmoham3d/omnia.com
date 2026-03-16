@@ -29,8 +29,8 @@ const Header = () => {
     <header
       className={`fixed top-0 w-full z-50 transition-all duration-300 supports-[backdrop-filter:blur(20px)]:backdrop-blur-md shadow-lg ${
         isScrolled 
-          ? 'bg-gray-900/95 shadow-xl border-b border-gray-800/50 backdrop-blur-md' 
-          : 'bg-white/10 shadow-lg border-b border-white/20 backdrop-blur-sm'
+          ? 'bg-gray-900/95 shadow-xl backdrop-blur-md' 
+          : 'bg-white/10 shadow-lg backdrop-blur-sm'
       }`}
     >
       <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2 sm:py-3 md:py-4 flex justify-between items-center relative">
