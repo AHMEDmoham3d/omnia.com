@@ -1,19 +1,901 @@
+// import React, { useState, useEffect, useCallback, useMemo } from 'react';
+// import { X, Users, Globe, Clock, Download, Trash2, Ban, UserCheck, Eye, BarChart3, Shield, MapPin, Lock } from 'lucide-react';
+// import { createClient } from '@supabase/supabase-js';
+
+// // Initialize Supabase client with environment variables
+// const supabaseUrl = process.env.REACT_APP_SUPABASE_URL || '';
+// const supabaseKey = process.env.REACT_APP_SUPABASE_KEY || '';
+// const supabase = createClient(supabaseUrl, supabaseKey);
+
+// // Type definitions
+// interface Message {
+//   id: number;
+//   created_at: string;
+//   name: string;
+//   email: string;
+//   whatsapp: string;
+//   message: string;
+//   status: string;
+//   country?: string;
+//   city?: string;
+//   timestamp?: string;
+// }
+
+// interface Visitor {
+//   id: string;
+//   country: string;
+//   city: string;
+//   region?: string;
+//   ip: string;
+//   device: string;
+//   browser: string;
+//   isp?: string;
+//   isActive: boolean;
+//   visitTime: string;
+//   timeOnSite: number;
+//   screenResolution: string;
+//   language: string;
+//   pageViews?: string[];
+// }
+
+// interface BannedIP {
+//   ip: string;
+//   bannedAt: string;
+//   reason?: string;
+// }
+
+// interface VisitorData {
+//   totalVisitors: number;
+//   todayVisitors: number;
+//   countries: string[];
+//   pageViews: Record<string, number>;
+// }
+
+// interface AdminPanelProps {
+//   onClose: () => void;
+//   visitorData: VisitorData;
+// }
+
+// const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
+//   const [activeTab, setActiveTab] = useState('dashboard');
+//   const [realTimeVisitors, setRealTimeVisitors] = useState<Visitor[]>([]);
+//   const [bannedIPs, setBannedIPs] = useState<BannedIP[]>([]);
+//   const [messages, setMessages] = useState<Message[]>([]);
+//   const [showDeleteConfirm, setShowDeleteConfirm] = useState<number | null>(null);
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+//   const [loginError, setLoginError] = useState('');
+//   const [isLoading, setIsLoading] = useState(false);
+
+//   // Secure storage keys with useMemo to prevent recreation on every render
+//   const STORAGE_KEYS = useMemo(() => ({
+//     VISITORS: 'secure_visitors_data_v2',
+//     BANNED_IPS: 'secure_banned_ips_data_v2',
+//     LOGIN_ATTEMPTS: 'login_attempts_counter',
+//     SESSION_EXPIRY: 'admin_session_expiry'
+//   }), []);
+
+//   const unreadMessagesCount = messages.filter(m => m.status === 'unread').length;
+
+//   const tabs = useMemo(() => [
+//     { 
+//       id: 'dashboard', 
+//       name: 'Dashboard', 
+//       icon: <BarChart3 className="w-4 h-4" /> 
+//     },
+//     { 
+//       id: 'messages', 
+//       name: 'Messages', 
+//       icon: (
+//         <div className="relative">
+//           <Eye className="w-4 h-4" />
+//           {unreadMessagesCount > 0 && (
+//             <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+//               {unreadMessagesCount}
+//             </span>
+//           )}
+//         </div>
+//       ) 
+//     },
+//     { 
+//       id: 'visitors', 
+//       name: 'Visitors', 
+//       icon: <Users className="w-4 h-4" /> 
+//     },
+//     { 
+//       id: 'analytics', 
+//       name: 'Analytics', 
+//       icon: <Globe className="w-4 h-4" /> 
+//     },
+//     { 
+//       id: 'security', 
+//       name: 'Security', 
+//       icon: <Shield className="w-4 h-4" /> 
+//     },
+//   ], [unreadMessagesCount]);
+
+//   const handleLogin = async (e: React.FormEvent) => {
+//     e.preventDefault();
+//     setLoginError('');
+//     setIsLoading(true);
+
+//     try {
+//       // Rate limiting check
+//       const loginAttempts = parseInt(localStorage.getItem(STORAGE_KEYS.LOGIN_ATTEMPTS) || '0');
+//       if (loginAttempts > 3) {
+//         setLoginError('Too many attempts. Please try again later.');
+//         return;
+//       }
+
+//       if (!email || !password) {
+//         setLoginError('Please enter both email and password');
+//         localStorage.setItem(STORAGE_KEYS.LOGIN_ATTEMPTS, (loginAttempts + 1).toString());
+//         return;
+//       }
+
+//       // In a real app, you would hash the password and compare with stored hash
+//       const correctEmail = process.env.REACT_APP_ADMIN_EMAIL || 'admin@example.com';
+//       const correctPassword = process.env.REACT_APP_ADMIN_PASSWORD || 'securePassword123!';
+
+//       if (email === correctEmail && password === correctPassword) {
+//         setIsLoggedIn(true);
+//         localStorage.removeItem(STORAGE_KEYS.LOGIN_ATTEMPTS);
+//         localStorage.setItem(STORAGE_KEYS.SESSION_EXPIRY, (Date.now() + 3600000).toString());
+//       } else {
+//         setLoginError('Invalid credentials');
+//         localStorage.setItem(STORAGE_KEYS.LOGIN_ATTEMPTS, (loginAttempts + 1).toString());
+//       }
+//     } catch (error) {
+//       console.error('Login error:', error);
+//       setLoginError('An error occurred during login');
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
+
+//   const fetchMessages = useCallback(async () => {
+//     try {
+//       const { data, error } = await supabase
+//         .from('messages')
+//         .select('*')
+//         .order('created_at', { ascending: false });
+
+//       if (error) throw error;
+//       setMessages(data as Message[]);
+//     } catch (error) {
+//       console.error("Failed to fetch messages:", error);
+//     }
+//   }, []);
+
+// const downloadData = useCallback((type: 'all' | 'messages' | 'visitors') => {
+//   let dataToExport: unknown;
+//   let fileName = '';
+
+//   const sanitizeData = <T extends { ip?: string; email?: string; whatsapp?: string }>(data: T[]): T[] => {
+//     return data.map(item => {
+//       const { ip, email, whatsapp, ...rest } = item;
+//       return {
+//         ...rest,
+//         ...(ip ? { ip: 'REDACTED' } : {}),
+//         ...(email ? { email: 'REDACTED@example.com' } : {}),
+//         ...(whatsapp ? { whatsapp: 'REDACTED' } : {})
+//       } as T;
+//     });
+//   };
+
+//   switch (type) {
+//     case 'all':
+//       dataToExport = {
+//         messages: sanitizeData<Message>(messages),
+//         visitors: sanitizeData<Visitor>(realTimeVisitors),
+//         bannedIPs: sanitizeData<BannedIP>(bannedIPs)
+//       };
+//       fileName = `secure-export-${new Date().toISOString().split('T')[0]}.json`;
+//       break;
+//     case 'messages':
+//       dataToExport = sanitizeData<Message>(messages);
+//       fileName = `messages-export-${new Date().toISOString().split('T')[0]}.json`;
+//       break;
+//     case 'visitors':
+//       dataToExport = sanitizeData<Visitor>(realTimeVisitors);
+//       fileName = `visitors-export-${new Date().toISOString().split('T')[0]}.json`;
+//       break;
+//   }
+
+//     const dataStr = JSON.stringify(dataToExport, null, 2);
+//     const dataBlob = new Blob([dataStr], { type: 'application/json;charset=utf-8' });
+//     const url = URL.createObjectURL(dataBlob);
+//     const link = document.createElement('a');
+//     link.href = url;
+//     link.download = fileName;
+//     link.style.display = 'none';
+//     document.body.appendChild(link);
+//     link.click();
+//     document.body.removeChild(link);
+//     URL.revokeObjectURL(url);
+// }, [messages, realTimeVisitors, bannedIPs]);
+//   const markMessageAsRead = useCallback(async (id: number) => {
+//     try {
+//       const { error } = await supabase
+//         .from('messages')
+//         .update({ status: 'read' })
+//         .eq('id', id);
+
+//       if (error) throw error;
+//       setMessages(prev => prev.map(msg => 
+//         msg.id === id ? { ...msg, status: 'read' } : msg
+//       ));
+//     } catch (error) {
+//       console.error("Failed to update message:", error);
+//     }
+//   }, []);
+
+//   const handleDeleteMessage = useCallback((id: number) => {
+//     setShowDeleteConfirm(id);
+//   }, []);
+
+//   const confirmDeleteMessage = useCallback(async (id: number) => {
+//     try {
+//       const { error } = await supabase
+//         .from('messages')
+//         .delete()
+//         .eq('id', id);
+
+//       if (error) throw error;
+//       setMessages(prev => prev.filter(msg => msg.id !== id));
+//     } catch (error) {
+//       console.error("Failed to delete message:", error);
+//     } finally {
+//       setShowDeleteConfirm(null);
+//     }
+//   }, []);
+
+//   const cancelDeleteMessage = useCallback(() => {
+//     setShowDeleteConfirm(null);
+//   }, []);
+
+//   const banVisitor = useCallback((ip: string, reason?: string) => {
+//     if (!/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ip)) {
+//       console.error('Invalid IP address');
+//       return;
+//     }
+    
+//     const bannedAt = new Date().toISOString();
+//     const bannedIPs: BannedIP[] = JSON.parse(localStorage.getItem(STORAGE_KEYS.BANNED_IPS) || '[]');
+//     const updatedBannedIPs = [...bannedIPs, { ip, bannedAt, reason }];
+    
+//     localStorage.setItem(STORAGE_KEYS.BANNED_IPS, JSON.stringify(updatedBannedIPs));
+//     setBannedIPs(updatedBannedIPs);
+//   }, [STORAGE_KEYS.BANNED_IPS]);
+
+//   const unbanVisitor = useCallback((ip: string) => {
+//     const bannedIPs: BannedIP[] = JSON.parse(localStorage.getItem(STORAGE_KEYS.BANNED_IPS) || '[]');
+//     const updatedBannedIPs = bannedIPs.filter(banned => banned.ip !== ip);
+    
+//     localStorage.setItem(STORAGE_KEYS.BANNED_IPS, JSON.stringify(updatedBannedIPs));
+//     setBannedIPs(updatedBannedIPs);
+//   }, [STORAGE_KEYS.BANNED_IPS]);
+
+//   const formatTimeOnSite = useCallback((seconds: number) => {
+//     const mins = Math.floor(seconds / 60);
+//     const secs = seconds % 60;
+//     return `${mins}m ${secs}s`;
+//   }, []);
+
+//   const checkSession = useCallback(() => {
+//     const expiry = localStorage.getItem(STORAGE_KEYS.SESSION_EXPIRY);
+//     if (expiry && parseInt(expiry) < Date.now()) {
+//       setIsLoggedIn(false);
+//       localStorage.removeItem(STORAGE_KEYS.SESSION_EXPIRY);
+//     }
+//   }, [STORAGE_KEYS.SESSION_EXPIRY]);
+
+//   const loadData = useCallback(async () => {
+//     try {
+//       await fetchMessages();
+
+//       try {
+//         const visitorsData = localStorage.getItem(STORAGE_KEYS.VISITORS);
+//         if (visitorsData) {
+//           const visitors: Visitor[] = JSON.parse(visitorsData);
+//           setRealTimeVisitors(visitors);
+//         }
+//       } catch (e) {
+//         console.error("Error loading visitors:", e);
+//       }
+
+//       try {
+//         const bannedData = localStorage.getItem(STORAGE_KEYS.BANNED_IPS);
+//         if (bannedData) {
+//           const banned: BannedIP[] = JSON.parse(bannedData);
+//           setBannedIPs(banned);
+//         }
+//       } catch (e) {
+//         console.error("Error loading banned IPs:", e);
+//       }
+//     } catch (error) {
+//       console.error("Initial data load error:", error);
+//     }
+//   }, [STORAGE_KEYS.BANNED_IPS, STORAGE_KEYS.VISITORS, fetchMessages]);
+
+//   useEffect(() => {
+//     if (!isLoggedIn) return;
+//     loadData();
+//   }, [isLoggedIn, loadData]);
+
+//   useEffect(() => {
+//     checkSession();
+//     const interval = setInterval(checkSession, 60000);
+//     return () => clearInterval(interval);
+//   }, [checkSession]);
+
+//   useEffect(() => {
+//     if (!isLoggedIn) return;
+
+//     let timeout: NodeJS.Timeout;
+//     const resetTimer = () => {
+//       clearTimeout(timeout);
+//       timeout = setTimeout(() => {
+//         setIsLoggedIn(false);
+//         localStorage.removeItem(STORAGE_KEYS.SESSION_EXPIRY);
+//       }, 1800000);
+//     };
+
+//     const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'];
+//     events.forEach(event => window.addEventListener(event, resetTimer));
+
+//     resetTimer();
+
+//     return () => {
+//       clearTimeout(timeout);
+//       events.forEach(event => window.removeEventListener(event, resetTimer));
+//     };
+//   }, [isLoggedIn, STORAGE_KEYS.SESSION_EXPIRY]);
+
+//   if (!isLoggedIn) {
+//     return (
+//       <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+//         <div className="bg-gray-900 rounded-2xl p-8 w-full max-w-md border border-gray-700">
+//           <div className="flex flex-col items-center mb-6">
+//             <Lock className="w-12 h-12 text-purple-500 mb-4" />
+//             <h2 className="text-2xl font-bold text-white">Admin Login</h2>
+//             <p className="text-gray-400 text-sm mt-2">Enter your credentials to continue</p>
+//           </div>
+          
+//           <form onSubmit={handleLogin} className="space-y-6">
+//             {loginError && (
+//               <div className="bg-red-500/20 text-red-400 p-3 rounded-lg text-sm">
+//                 {loginError}
+//               </div>
+//             )}
+            
+//             <div>
+//               <label htmlFor="email" className="block text-gray-400 mb-2">Email</label>
+//               <input
+//                 id="email"
+//                 type="email"
+//                 value={email}
+//                 onChange={(e) => setEmail(e.target.value)}
+//                 className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+//                 required
+//                 autoComplete="username"
+//               />
+//             </div>
+            
+//             <div>
+//               <label htmlFor="password" className="block text-gray-400 mb-2">Password</label>
+//               <input
+//                 id="password"
+//                 type="password"
+//                 value={password}
+//                 onChange={(e) => setPassword(e.target.value)}
+//                 className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+//                 required
+//                 autoComplete="current-password"
+//               />
+//             </div>
+            
+//             <button
+//               type="submit"
+//               disabled={isLoading}
+//               className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-colors duration-300 flex items-center justify-center disabled:opacity-50"
+//             >
+//               {isLoading ? (
+//                 <span className="animate-pulse">Verifying...</span>
+//               ) : (
+//                 <>
+//                   <Lock className="w-4 h-4 mr-2" />
+//                   Login
+//                 </>
+//               )}
+//             </button>
+//           </form>
+//         </div>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+//       {showDeleteConfirm && (
+//         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+//           <div className="bg-gray-800 p-6 rounded-xl max-w-md w-full">
+//             <h3 className="text-xl font-bold text-white mb-4">Confirm Delete</h3>
+//             <p className="text-gray-300 mb-6">Are you sure you want to delete this message? This action cannot be undone.</p>
+//             <div className="flex justify-end space-x-4">
+//               <button
+//                 onClick={cancelDeleteMessage}
+//                 className="px-4 py-2 text-gray-300 hover:text-white"
+//               >
+//                 Cancel
+//               </button>
+//               <button
+//                 onClick={() => confirmDeleteMessage(showDeleteConfirm)}
+//                 className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+//               >
+//                 Confirm Delete
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+
+//       <div className="bg-gray-900 rounded-2xl w-full max-w-7xl h-[90vh] overflow-hidden border border-gray-700">
+//         <div className="flex items-center justify-between p-6 border-b border-gray-700">
+//           <div className="flex items-center space-x-3">
+//             <Shield className="w-6 h-6 text-purple-500" />
+//             <h2 className="text-2xl font-bold text-white">Secure Admin Dashboard</h2>
+//           </div>
+//           <button
+//             onClick={onClose}
+//             className="text-gray-400 hover:text-white transition-colors duration-300"
+//             aria-label="Close admin panel"
+//           >
+//             <X className="w-6 h-6" />
+//           </button>
+//         </div>
+
+//         <div className="flex h-full">
+//           <div className="w-64 bg-gray-800 border-r border-gray-700 p-4">
+//             <nav className="space-y-2">
+//               {tabs.map((tab) => (
+//                 <button
+//                   key={tab.id}
+//                   onClick={() => setActiveTab(tab.id)}
+//                   className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all duration-300 ${
+//                     activeTab === tab.id
+//                       ? 'bg-purple-600 text-white'
+//                       : 'text-gray-300 hover:bg-gray-700'
+//                   }`}
+//                   aria-label={`Switch to ${tab.name} tab`}
+//                 >
+//                   {tab.icon}
+//                   <span className="flex-1">{tab.name}</span>
+//                   {tab.id === 'messages' && unreadMessagesCount > 0 && (
+//                     <span className="bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+//                       {unreadMessagesCount}
+//                     </span>
+//                   )}
+//                 </button>
+//               ))}
+//             </nav>
+
+//             <div className="mt-8 p-4 bg-gray-700/50 rounded-lg">
+//               <p className="text-gray-300 text-sm">Secure session active</p>
+//               <button
+//                 onClick={() => {
+//                   setIsLoggedIn(false);
+//                   localStorage.removeItem(STORAGE_KEYS.SESSION_EXPIRY);
+//                 }}
+//                 className="mt-2 text-sm text-red-400 hover:text-red-300 flex items-center"
+//               >
+//                 <Lock className="w-3 h-3 mr-1" />
+//                 Logout
+//               </button>
+//             </div>
+//           </div>
+
+//           <div className="flex-1 overflow-y-auto">
+//             {activeTab === 'dashboard' && (
+//               <div className="p-6">
+//                 <h3 className="text-xl font-bold text-white mb-6">Real-Time Overview</h3>
+                
+//                 <div className="grid grid-cols-4 gap-6 mb-8">
+//                   <div className="bg-gray-800 p-6 rounded-xl">
+//                     <div className="flex items-center justify-between">
+//                       <div>
+//                         <p className="text-gray-400 text-sm">Total Real Visitors</p>
+//                         <p className="text-2xl font-bold text-white">{visitorData.totalVisitors}</p>
+//                       </div>
+//                       <Users className="w-8 h-8 text-purple-400" />
+//                     </div>
+//                   </div>
+                  
+//                   <div className="bg-gray-800 p-6 rounded-xl">
+//                     <div className="flex items-center justify-between">
+//                       <div>
+//                         <p className="text-gray-400 text-sm">Today's Visitors</p>
+//                         <p className="text-2xl font-bold text-white">{visitorData.todayVisitors}</p>
+//                       </div>
+//                       <Clock className="w-8 h-8 text-green-400" />
+//                     </div>
+//                   </div>
+                  
+//                   <div className="bg-gray-800 p-6 rounded-xl">
+//                     <div className="flex items-center justify-between">
+//                       <div>
+//                         <p className="text-gray-400 text-sm">New Messages</p>
+//                         <p className="text-2xl font-bold text-white">{unreadMessagesCount}</p>
+//                       </div>
+//                       <div className="relative">
+//                         <Eye className="w-8 h-8 text-blue-400" />
+//                         {unreadMessagesCount > 0 && (
+//                           <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+//                             {unreadMessagesCount}
+//                           </span>
+//                         )}
+//                       </div>
+//                     </div>
+//                   </div>
+                  
+//                   <div className="bg-gray-800 p-6 rounded-xl">
+//                     <div className="flex items-center justify-between">
+//                       <div>
+//                         <p className="text-gray-400 text-sm">Countries</p>
+//                         <p className="text-2xl font-bold text-white">{visitorData.countries.length}</p>
+//                       </div>
+//                       <Globe className="w-8 h-8 text-yellow-400" />
+//                     </div>
+//                   </div>
+//                 </div>
+
+//                 <div className="bg-gray-800 p-6 rounded-xl">
+//                   <h4 className="text-lg font-semibold text-white mb-4">Quick Actions</h4>
+//                   <div className="flex space-x-4">
+//                     <button
+//                       onClick={() => downloadData('all')}
+//                       className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors duration-300"
+//                     >
+//                       <Download className="w-4 h-4" />
+//                       <span>Export All Data</span>
+//                     </button>
+//                     <button
+//                       onClick={() => downloadData('messages')}
+//                       className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300"
+//                     >
+//                       <Download className="w-4 h-4" />
+//                       <span>Export Messages</span>
+//                     </button>
+//                     <button
+//                       onClick={() => downloadData('visitors')}
+//                       className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-300"
+//                     >
+//                       <Download className="w-4 h-4" />
+//                       <span>Export Visitors</span>
+//                     </button>
+//                   </div>
+//                 </div>
+//               </div>
+//             )}
+
+//             {activeTab === 'messages' && (
+//               <div className="p-6">
+//                 <div className="flex items-center justify-between mb-6">
+//                   <h3 className="text-xl font-bold text-white flex items-center">
+//                     <span>Contact Messages ({messages.length})</span>
+//                     {unreadMessagesCount > 0 && (
+//                       <span className="ml-3 bg-red-500 text-white text-sm rounded-full px-3 py-1 flex items-center">
+//                         <Eye className="w-3 h-3 mr-1" />
+//                         {unreadMessagesCount} unread
+//                       </span>
+//                     )}
+//                   </h3>
+//                   <button
+//                     onClick={() => downloadData('messages')}
+//                     className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors duration-300"
+//                   >
+//                     <Download className="w-4 h-4" />
+//                     <span>Export</span>
+//                   </button>
+//                 </div>
+
+//                 <div className="space-y-4">
+//                   {messages.length === 0 ? (
+//                     <div className="text-center text-gray-400 py-8">
+//                       No messages received yet.
+//                     </div>
+//                   ) : (
+//                     messages.map((message) => (
+//                       <div key={message.id} className="bg-gray-800 p-6 rounded-xl">
+//                         <div className="flex items-start justify-between mb-4">
+//                           <div>
+//                             <h4 className="text-white font-semibold">{message.name}</h4>
+//                             <p className="text-gray-400 text-sm">{message.email}</p>
+//                             {message.whatsapp && <p className="text-gray-400 text-sm">{message.whatsapp}</p>}
+//                           </div>
+//                           <div className="flex space-x-2">
+//                             <span className={`px-2 py-1 rounded text-xs ${
+//                               message.status === 'unread' 
+//                                 ? 'bg-red-600 text-white' 
+//                                 : 'bg-green-600 text-white'
+//                             }`}>
+//                               {message.status}
+//                             </span>
+//                             {message.status === 'unread' && (
+//                               <button 
+//                                 onClick={() => markMessageAsRead(message.id)}
+//                                 className="text-green-400 hover:text-green-300"
+//                                 title="Mark as Read"
+//                               >
+//                                 <UserCheck className="w-4 h-4" />
+//                               </button>
+//                             )}
+//                             <button 
+//                               onClick={() => handleDeleteMessage(message.id)}
+//                               className="text-red-400 hover:text-red-300"
+//                               title="Delete Message"
+//                               aria-label={`Delete message from ${message.name}`}
+//                             >
+//                               <Trash2 className="w-4 h-4" />
+//                             </button>
+//                           </div>
+//                         </div>
+//                         <p className="text-gray-300 mb-4">{message.message}</p>
+//                         <div className="flex items-center justify-between text-sm text-gray-400">
+//                           {message.country && (
+//                             <span className="flex items-center space-x-1">
+//                               <MapPin className="w-3 h-3" />
+//                               <span>{message.country}{message.city && `, ${message.city}`}</span>
+//                             </span>
+//                           )}
+//                           {message.timestamp && (
+//                             <span>{new Date(message.timestamp).toLocaleString()}</span>
+//                           )}
+//                         </div>
+//                       </div>
+//                     ))
+//                   )}
+//                 </div>
+//               </div>
+//             )}
+
+//             {activeTab === 'visitors' && (
+//               <div className="p-6">
+//                 <div className="flex items-center justify-between mb-6">
+//                   <h3 className="text-xl font-bold text-white">Real Visitor Tracking ({realTimeVisitors.length})</h3>
+//                   <button
+//                     onClick={() => downloadData('visitors')}
+//                     className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors duration-300"
+//                   >
+//                     <Download className="w-4 h-4" />
+//                     <span>Export</span>
+//                   </button>
+//                 </div>
+
+//                 <div className="space-y-4">
+//                   {realTimeVisitors.map((visitor) => (
+//                     <div key={visitor.id} className="bg-gray-800 p-6 rounded-xl">
+//                       <div className="flex items-start justify-between mb-4">
+//                         <div>
+//                           <h4 className="text-white font-semibold flex items-center space-x-2">
+//                             <MapPin className="w-4 h-4 text-purple-400" />
+//                             <span>{visitor.country}, {visitor.city}</span>
+//                             {visitor.region && <span className="text-gray-400">({visitor.region})</span>}
+//                           </h4>
+//                           <p className="text-gray-400 text-sm">IP: {visitor.ip}</p>
+//                           <p className="text-gray-400 text-sm">{visitor.device} - {visitor.browser}</p>
+//                           {visitor.isp && <p className="text-gray-400 text-sm">ISP: {visitor.isp}</p>}
+//                         </div>
+//                         <div className="flex space-x-2">
+//                           <span className={`px-2 py-1 rounded text-xs ${
+//                             visitor.isActive ? 'bg-green-600 text-white' : 'bg-gray-600 text-white'
+//                           }`}>
+//                             {visitor.isActive ? 'Active' : 'Offline'}
+//                           </span>
+//                           {!bannedIPs.find(banned => banned.ip === visitor.ip) ? (
+//                             <button 
+//                               onClick={() => banVisitor(visitor.ip, 'Manual ban')}
+//                               className="text-yellow-400 hover:text-yellow-300" 
+//                               title="Ban User"
+//                               aria-label={`Ban visitor from ${visitor.country}`}
+//                             >
+//                               <Ban className="w-4 h-4" />
+//                             </button>
+//                           ) : (
+//                             <button 
+//                               onClick={() => unbanVisitor(visitor.ip)}
+//                               className="text-green-400 hover:text-green-300" 
+//                               title="Unban User"
+//                               aria-label={`Unban visitor from ${visitor.country}`}
+//                             >
+//                               <UserCheck className="w-4 h-4" />
+//                             </button>
+//                           )}
+//                          </div>
+//                        </div>
+                      
+//                        <div className="grid grid-cols-4 gap-4 mb-4">
+//                          <div>
+//                            <p className="text-gray-400 text-sm">Visit Time</p>
+//                            <p className="text-white font-semibold text-sm">{new Date(visitor.visitTime).toLocaleString()}</p>
+//                          </div>
+//                          <div>
+//                           <p className="text-gray-400 text-sm">Time on Site</p>
+//                            <p className="text-white font-semibold text-sm">{formatTimeOnSite(visitor.timeOnSite)}</p>
+//                          </div>
+//                          <div>
+//                            <p className="text-gray-400 text-sm">Screen</p>
+//                            <p className="text-white font-semibold text-sm">{visitor.screenResolution}</p>
+//                         </div>
+//                         <div>
+//                           <p className="text-gray-400 text-sm">Language</p>
+//                           <p className="text-white font-semibold text-sm">{visitor.language}</p>
+//                         </div>
+//                       </div>
+
+//                       <div>
+//                         <p className="text-gray-400 text-sm mb-2">Pages Viewed:</p>
+//                         <div className="flex space-x-2">
+//                           {visitor.pageViews?.map((page) => (
+//                             <span
+//                               key={page}
+//                               className="bg-purple-600/20 text-purple-400 px-2 py-1 rounded text-xs"
+//                             >
+//                               {page}
+//                             </span>
+//                           ))}
+//                         </div>
+//                       </div>
+//                     </div>
+//                   ))}
+//                 </div>
+//               </div>
+//             )}
+
+//             {activeTab === 'analytics' && (
+//               <div className="p-6">
+//                 <h3 className="text-xl font-bold text-white mb-6">Site Analytics</h3>
+                
+//                 <div className="grid grid-cols-2 gap-6 mb-8">
+//                   <div className="bg-gray-800 p-6 rounded-xl">
+//                     <h4 className="text-lg font-semibold text-white mb-4">Page Views</h4>
+//                     <div className="space-y-3">
+//                       {Object.entries(visitorData.pageViews).map(([page, views]) => (
+//                         <div key={page} className="flex items-center justify-between">
+//                           <span className="text-gray-300 capitalize">{page}</span>
+//                           <span className="text-white font-semibold">{views as React.ReactNode}</span>
+//                         </div>
+//                       ))}
+//                     </div>
+//                   </div>
+
+//                   <div className="bg-gray-800 p-6 rounded-xl">
+//                     <h4 className="text-lg font-semibold text-white mb-4">Top Countries</h4>
+//                     <div className="space-y-3">
+//                       {visitorData.countries.slice(0, 5).map((country) => {
+//                         const countryVisitors = realTimeVisitors.filter(v => v.country === country).length;
+//                         return (
+//                           <div key={country} className="flex items-center justify-between">
+//                             <span className="text-gray-300">{country}</span>
+//                             <span className="text-white font-semibold">{countryVisitors}</span>
+//                           </div>
+//                         );
+//                       })}
+//                     </div>
+//                   </div>
+//                 </div>
+
+//                 <div className="bg-gray-800 p-6 rounded-xl">
+//                   <h4 className="text-lg font-semibold text-white mb-4">Device Analytics</h4>
+//                   <div className="grid grid-cols-3 gap-4">
+//                     <div className="text-center">
+//                       <p className="text-2xl font-bold text-purple-400">
+//                         {realTimeVisitors.filter(v => v.device === 'Mobile').length}
+//                       </p>
+//                       <p className="text-gray-400 text-sm">Mobile</p>
+//                     </div>
+//                     <div className="text-center">
+//                       <p className="text-2xl font-bold text-blue-400">
+//                         {realTimeVisitors.filter(v => v.device === 'Desktop').length}
+//                       </p>
+//                       <p className="text-gray-400 text-sm">Desktop</p>
+//                     </div>
+//                     <div className="text-center">
+//                       <p className="text-2xl font-bold text-green-400">
+//                         {realTimeVisitors.filter(v => v.isActive).length}
+//                       </p>
+//                       <p className="text-gray-400 text-sm">Active Now</p>
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+//             )}
+
+//             {activeTab === 'security' && (
+//               <div className="p-6">
+//                 <h3 className="text-xl font-bold text-white mb-6">Security Management</h3>
+                
+//                 <div className="grid gap-6">
+//                   <div className="bg-gray-800 p-6 rounded-xl">
+//                     <h4 className="text-lg font-semibold text-white mb-4">Banned IPs ({bannedIPs.length})</h4>
+//                     {bannedIPs.length === 0 ? (
+//                       <p className="text-gray-400">No banned IPs</p>
+//                     ) : (
+//                       <div className="space-y-2">
+//                         {bannedIPs.map((banned) => (
+//                           <div key={banned.ip} className="flex items-center justify-between bg-gray-700 p-3 rounded">
+//                             <div>
+//                               <span className="text-white font-mono">{banned.ip}</span>
+//                               <span className="text-gray-400 text-sm ml-2">
+//                                 Banned: {new Date(banned.bannedAt).toLocaleString()}
+//                               </span>
+//                             </div>
+//                             <button
+//                               onClick={() => unbanVisitor(banned.ip)}
+//                               className="text-green-400 hover:text-green-300"
+//                               title="Unban"
+//                               aria-label={`Unban IP ${banned.ip}`}
+//                             >
+//                               <UserCheck className="w-4 h-4" />
+//                             </button>
+//                           </div>
+//                         ))}
+//                       </div>
+//                     )}
+//                   </div>
+
+//                   <div className="bg-gray-800 p-6 rounded-xl">
+//                     <h4 className="text-lg font-semibold text-white mb-4">Security Status</h4>
+//                     <div className="space-y-3">
+//                       <div className="flex items-center justify-between">
+//                         <span className="text-gray-300">Data Encryption</span>
+//                         <span className="text-green-400 font-semibold">Active</span>
+//                       </div>
+//                       <div className="flex items-center justify-between">
+//                         <span className="text-gray-300">Secure Storage</span>
+//                         <span className="text-green-400 font-semibold">Enabled</span>
+//                       </div>
+//                       <div className="flex items-center justify-between">
+//                         <span className="text-gray-300">Admin Access</span>
+//                         <span className="text-green-400 font-semibold">Protected</span>
+//                       </div>
+//                       <div className="flex items-center justify-between">
+//                         <span className="text-gray-300">Real-time Tracking</span>
+//                         <span className="text-green-400 font-semibold">Active</span>
+//                       </div>
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+//             )}
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default AdminPanel;
+
+
 import React, { useState, useEffect } from 'react';
-import { X, Users, Globe, Clock, Download, Trash2, Ban, UserCheck, Eye, BarChart3, Shield, MapPin, Lock, Menu } from 'lucide-react';
+import { X, Users, Globe, Clock, Download, Trash2, Ban, UserCheck, Eye, BarChart3, Shield, MapPin, Lock } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = 'https://mldvuzkrcjnltzgwtpfc.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZHZ1emtyY2pubHR6Z3d0cGZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5Mjg4MjYsImV4cCI6MjA2NjUwNDgyNn0.idcUACM1z8IPkYdpV-oT_R1jZexmC25W7IMZaFvooUc';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+// تعريف الأنواع
 interface Message {
   id: number;
   created_at: string;
   name: string;
   email: string;
-  whatsapp?: string;
+  whatsapp: string;
   message: string;
-  status: 'unread' | 'read';
+  status: string;
   country?: string;
   city?: string;
   timestamp?: string;
@@ -53,9 +935,8 @@ interface AdminPanelProps {
   visitorData: VisitorData;
 }
 
-const AdminPanel: React.FC<AdminPanelProps> = ({ onClose, visitorData }) => {
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'messages' | 'visitors' | 'analytics' | 'security'>('dashboard');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
+  const [activeTab, setActiveTab] = useState('dashboard');
   const [realTimeVisitors, setRealTimeVisitors] = useState<Visitor[]>([]);
   const [bannedIPs, setBannedIPs] = useState<BannedIP[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -68,95 +949,157 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onClose, visitorData }) => {
   const unreadMessagesCount = messages.filter(m => m.status === 'unread').length;
 
   const tabs = [
-    { id: 'dashboard', name: 'Dashboard', icon: <BarChart3 className="w-5 h-5" /> },
+    { 
+      id: 'dashboard', 
+      name: 'Dashboard', 
+      icon: <BarChart3 className="w-4 h-4" /> 
+    },
     { 
       id: 'messages', 
       name: 'Messages', 
-      icon: unreadMessagesCount > 0 ? (
+      icon: (
         <div className="relative">
-          <Eye className="w-5 h-5" />\n          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">\n            {unreadMessagesCount}\n          </span>
+          <Eye className="w-4 h-4" />
+          {unreadMessagesCount > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+              {unreadMessagesCount}
+            </span>
+          )}
         </div>
-      ) : <Eye className="w-5 h-5" /> 
+      ) 
     },
-    { id: 'visitors', name: 'Visitors', icon: <Users className="w-5 h-5" /> },
-    { id: 'analytics', name: 'Analytics', icon: <Globe className="w-5 h-5" /> },
-    { id: 'security', name: 'Security', icon: <Shield className="w-5 h-5" /> },
+    { 
+      id: 'visitors', 
+      name: 'Visitors', 
+      icon: <Users className="w-4 h-4" /> 
+    },
+    { 
+      id: 'analytics', 
+      name: 'Analytics', 
+      icon: <Globe className="w-4 h-4" /> 
+    },
+    { 
+      id: 'security', 
+      name: 'Security', 
+      icon: <Shield className="w-4 h-4" /> 
+    },
   ];
-
-  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-  const closeSidebar = () => setIsSidebarOpen(false);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    setLoginError('');
+    
+    // بيانات تسجيل الدخول الثابتة
     const correctEmail = 'omniaAbdo@gmail.com';
     const correctPassword = '123456789Omnia';
     
     if (email === correctEmail && password === correctPassword) {
       setIsLoggedIn(true);
     } else {
-      setLoginError('خطأ في البريد الإلكتروني أو كلمة المرور');
+      setLoginError('Invalid email or password');
     }
   };
 
   const fetchMessages = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('messages')
-        .select('*')
-        .order('created_at', { ascending: false });
-      if (data) setMessages(data as Message[]);
-    } catch (error) {
-      console.error("Failed to fetch messages:", error);
+    const { data, error } = await supabase
+      .from('messages')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (!error && data) {
+      setMessages(data as Message[]);
+    } else {
+      console.error("❌ Failed to fetch messages:", error);
     }
   };
 
   const downloadData = (type: 'all' | 'messages' | 'visitors') => {
-    let data: any, filename = '';
+    let dataToExport: unknown;
+    let fileName = '';
+
     switch (type) {
       case 'all':
-        data = { messages, visitors: realTimeVisitors, bannedIPs };
-        filename = 'admin-data.json';
+        dataToExport = {
+          messages: messages,
+          visitors: realTimeVisitors,
+          bannedIPs: bannedIPs
+        };
+        fileName = 'omnia-data-all.json';
         break;
       case 'messages':
-        data = messages;
-        filename = 'messages.json';
+        dataToExport = messages;
+        fileName = 'omnia-messages.json';
         break;
       case 'visitors':
-        data = realTimeVisitors;
-        filename = 'visitors.json';
+        dataToExport = realTimeVisitors;
+        fileName = 'omnia-visitors.json';
         break;
     }
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    a.click();
+
+    const dataStr = JSON.stringify(dataToExport, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
     URL.revokeObjectURL(url);
   };
 
   const markMessageAsRead = async (id: number) => {
-    await supabase.from('messages').update({ status: 'read' }).eq('id', id);
-    setMessages(messages.map(msg => msg.id === id ? { ...msg, status: 'read' } : msg));
+    const { error } = await supabase
+      .from('messages')
+      .update({ status: 'read' })
+      .eq('id', id);
+
+    if (!error) {
+      setMessages(messages.map(msg => 
+        msg.id === id ? { ...msg, status: 'read' } : msg
+      ));
+    } else {
+      console.error("❌ Failed to update message:", error);
+    }
   };
 
-  const deleteMessage = async (id: number) => {
-    await supabase.from('messages').delete().eq('id', id);
-    setMessages(messages.filter(msg => msg.id !== id));
+  const handleDeleteMessage = async (id: number) => {
+    setShowDeleteConfirm(id);
+  };
+
+  const confirmDeleteMessage = async (id: number) => {
+    const { error } = await supabase
+      .from('messages')
+      .delete()
+      .eq('id', id);
+
+    if (!error) {
+      setMessages(messages.filter(msg => msg.id !== id));
+    } else {
+      console.error("❌ Failed to delete message:", error);
+    }
+    setShowDeleteConfirm(null);
+  };
+
+  const cancelDeleteMessage = () => {
     setShowDeleteConfirm(null);
   };
 
   const banVisitor = (ip: string) => {
     const bannedAt = new Date().toISOString();
-    const newBanned = [...bannedIPs, { ip, bannedAt }];
-    localStorage.setItem('admin_banned_ips', JSON.stringify(newBanned));
-    setBannedIPs(newBanned);
+    const bannedIPs: BannedIP[] = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
+    const updatedBannedIPs = [...bannedIPs, { ip, bannedAt }];
+    
+    localStorage.setItem('omnia_banned_ips', JSON.stringify(updatedBannedIPs));
+    setBannedIPs(updatedBannedIPs);
   };
 
   const unbanVisitor = (ip: string) => {
-    const newBanned = bannedIPs.filter(b => b.ip !== ip);
-    localStorage.setItem('admin_banned_ips', JSON.stringify(newBanned));
-    setBannedIPs(newBanned);
+    const bannedIPs: BannedIP[] = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
+    const updatedBannedIPs = bannedIPs.filter(banned => banned.ip !== ip);
+    
+    localStorage.setItem('omnia_banned_ips', JSON.stringify(updatedBannedIPs));
+    setBannedIPs(updatedBannedIPs);
   };
 
   const formatTimeOnSite = (seconds: number) => {
@@ -168,62 +1111,61 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onClose, visitorData }) => {
   useEffect(() => {
     if (isLoggedIn) {
       fetchMessages();
-      const visitors = localStorage.getItem('omnia_secure_visitors') ? JSON.parse(localStorage.getItem('omnia_secure_visitors')!) as Visitor[] : [];
-      const banned = localStorage.getItem('admin_banned_ips') ? JSON.parse(localStorage.getItem('admin_banned_ips')!) as BannedIP[] : [];
+
+      const visitors: Visitor[] = JSON.parse(localStorage.getItem('omnia_secure_visitors') || '[]');
       setRealTimeVisitors(visitors);
+
+      const banned: BannedIP[] = JSON.parse(localStorage.getItem('omnia_banned_ips') || '[]');
       setBannedIPs(banned);
     }
   }, [isLoggedIn]);
 
   if (!isLoggedIn) {
     return (
-      <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 sm:p-6">
-        <div className="bg-gray-900/95 backdrop-blur-sm rounded-3xl p-6 sm:p-8 w-full max-w-sm sm:max-w-md border border-gray-700 shadow-2xl">
-          <div className="flex flex-col items-center mb-6 text-center">
-            <Lock className="w-16 h-16 text-purple-500 mb-4" />
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">لوحة التحكم</h2>
-            <p className="text-gray-400 text-sm">أدخل بيانات الدخول</p>
+      <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="bg-gray-900 rounded-2xl p-8 w-full max-w-md border border-gray-700">
+          <div className="flex flex-col items-center mb-6">
+            <Lock className="w-12 h-12 text-purple-500 mb-4" />
+            <h2 className="text-2xl font-bold text-white">Admin Login</h2>
           </div>
           
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-6">
             {loginError && (
-              <div className="bg-red-500/20 border border-red-500/50 text-red-300 p-4 rounded-xl text-sm text-center">
+              <div className="bg-red-500/20 text-red-400 p-3 rounded-lg text-sm">
                 {loginError}
               </div>
             )}
             
             <div>
-              <label htmlFor="email" className="block text-gray-400 text-sm font-medium mb-2">البريد الإلكتروني</label>
+              <label htmlFor="email" className="block text-gray-400 mb-2">Email</label>
               <input
                 id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-gray-800/50 border border-gray-600 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all min-h-[48px]"
-                placeholder="your@email.com"
+                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                 required
               />
             </div>
             
             <div>
-              <label htmlFor="password" className="block text-gray-400 text-sm font-medium mb-2">كلمة المرور</label>
+              <label htmlFor="password" className="block text-gray-400 mb-2">Password</label>
               <input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-gray-800/50 border border-gray-600 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all min-h-[48px]"
-                placeholder="••••••••"
+                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                 required
               />
             </div>
             
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-4 focus:ring-purple-500/50 transition-all font-semibold text-lg min-h-[52px] shadow-lg hover:shadow-xl"
+              className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-colors duration-300 flex items-center justify-center"
             >
-              <Lock className="w-5 h-5 inline mr-2" />
-              دخول
+              <Lock className="w-4 h-4 mr-2" />
+              Login
             </button>
           </form>
         </div>
@@ -232,266 +1174,226 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onClose, visitorData }) => {
   }
 
   return (
-    <>
-      {/* Mobile sidebar overlay */}
-      {isSidebarOpen && (
-        <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
-          onClick={closeSidebar}
-          aria-hidden="true"
-        />
-      )}
-
-      <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex flex-col md:flex-row items-stretch p-2 sm:p-4 h-screen md:h-[95vh]">
-        {/* Sidebar */}
-        <div className={`bg-gray-900/95 backdrop-blur-md border-r border-gray-700/50 shadow-2xl transform transition-transform duration-300 ease-in-out fixed md:relative inset-0 z-50 w-full md:w-72 h-full flex flex-col overflow-hidden ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
-          
-          {/* Header */}
-          <div className="p-4 md:p-6 border-b border-gray-700/50 flex items-center justify-between shrink-0">
-            <div className="flex items-center space-x-3">
-              <Shield className="w-7 h-7 text-purple-400" />
-              <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                لوحة التحكم
-              </h1>
-            </div>
-            <button
-              onClick={onClose}
-              className="p-2 rounded-xl hover:bg-gray-800/50 transition-colors text-gray-400 hover:text-white md:ml-auto"
-              aria-label="إغلاق"
-            >
-              <X className="w-6 h-6" />
-            </button>
-          </div>
-
-          {/* Navigation */}
-          <nav className="flex-1 p-4 overflow-y-auto space-y-2">
-            {tabs.map((tab) => (
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-gray-800 p-6 rounded-xl max-w-md w-full">
+            <h3 className="text-xl font-bold text-white mb-4">Confirm Delete</h3>
+            <p className="text-gray-300 mb-6">Are you sure you want to delete this message?</p>
+            <div className="flex justify-end space-x-4">
               <button
-                key={tab.id}
-                onClick={() => {
-                  setActiveTab(tab.id as any);
-                  if (isSidebarOpen) closeSidebar();
-                }}
-                className={`w-full flex items-center space-x-3 p-4 rounded-2xl transition-all duration-300 text-left group hover:shadow-lg min-h-[52px] ${
-                  activeTab === tab.id
-                    ? 'bg-gradient-to-r from-purple-600/80 to-pink-600/80 text-white shadow-lg border border-purple-500/50 backdrop-blur-sm'
-                    : 'text-gray-300 hover:bg-gray-800/50 hover:text-white hover:border hover:border-gray-600/50'
-                }`}
+                onClick={cancelDeleteMessage}
+                className="px-4 py-2 text-gray-300 hover:text-white"
               >
-                {tab.icon}
-                <span className="flex-1 font-medium">{tab.name}</span>
-                {tab.id === 'messages' && unreadMessagesCount > 0 && (
-                  <div className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-lg">
-                    {unreadMessagesCount > 9 ? '9+' : unreadMessagesCount}
-                  </div>
-                )}
+                Cancel
               </button>
-            ))}
-          </nav>
-
-          {/* Footer */}
-          <div className="p-4 border-t border-gray-700/50 mt-auto">
-            <button
-              onClick={() => setIsLoggedIn(false)}
-              className="w-full flex items-center space-x-3 p-4 bg-gray-800/50 hover:bg-red-600/80 text-red-300 hover:text-white rounded-2xl transition-all duration-300 font-medium min-h-[52px]"
-            >
-              <Lock className="w-5 h-5" />
-              <span>تسجيل خروج</span>
-            </button>
+              <button
+                onClick={() => confirmDeleteMessage(showDeleteConfirm)}
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
+      )}
 
-        {/* Main Content */}
-        <div className={`flex-1 overflow-y-auto transition-all duration-300 ${isSidebarOpen ? 'blur-sm pointer-events-none' : ''}`}>
-          <main className="p-4 sm:p-6 lg:p-8 space-y-6">
+      <div className="bg-gray-900 rounded-2xl w-full max-w-7xl h-[90vh] overflow-hidden border border-gray-700">
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 border-b border-gray-700">
+          <h2 className="text-2xl font-bold text-white">Omnia Admin Dashboard</h2>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-white transition-colors duration-300"
+          >
+            <X className="w-6 h-6" />
+          </button>
+        </div>
+
+        <div className="flex h-full">
+          {/* Sidebar */}
+          <div className="w-64 bg-gray-800 border-r border-gray-700 p-4">
+            <nav className="space-y-2">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all duration-300 ${
+                    activeTab === tab.id
+                      ? 'bg-purple-600 text-white'
+                      : 'text-gray-300 hover:bg-gray-700'
+                  }`}
+                >
+                  {tab.icon}
+                  <span className="flex-1">{tab.name}</span>
+                  {tab.id === 'messages' && unreadMessagesCount > 0 && (
+                    <span className="bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                      {unreadMessagesCount}
+                    </span>
+                  )}
+                </button>
+              ))}
+            </nav>
+          </div>
+
+          {/* Main Content */}
+          <div className="flex-1 overflow-y-auto">
             {activeTab === 'dashboard' && (
-              <>
-                <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                  <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                    نظرة عامة
-                  </h2>
-                  <div className="flex gap-3 flex-wrap">
-                    <button
-                      onClick={() => downloadData('all')}
-                      className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl hover:from-purple-700 hover:to-pink-700 shadow-lg transition-all min-h-[48px] whitespace-nowrap"
-                    >
-                      <Download className="w-4 h-4" />
-                      تصدير الكل
-                    </button>
-                  </div>
-                </header>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-                  <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/50 hover:border-purple-500/50 transition-all group">
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-white mb-6">Real-Time Overview</h3>
+                
+                {/* Stats Grid */}
+                <div className="grid grid-cols-4 gap-6 mb-8">
+                  <div className="bg-gray-800 p-6 rounded-xl">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-gray-400 text-sm font-medium">الزوار الكليين</p>
-                        <p className="text-3xl lg:text-2xl font-bold text-white mt-1">{visitorData.totalVisitors}</p>
+                        <p className="text-gray-400 text-sm">Total Real Visitors</p>
+                        <p className="text-2xl font-bold text-white">{visitorData.totalVisitors}</p>
                       </div>
-                      <Users className="w-10 h-10 text-purple-400 group-hover:scale-110 transition-transform" />
+                      <Users className="w-8 h-8 text-purple-400" />
                     </div>
                   </div>
-
-                  <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/50 hover:border-green-500/50 transition-all group">
+                  
+                  <div className="bg-gray-800 p-6 rounded-xl">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-gray-400 text-sm font-medium">زوار اليوم</p>
-                        <p className="text-3xl lg:text-2xl font-bold text-white mt-1">{visitorData.todayVisitors}</p>
+                        <p className="text-gray-400 text-sm">Today's Visitors</p>
+                        <p className="text-2xl font-bold text-white">{visitorData.todayVisitors}</p>
                       </div>
-                      <Clock className="w-10 h-10 text-green-400 group-hover:scale-110 transition-transform" />
+                      <Clock className="w-8 h-8 text-green-400" />
                     </div>
                   </div>
-
-                  <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/50 hover:border-blue-500/50 transition-all group relative">
+                  
+                  <div className="bg-gray-800 p-6 rounded-xl">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-gray-400 text-sm font-medium">رسائل جديدة</p>
-                        <p className="text-3xl lg:text-2xl font-bold text-white mt-1">{unreadMessagesCount}</p>
+                        <p className="text-gray-400 text-sm">New Messages</p>
+                        <p className="text-2xl font-bold text-white">{unreadMessagesCount}</p>
                       </div>
                       <div className="relative">
-                        <Eye className="w-10 h-10 text-blue-400 group-hover:scale-110 transition-transform" />
+                        <Eye className="w-8 h-8 text-blue-400" />
                         {unreadMessagesCount > 0 && (
-                          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold shadow-lg">
+                          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                             {unreadMessagesCount}
                           </span>
                         )}
                       </div>
                     </div>
                   </div>
-
-                  <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/50 hover:border-yellow-500/50 transition-all group">
+                  
+                  <div className="bg-gray-800 p-6 rounded-xl">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-gray-400 text-sm font-medium">الدول</p>
-                        <p className="text-3xl lg:text-2xl font-bold text-white mt-1">{visitorData.countries.length}</p>
+                        <p className="text-gray-400 text-sm">Countries</p>
+                        <p className="text-2xl font-bold text-white">{visitorData.countries.length}</p>
                       </div>
-                      <Globe className="w-10 h-10 text-yellow-400 group-hover:scale-110 transition-transform" />
+                      <Globe className="w-8 h-8 text-yellow-400" />
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-gray-800/50 backdrop-blur-sm p-6 lg:p-8 rounded-3xl border border-gray-700/50 shadow-xl">
-                  <h4 className="text-xl md:text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                    <Download className="w-6 h-6" />
-                    إجراءات سريعة
-                  </h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {/* Quick Actions */}
+                <div className="bg-gray-800 p-6 rounded-xl">
+                  <h4 className="text-lg font-semibold text-white mb-4">Quick Actions</h4>
+                  <div className="flex space-x-4">
                     <button
                       onClick={() => downloadData('all')}
-                      className="group relative overflow-hidden bg-gradient-to-br from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 p-6 rounded-2xl text-white font-semibold shadow-lg hover:shadow-2xl transition-all duration-300 min-h-[60px] flex items-center justify-center gap-3 border-0 hover:scale-[1.02]"
+                      className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors duration-300"
                     >
-                      <Download className="w-6 h-6 group-hover:scale-110 transition-transform" />
-                      تصدير كل البيانات
+                      <Download className="w-4 h-4" />
+                      <span>Export All Data</span>
                     </button>
                     <button
                       onClick={() => downloadData('messages')}
-                      className="group relative overflow-hidden bg-gradient-to-br from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 p-6 rounded-2xl text-white font-semibold shadow-lg hover:shadow-2xl transition-all duration-300 min-h-[60px] flex items-center justify-center gap-3 border-0 hover:scale-[1.02]"
+                      className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300"
                     >
-                      <Download className="w-6 h-6 group-hover:scale-110 transition-transform" />
-                      تصدير الرسائل
+                      <Download className="w-4 h-4" />
+                      <span>Export Messages</span>
                     </button>
                     <button
                       onClick={() => downloadData('visitors')}
-                      className="group relative overflow-hidden bg-gradient-to-br from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 p-6 rounded-2xl text-white font-semibold shadow-lg hover:shadow-2xl transition-all duration-300 min-h-[60px] flex items-center justify-center gap-3 border-0 hover:scale-[1.02]"
+                      className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-300"
                     >
-                      <Download className="w-6 h-6 group-hover:scale-110 transition-transform" />
-                      تصدير الزوار
+                      <Download className="w-4 h-4" />
+                      <span>Export Visitors</span>
                     </button>
                   </div>
                 </div>
-              </>
+              </div>
             )}
 
             {activeTab === 'messages' && (
-              <div className="space-y-6">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                  <div>
-                    <h3 className="text-2xl md:text-3xl font-bold text-white flex items-center gap-3">
-                      <Eye className="w-8 h-8" />
-                      الرسائل ({messages.length})
-                      {unreadMessagesCount > 0 && (
-                        <span className="bg-red-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
-                          {unreadMessagesCount} غير مقروءة
-                        </span>
-                      )}
-                    </h3>
-                  </div>
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-xl font-bold text-white flex items-center">
+                    <span>Contact Messages ({messages.length})</span>
+                    {unreadMessagesCount > 0 && (
+                      <span className="ml-3 bg-red-500 text-white text-sm rounded-full px-3 py-1 flex items-center">
+                        <Eye className="w-3 h-3 mr-1" />
+                        {unreadMessagesCount} unread
+                      </span>
+                    )}
+                  </h3>
                   <button
                     onClick={() => downloadData('messages')}
-                    className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all whitespace-nowrap min-h-[52px]"
+                    className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors duration-300"
                   >
-                    <Download className="w-5 h-5" />
-                    تصدير الرسائل
+                    <Download className="w-4 h-4" />
+                    <span>Export</span>
                   </button>
                 </div>
 
-                <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+                <div className="space-y-4">
                   {messages.length === 0 ? (
-                    <div className="text-center py-12">
-                      <Eye className="w-16 h-16 text-gray-600 mx-auto mb-4 opacity-50" />
-                      <p className="text-gray-400 text-lg font-medium">لا توجد رسائل بعد</p>
+                    <div className="text-center text-gray-400 py-8">
+                      No messages received yet.
                     </div>
                   ) : (
                     messages.map((message) => (
-                      <div key={message.id} className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/50 hover:border-purple-500/50 transition-all hover:shadow-xl">
-                        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-4">
-                          <div className="flex flex-col sm:flex-row sm:items-center gap-3 flex-1 min-w-0">
-                            <div className="flex items-center gap-3">
-                              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center flex-shrink-0">
-                                <span className="text-white font-semibold text-lg">
-                                  {message.name.split(' ').map(n => n[0]).join('')}
-                                </span>
-                              </div>
-                              <div className="min-w-0 flex-1">
-                                <h4 className="text-white font-bold truncate">{message.name}</h4>
-                                <p className="text-gray-400 text-sm truncate">{message.email}</p>
-                                {message.whatsapp && (
-                                  <p className="text-gray-400 text-sm truncate">{message.whatsapp}</p>
-                                )}
-                              </div>
-                            </div>
+                      <div key={message.id} className="bg-gray-800 p-6 rounded-xl">
+                        <div className="flex items-start justify-between mb-4">
+                          <div>
+                            <h4 className="text-white font-semibold">{message.name}</h4>
+                            <p className="text-gray-400 text-sm">{message.email}</p>
+                            {message.whatsapp && <p className="text-gray-400 text-sm">{message.whatsapp}</p>}
                           </div>
-                          
-                          <div className="flex items-center gap-2 self-start lg:self-center">
-                            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                          <div className="flex space-x-2">
+                            <span className={`px-2 py-1 rounded text-xs ${
                               message.status === 'unread' 
-                                ? 'bg-red-500/90 text-white' 
-                                : 'bg-green-500/90 text-white'
+                                ? 'bg-red-600 text-white' 
+                                : 'bg-green-600 text-white'
                             }`}>
-                              {message.status === 'unread' ? 'غير مقروء' : 'مقروء'}
+                              {message.status}
                             </span>
-                            <div className="flex gap-1">
-                              {message.status === 'unread' && (
-                                <button 
-                                  onClick={() => markMessageAsRead(message.id)}
-                                  className="p-2 hover:bg-green-500/20 rounded-xl text-green-400 hover:text-green-300 transition-all"
-                                  title="وضع كمقروء"
-                                >
-                                  <UserCheck className="w-5 h-5" />
-                                </button>
-                              )}
+                            {message.status === 'unread' && (
                               <button 
-                                onClick={() => setShowDeleteConfirm(message.id)}
-                                className="p-2 hover:bg-red-500/20 rounded-xl text-red-400 hover:text-red-300 transition-all"
-                                title="حذف"
+                                onClick={() => markMessageAsRead(message.id)}
+                                className="text-green-400 hover:text-green-300"
+                                title="Mark as Read"
                               >
-                                <Trash2 className="w-5 h-5" />
+                                <UserCheck className="w-4 h-4" />
                               </button>
-                            </div>
+                            )}
+                            <button 
+                              onClick={() => handleDeleteMessage(message.id)}
+                              className="text-red-400 hover:text-red-300"
+                              title="Delete Message"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
                           </div>
                         </div>
-                        
-                        <p className="text-gray-300 text-base leading-relaxed mb-6">{message.message}</p>
-                        
-                        <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500">
+                        <p className="text-gray-300 mb-4">{message.message}</p>
+                        <div className="flex items-center justify-between text-sm text-gray-400">
                           {message.country && (
-                            <span className="flex items-center gap-1">
-                              <MapPin className="w-4 h-4" />
-                              <span>{message.country}, {message.city}</span>
+                            <span className="flex items-center space-x-1">
+                              <MapPin className="w-3 h-3" />
+                              <span>{message.country}{message.city && `, ${message.city}`}</span>
                             </span>
                           )}
                           {message.timestamp && (
-                            <span>{new Date(message.timestamp).toLocaleString('ar-EG')}</span>
+                            <span>{new Date(message.timestamp).toLocaleString()}</span>
                           )}
                         </div>
                       </div>
@@ -502,111 +1404,90 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onClose, visitorData }) => {
             )}
 
             {activeTab === 'visitors' && (
-              <div className="space-y-6">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <h3 className="text-2xl md:text-3xl font-bold text-white flex items-center gap-3">
-                    <Users className="w-8 h-8" />
-                    الزوار الحاليين ({realTimeVisitors.length})
-                  </h3>
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-xl font-bold text-white">Real Visitor Tracking ({realTimeVisitors.length})</h3>
                   <button
                     onClick={() => downloadData('visitors')}
-                    className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all whitespace-nowrap min-h-[52px]"
+                    className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors duration-300"
                   >
-                    <Download className="w-5 h-5" />
-                    تصدير الزوار
+                    <Download className="w-4 h-4" />
+                    <span>Export</span>
                   </button>
                 </div>
 
-                <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
-                  {realTimeVisitors.length === 0 ? (
-                    <div className="text-center py-12">
-                      <Users className="w-16 h-16 text-gray-600 mx-auto mb-4 opacity-50" />
-                      <p className="text-gray-400 text-lg font-medium">لا يوجد زوار حالياً</p>
-                    </div>
-                  ) : realTimeVisitors.map((visitor) => (
-                    <div key={visitor.id} className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/50 hover:border-emerald-500/50 transition-all hover:shadow-xl">
-                      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-4">
-                        <div className="flex items-center gap-4 flex-1">
-                          <div className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-green-500 rounded-2xl flex items-center justify-center flex-shrink-0">
-                            <Globe className="w-7 h-7 text-white" />
-                          </div>
-                          <div>
-                            <h4 className="text-white font-bold flex flex-col lg:flex-row lg:items-center gap-2">
-                              <span>{visitor.country}</span>
-                              <span className="text-gray-400 font-normal">، {visitor.city}</span>
-                              {visitor.region && (
-                                <span className="text-xs bg-gray-700 px-2 py-1 rounded-full">{visitor.region}</span>
-                              )}
-                            </h4>
-                            <p className="text-gray-400 text-sm">IP: <span className="font-mono">{visitor.ip}</span></p>
-                            <p className="text-gray-400 text-sm">{visitor.device} • {visitor.browser}</p>
-                          </div>
+                <div className="space-y-4">
+                  {realTimeVisitors.map((visitor) => (
+                    <div key={visitor.id} className="bg-gray-800 p-6 rounded-xl">
+                      <div className="flex items-start justify-between mb-4">
+                        <div>
+                          <h4 className="text-white font-semibold flex items-center space-x-2">
+                            <MapPin className="w-4 h-4 text-purple-400" />
+                            <span>{visitor.country}, {visitor.city}</span>
+                            {visitor.region && <span className="text-gray-400">({visitor.region})</span>}
+                          </h4>
+                          <p className="text-gray-400 text-sm">IP: {visitor.ip}</p>
+                          <p className="text-gray-400 text-sm">{visitor.device} - {visitor.browser}</p>
+                          {visitor.isp && <p className="text-gray-400 text-sm">ISP: {visitor.isp}</p>}
                         </div>
-                        
-                        <div className="flex items-center gap-3 self-start lg:self-center">
-                          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                            visitor.isActive 
-                              ? 'bg-emerald-500/90 text-white shadow-lg' 
-                              : 'bg-gray-600/90 text-gray-200'
+                        <div className="flex space-x-2">
+                          <span className={`px-2 py-1 rounded text-xs ${
+                            visitor.isActive ? 'bg-green-600 text-white' : 'bg-gray-600 text-white'
                           }`}>
-                            {visitor.isActive ? 'نشط الآن' : 'غير متصل'}
+                            {visitor.isActive ? 'Active' : 'Offline'}
                           </span>
-                          {!bannedIPs.some(b => b.ip === visitor.ip) ? (
+                          {!bannedIPs.find(banned => banned.ip === visitor.ip) ? (
                             <button 
                               onClick={() => banVisitor(visitor.ip)}
-                              className="p-3 bg-yellow-500/20 hover:bg-yellow-500/40 text-yellow-400 hover:text-yellow-300 rounded-xl transition-all shadow-lg hover:shadow-xl min-w-[44px] h-[44px] flex items-center justify-center"
-                              title="حظر الزائر"
+                              className="text-yellow-400 hover:text-yellow-300" 
+                              title="Ban User"
                             >
-                              <Ban className="w-5 h-5" />
+                              <Ban className="w-4 h-4" />
                             </button>
                           ) : (
                             <button 
                               onClick={() => unbanVisitor(visitor.ip)}
-                              className="p-3 bg-emerald-500/20 hover:bg-emerald-500/40 text-emerald-400 hover:text-emerald-300 rounded-xl transition-all shadow-lg hover:shadow-xl min-w-[44px] h-[44px] flex items-center justify-center"
-                              title="إلغاء الحظر"
+                              className="text-green-400 hover:text-green-300" 
+                              title="Unban User"
                             >
-                              <UserCheck className="w-5 h-5" />
+                              <UserCheck className="w-4 h-4" />
                             </button>
                           )}
+                         </div>
+                       </div>
+                      
+                       <div className="grid grid-cols-4 gap-4 mb-4">
+                         <div>
+                           <p className="text-gray-400 text-sm">Visit Time</p>
+                           <p className="text-white font-semibold text-sm">{new Date(visitor.visitTime).toLocaleString()}</p>
+                         </div>
+                         <div>
+                          <p className="text-gray-400 text-sm">Time on Site</p>
+                           <p className="text-white font-semibold text-sm">{formatTimeOnSite(visitor.timeOnSite)}</p>
+                         </div>
+                         <div>
+                           <p className="text-gray-400 text-sm">Screen</p>
+                           <p className="text-white font-semibold text-sm">{visitor.screenResolution}</p>
                         </div>
-                      </div>
-
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 bg-gray-900/50 rounded-2xl">
-                        <div className="text-center p-3">
-                          <p className="text-gray-400 text-xs uppercase tracking-wide">وقت الزيارة</p>
-                          <p className="text-white font-mono text-sm">{new Date(visitor.visitTime).toLocaleString('ar-EG')}</p>
-                        </div>
-                        <div className="text-center p-3">
-                          <p className="text-gray-400 text-xs uppercase tracking-wide">مدة البقاء</p>
-                          <p className="text-emerald-400 font-mono font-semibold text-sm">{formatTimeOnSite(visitor.timeOnSite)}</p>
-                        </div>
-                        <div className="text-center p-3">
-                          <p className="text-gray-400 text-xs uppercase tracking-wide">دقة الشاشة</p>
-                          <p className="text-white font-mono text-sm">{visitor.screenResolution}</p>
-                        </div>
-                        <div className="text-center p-3">
-                          <p className="text-gray-400 text-xs uppercase tracking-wide">اللغة</p>
-                          <p className="text-white font-mono text-sm">{visitor.language}</p>
-                        </div>
-                      </div>
-
-                      {visitor.pageViews && visitor.pageViews.length > 0 && (
                         <div>
-                          <p className="text-gray-400 text-sm font-medium mb-3 flex items-center gap-2">
-                            صفحات تمت زيارتها:
-                          </p>
-                          <div className="flex flex-wrap gap-2">
-                            {visitor.pageViews.map((page, idx) => (
-                              <span
-                                key={idx}
-                                className="bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full text-xs font-medium border border-purple-500/30 hover:bg-purple-500/30 transition-all"
-                              >
-                                {page}
-                              </span>
-                            ))}
-                          </div>
+                          <p className="text-gray-400 text-sm">Language</p>
+                          <p className="text-white font-semibold text-sm">{visitor.language}</p>
                         </div>
-                      )}
+                      </div>
+
+                      <div>
+                        <p className="text-gray-400 text-sm mb-2">Pages Viewed:</p>
+                        <div className="flex space-x-2">
+                          {visitor.pageViews?.map((page) => (
+                            <span
+                              key={page}
+                              className="bg-purple-600/20 text-purple-400 px-2 py-1 rounded text-xs"
+                            >
+                              {page}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -614,44 +1495,31 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onClose, visitorData }) => {
             )}
 
             {activeTab === 'analytics' && (
-              <div className="space-y-6">
-                <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                  <h3 className="text-2xl md:text-3xl font-bold text-white flex items-center gap-3">
-                    <BarChart3 className="w-8 h-8" />
-                    الإحصائيات والتحليلات
-                  </h3>
-                </header>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  <div className="bg-gray-800/50 backdrop-blur-sm p-6 lg:p-8 rounded-3xl border border-gray-700/50 shadow-xl">
-                    <h4 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
-                      <BarChart3 className="w-6 h-6 text-blue-400" />
-                      مشاهدات الصفحات
-                    </h4>
-                    <div className="space-y-4">
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-white mb-6">Site Analytics</h3>
+                
+                <div className="grid grid-cols-2 gap-6 mb-8">
+                  <div className="bg-gray-800 p-6 rounded-xl">
+                    <h4 className="text-lg font-semibold text-white mb-4">Page Views</h4>
+                    <div className="space-y-3">
                       {Object.entries(visitorData.pageViews).map(([page, views]) => (
-                        <div key={page} className="flex items-center justify-between p-4 bg-gray-900/50 rounded-2xl hover:bg-gray-900/70 transition-all">
-                          <span className="text-gray-300 capitalize font-medium min-w-0 truncate">{page}</span>
-                          <span className="text-white font-bold text-lg bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
-                            {views}
-                          </span>
+                        <div key={page} className="flex items-center justify-between">
+                          <span className="text-gray-300 capitalize">{page}</span>
+                          <span className="text-white font-semibold">{views as React.ReactNode}</span>
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="bg-gray-800/50 backdrop-blur-sm p-6 lg:p-8 rounded-3xl border border-gray-700/50 shadow-xl">
-                    <h4 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
-                      <Globe className="w-6 h-6 text-yellow-400" />
-                      أعلى الدول
-                    </h4>
-                    <div className="space-y-4">
-                      {visitorData.countries.slice(0, 8).map((country, idx) => {
-                        const count = realTimeVisitors.filter(v => v.country === country).length;
+                  <div className="bg-gray-800 p-6 rounded-xl">
+                    <h4 className="text-lg font-semibold text-white mb-4">Top Countries</h4>
+                    <div className="space-y-3">
+                      {visitorData.countries.slice(0, 5).map((country) => {
+                        const countryVisitors = realTimeVisitors.filter(v => v.country === country).length;
                         return (
-                          <div key={country} className="flex items-center justify-between p-4 bg-gray-900/50 rounded-2xl hover:bg-gray-900/70 transition-all">
-                            <span className="text-gray-300 font-medium">{country}</span>
-                            <span className="text-white font-bold text-lg">{count}</span>
+                          <div key={country} className="flex items-center justify-between">
+                            <span className="text-gray-300">{country}</span>
+                            <span className="text-white font-semibold">{countryVisitors}</span>
                           </div>
                         );
                       })}
@@ -659,31 +1527,26 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onClose, visitorData }) => {
                   </div>
                 </div>
 
-                <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-3xl border border-gray-700/50 shadow-2xl">
-                  <h4 className="text-2xl font-bold text-white mb-8 flex items-center gap-3 justify-center">
-                    تحليل الأجهزة
-                  </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="text-center group hover:scale-105 transition-all">
-                      <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-3xl flex items-center justify-center border-2 border-purple-500/30 group-hover:border-purple-400/50">
-                        <Users className="w-12 h-12 text-purple-400 group-hover:scale-110 transition-all" />
-                      </div>
-                      <p className="text-3xl font-bold text-white mb-2">{realTimeVisitors.filter(v => v.device === 'Mobile').length}</p>
-                      <p className="text-gray-400 text-lg font-medium uppercase tracking-wide">موبايل</p>
+                <div className="bg-gray-800 p-6 rounded-xl">
+                  <h4 className="text-lg font-semibold text-white mb-4">Device Analytics</h4>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-purple-400">
+                        {realTimeVisitors.filter(v => v.device === 'Mobile').length}
+                      </p>
+                      <p className="text-gray-400 text-sm">Mobile</p>
                     </div>
-                    <div className="text-center group hover:scale-105 transition-all">
-                      <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-3xl flex items-center justify-center border-2 border-blue-500/30 group-hover:border-blue-400/50">
-                        <Globe className="w-12 h-12 text-blue-400 group-hover:scale-110 transition-all" />
-                      </div>
-                      <p className="text-3xl font-bold text-white mb-2">{realTimeVisitors.filter(v => v.device === 'Desktop').length}</p>
-                      <p className="text-gray-400 text-lg font-medium uppercase tracking-wide">كمبيوتر</p>
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-blue-400">
+                        {realTimeVisitors.filter(v => v.device === 'Desktop').length}
+                      </p>
+                      <p className="text-gray-400 text-sm">Desktop</p>
                     </div>
-                    <div className="text-center group hover:scale-105 transition-all">
-                      <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-emerald-500/20 to-green-500/20 rounded-3xl flex items-center justify-center border-2 border-emerald-500/30 group-hover:border-emerald-400/50">
-                        <Clock className="w-12 h-12 text-emerald-400 group-hover:scale-110 transition-all" />
-                      </div>
-                      <p className="text-3xl font-bold text-white mb-2">{realTimeVisitors.filter(v => v.isActive).length}</p>
-                      <p className="text-gray-400 text-lg font-medium uppercase tracking-wide">نشط الآن</p>
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-green-400">
+                        {realTimeVisitors.filter(v => v.isActive).length}
+                      </p>
+                      <p className="text-gray-400 text-sm">Active Now</p>
                     </div>
                   </div>
                 </div>
@@ -691,37 +1554,30 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onClose, visitorData }) => {
             )}
 
             {activeTab === 'security' && (
-              <div className="space-y-6">
-                <h3 className="text-2xl md:text-3xl font-bold text-white flex items-center gap-3 justify-center">
-                  <Shield className="w-9 h-9" />
-                  إدارة الأمان
-                </h3>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-3xl border border-gray-700/50 shadow-xl">
-                    <h4 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
-                      عناوين محظورة ({bannedIPs.length})
-                    </h4>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-white mb-6">Security Management</h3>
+                
+                <div className="grid gap-6">
+                  <div className="bg-gray-800 p-6 rounded-xl">
+                    <h4 className="text-lg font-semibold text-white mb-4">Banned IPs ({bannedIPs.length})</h4>
                     {bannedIPs.length === 0 ? (
-                      <div className="text-center py-12">
-                        <Ban className="w-16 h-16 text-gray-600 mx-auto mb-4 opacity-50" />
-                        <p className="text-gray-400 text-lg font-medium">لا توجد عناوين محظورة</p>
-                      </div>
+                      <p className="text-gray-400">No banned IPs</p>
                     ) : (
-                      <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
+                      <div className="space-y-2">
                         {bannedIPs.map((banned) => (
-                          <div key={banned.ip} className="flex items-center justify-between p-5 bg-gray-900/50 rounded-2xl border border-gray-700/50 hover:border-red-500/50 transition-all hover:shadow-lg">
+                          <div key={banned.ip} className="flex items-center justify-between bg-gray-700 p-3 rounded">
                             <div>
-                              <span className="text-white font-mono text-lg block font-bold">{banned.ip}</span>
-                              <span className="text-gray-400 text-sm">
-                                تم الحظر في {new Date(banned.bannedAt).toLocaleString('ar-EG')}
+                              <span className="text-white font-mono">{banned.ip}</span>
+                              <span className="text-gray-400 text-sm ml-2">
+                                Banned: {new Date(banned.bannedAt).toLocaleString()}
                               </span>
                             </div>
                             <button
                               onClick={() => unbanVisitor(banned.ip)}
-                              className="p-3 bg-emerald-500/20 hover:bg-emerald-500/40 text-emerald-400 hover:text-emerald-300 rounded-2xl transition-all shadow-lg hover:shadow-xl min-w-[48px] h-[48px] flex items-center justify-center"
+                              className="text-green-400 hover:text-green-300"
+                              title="Unban"
                             >
-                              <UserCheck className="w-5 h-5" />
+                              <UserCheck className="w-4 h-4" />
                             </button>
                           </div>
                         ))}
@@ -729,37 +1585,90 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onClose, visitorData }) => {
                     )}
                   </div>
 
-                  <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-3xl border border-gray-700/50 shadow-xl">
-                    <h4 className="text-xl font-bold text-white mb-8 flex items-center gap-3 justify-center">
-                      حالة الأمان
-                    </h4>
-                    <div className="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="flex items-center justify-between p-6 bg-gray-900/50 rounded-2xl">
-                        <span className="text-gray-300 font-medium">تشفير البيانات</span>
-                        <span className="px-4 py-2 bg-emerald-500/90 text-white rounded-xl font-semibold text-sm shadow-lg">مفعل</span>
+                  <div className="bg-gray-800 p-6 rounded-xl">
+                    <h4 className="text-lg font-semibold text-white mb-4">Security Status</h4>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-300">Data Encryption</span>
+                        <span className="text-green-400 font-semibold">Active</span>
                       </div>
-                      <div className="flex items-center justify-between p-6 bg-gray-900/50 rounded-2xl">
-                        <span className="text-gray-300 font-medium">التخزين الآمن</span>
-                        <span className="px-4 py-2 bg-emerald-500/90 text-white rounded-xl font-semibold text-sm shadow-lg">مفعل</span>
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-300">Secure Storage</span>
+                        <span className="text-green-400 font-semibold">Enabled</span>
                       </div>
-                      <div className="flex items-center justify-between p-6 bg-gray-900/50 rounded-2xl">
-                        <span className="text-gray-300 font-medium">وصول الإدارة</span>
-                        <span className="px-4 py-2 bg-emerald-500/90 text-white rounded-xl font-semibold text-sm shadow-lg">محمي</span>
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-300">Admin Access</span>
+                        <span className="text-green-400 font-semibold">Protected</span>
                       </div>
-                      <div className="flex items-center justify-between p-6 bg-gray-900/50 rounded-2xl md:col-span-2">
-                        <span className="text-gray-300 font-medium">التتبع في الوقت الحقيقي</span>
-                        <span className="px-4 py-2 bg-emerald-500/90 text-white rounded-xl font-semibold text-sm shadow-lg">مفعل</span>
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-300">Real-time Tracking</span>
+                        <span className="text-green-400 font-semibold">Active</span>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             )}
-          </main>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
 export default AdminPanel;
+// // export default AdminPanel;
+// import { useEffect, useState } from 'react';
+// import { createClient } from '@supabase/supabase-js';
+
+// // تعريف نوع الرسالة
+// interface Message {
+//   id: number;
+//   created_at: string;
+//   name: string;
+//   email: string;
+//   whatsapp: string;
+//   message: string;
+// }
+
+// const supabase = createClient(
+//   'https://mldvuzkrcjnltzgwtpfc.supabase.co',
+//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZHZ1emtyY2pubHR6Z3d0cGZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5Mjg4MjYsImV4cCI6MjA2NjUwNDgyNn0.idcUACM1z8IPkYdpV-oT_R1jZexmC25W7IMZaFvooUc'
+// );
+
+// export default function MessagesTest() {
+//   const [messages, setMessages] = useState<Message[]>([]);
+
+//   useEffect(() => {
+//     const fetchMessages = async () => {
+//       const { data, error } = await supabase.from('messages').select('*');
+
+//       if (error) {
+//         console.error('❌ Fetch error:', error.message);
+//       } else if (data) {
+//         setMessages(data as Message[]); // تأكيد أن البيانات من نوع Message[]
+//       }
+//     };
+
+//     fetchMessages();
+//   }, []);
+
+//   return (
+//     <div style={{ padding: '2rem', fontFamily: 'Arial, sans-serif' }}>
+//       <h2>📬 Messages:</h2>
+//       {messages.length === 0 ? (
+//         <p>No messages found.</p>
+//       ) : (
+//         messages.map((msg) => (
+//           <div key={msg.id} style={{ marginBottom: '1rem', border: '1px solid #ccc', padding: '1rem', borderRadius: '8px' }}>
+//             <p><strong>Name:</strong> {msg.name}</p>
+//             <p><strong>Email:</strong> {msg.email}</p>
+//             <p><strong>WhatsApp:</strong> {msg.whatsapp}</p>
+//             <p><strong>Message:</strong> {msg.message}</p>
+//             <p style={{ fontSize: '0.8rem', color: 'gray' }}>Sent: {new Date(msg.created_at).toLocaleString()}</p>
+//           </div>
+//         ))
+//       )}
+//     </div>
+//   );
+// }
