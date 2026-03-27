@@ -48,8 +48,6 @@ const StoreAndCourses = () => {
             </p>
             <a
               href="https://beyond-holistic-store-eg.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
               className="group/btn flex items-center justify-center w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-5 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-purple-400/50"
             >
               Shop Exclusive Products
@@ -94,8 +92,6 @@ const StoreAndCourses = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
               href="https://beyond-holistic-store-eg.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
               className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-4 rounded-2xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
             >
               Enter The Store Now
