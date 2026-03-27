@@ -1,1 +1,9 @@
-# Fix Tailwind CSS Conflicts in AdminPanel.tsx\n\n## Steps:\n- [x] 1. Create TODO.md with plan steps ✓\n- [x] 2. Edit AdminPanel.tsx to remove duplicate 'text-xs' class on line 78 ✓\n- [ ] 3. Verify warnings are resolved\n- [ ] 4. Mark complete and attempt_completion
+# StoreAndCourses Section Task
+
+## Steps:
+- [x] Create src/components/StoreAndCourses.tsx with matching design and promotional content.
+- [x] Integrate into src/App.tsx after Services section.
+- [x] Test locally with `npm run dev`.
+- [ ] Style adjustments if needed.
+- [ ] Update responsive design.
+

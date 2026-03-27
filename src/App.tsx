@@ -9,6 +9,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
 import Services from './components/Services';
+import StoreAndCourses from './components/StoreAndCourses';
 
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -250,19 +251,7 @@ function App() {
     setMessages(savedMessages);
   }, []);
 
-  const handleNewMessage = (messageData: Omit<Message, 'id' | 'timestamp' | 'status' | 'ip'>) => {
-    const newMessage: Message = {
-      id: Date.now(),
-      ...messageData,
-      timestamp: new Date().toISOString(),
-      status: 'unread',
-      ip: 'Hidden for security'
-    };
 
-    const updatedMessages = [...messages, newMessage];
-    setMessages(updatedMessages);
-    localStorage.setItem('omnia_secure_messages', JSON.stringify(updatedMessages));
-  };
 
   return (
     <Router>
@@ -278,7 +267,8 @@ function App() {
                 <Hero />
                 <About />
                 <Services />
-                <Contact onMessageSent={handleNewMessage} />
+                <StoreAndCourses />
+                <Contact />
                 <Footer />
               </>
             }
@@ -289,8 +279,6 @@ function App() {
             element={
               <AdminPanel
                 visitorData={visitorData}
-                messages={messages}
-                setMessages={setMessages}
                 onClose={() => {}}
               />
             }
