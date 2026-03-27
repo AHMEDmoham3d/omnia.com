@@ -39,12 +39,11 @@ const StoreAndCourses = () => {
               </div>
             </div>
             <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-pink-400 group-hover:bg-clip-text transition-all duration-300">
-              Healing Store
+              Online Store
             </h3>
             <p className="text-gray-300 mb-8 leading-relaxed text-lg opacity-90 group-hover:text-gray-200 transition-colors">
-              Premium crystals, tuning forks, sound tools & more. 
-              Elevate your practice with products trusted by healers worldwide. 
-              <span className="text-green-400 font-semibold block mt-2 text-xl">Shop Now & Transform Instantly</span>
+             Welcome to the online store where you can explore spiritual products and tools. 
+              <span className="text-green-400 font-semibold block mt-2 text-xl">Shop Now</span>
             </p>
             <a
               href="https://beyond-holistic-store-eg.vercel.app/"
@@ -76,7 +75,7 @@ const StoreAndCourses = () => {
                 <span className="text-purple-300 font-semibold block mt-2 text-xl">Master Your Gifts. Lead Your Path.</span>
               </p>
               <button className="group/btn flex items-center justify-center w-full bg-gradient-to-r from-yellow-500 to-purple-500 hover:from-yellow-600 hover:to-purple-600 text-white px-8 py-5 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-yellow-400/50 relative z-10">
-                Join Elite Waitlist
+                learn and grow  
                 <ArrowRight className="w-5 h-5 ml-3 group-hover/btn:translate-x-1 transition-transform duration-300" />
               </button>
             </div>
