@@ -171,7 +171,7 @@ const Header = () => {
       </header>
 
       {/* Add CSS animations */}
-      <style jsx>{`
+      <style>{`
         @keyframes slideDown {
           from {
             opacity: 0;
