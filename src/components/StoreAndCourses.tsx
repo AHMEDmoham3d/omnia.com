@@ -49,7 +49,7 @@ const StoreAndCourses = () => {
               href="https://beyond-holistic-store-eg.vercel.app/"
               className="group/btn flex items-center justify-center w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-5 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-purple-400/50"
             >
-              Shop Exclusive Products
+              Shop now
               <ArrowRight className="w-5 h-5 ml-3 group-hover/btn:translate-x-1 transition-transform duration-300" />
             </a>
           </div>
