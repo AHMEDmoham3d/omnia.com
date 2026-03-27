@@ -879,8 +879,73 @@
 // export default AdminPanel;
 
 
+// ********************************************************
+// ********************************************************
+// ********************************************************
+// ********************************************************
+// ********************************************************
+// ********************************************************
+
+
+// // export default AdminPanel;
+// import { useEffect, useState } from 'react';
+// import { createClient } from '@supabase/supabase-js';
+
+// // تعريف نوع الرسالة
+// interface Message {
+//   id: number;
+//   created_at: string;
+//   name: string;
+//   email: string;
+//   whatsapp: string;
+//   message: string;
+// }
+
+// const supabase = createClient(
+//   'https://mldvuzkrcjnltzgwtpfc.supabase.co',
+//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZHZ1emtyY2pubHR6Z3d0cGZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5Mjg4MjYsImV4cCI6MjA2NjUwNDgyNn0.idcUACM1z8IPkYdpV-oT_R1jZexmC25W7IMZaFvooUc'
+// );
+
+// export default function MessagesTest() {
+//   const [messages, setMessages] = useState<Message[]>([]);
+
+//   useEffect(() => {
+//     const fetchMessages = async () => {
+//       const { data, error } = await supabase.from('messages').select('*');
+
+//       if (error) {
+//         console.error('❌ Fetch error:', error.message);
+//       } else if (data) {
+//         setMessages(data as Message[]); // تأكيد أن البيانات من نوع Message[]
+//       }
+//     };
+
+//     fetchMessages();
+//   }, []);
+
+//   return (
+//     <div style={{ padding: '2rem', fontFamily: 'Arial, sans-serif' }}>
+//       <h2>📬 Messages:</h2>
+//       {messages.length === 0 ? (
+//         <p>No messages found.</p>
+//       ) : (
+//         messages.map((msg) => (
+//           <div key={msg.id} style={{ marginBottom: '1rem', border: '1px solid #ccc', padding: '1rem', borderRadius: '8px' }}>
+//             <p><strong>Name:</strong> {msg.name}</p>
+//             <p><strong>Email:</strong> {msg.email}</p>
+//             <p><strong>WhatsApp:</strong> {msg.whatsapp}</p>
+//             <p><strong>Message:</strong> {msg.message}</p>
+//             <p style={{ fontSize: '0.8rem', color: 'gray' }}>Sent: {new Date(msg.created_at).toLocaleString()}</p>
+//           </div>
+//         ))
+//       )}
+//     </div>
+//   );
+// }
+
+
 import React, { useState, useEffect } from 'react';
-import { X, Users, Globe, Clock, Download, Trash2, Ban, UserCheck, Eye, BarChart3, Shield, MapPin, Lock } from 'lucide-react';
+import { X, Users, Globe, Clock, Download, Trash2, Ban, UserCheck, Eye, BarChart3, Shield, MapPin, Lock, Menu } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = 'https://mldvuzkrcjnltzgwtpfc.supabase.co';
@@ -945,6 +1010,7 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const unreadMessagesCount = messages.filter(m => m.status === 'unread').length;
 
@@ -952,14 +1018,14 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
     { 
       id: 'dashboard', 
       name: 'Dashboard', 
-      icon: <BarChart3 className="w-4 h-4" /> 
+      icon: <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" /> 
     },
     { 
       id: 'messages', 
       name: 'Messages', 
       icon: (
         <div className="relative">
-          <Eye className="w-4 h-4" />
+          <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
           {unreadMessagesCount > 0 && (
             <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
               {unreadMessagesCount}
@@ -971,17 +1037,17 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
     { 
       id: 'visitors', 
       name: 'Visitors', 
-      icon: <Users className="w-4 h-4" /> 
+      icon: <Users className="w-4 h-4 sm:w-5 sm:h-5" /> 
     },
     { 
       id: 'analytics', 
       name: 'Analytics', 
-      icon: <Globe className="w-4 h-4" /> 
+      icon: <Globe className="w-4 h-4 sm:w-5 sm:h-5" /> 
     },
     { 
       id: 'security', 
       name: 'Security', 
-      icon: <Shield className="w-4 h-4" /> 
+      icon: <Shield className="w-4 h-4 sm:w-5 sm:h-5" /> 
     },
   ];
 
@@ -1123,46 +1189,46 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
   if (!isLoggedIn) {
     return (
       <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div className="bg-gray-900 rounded-2xl p-8 w-full max-w-md border border-gray-700">
+        <div className="bg-gray-900 rounded-2xl p-6 sm:p-8 w-full max-w-md border border-gray-700">
           <div className="flex flex-col items-center mb-6">
-            <Lock className="w-12 h-12 text-purple-500 mb-4" />
-            <h2 className="text-2xl font-bold text-white">Admin Login</h2>
+            <Lock className="w-10 h-10 sm:w-12 sm:h-12 text-purple-500 mb-4" />
+            <h2 className="text-xl sm:text-2xl font-bold text-white text-center">Admin Login</h2>
           </div>
           
-          <form onSubmit={handleLogin} className="space-y-6">
+          <form onSubmit={handleLogin} className="space-y-5 sm:space-y-6">
             {loginError && (
-              <div className="bg-red-500/20 text-red-400 p-3 rounded-lg text-sm">
+              <div className="bg-red-500/20 text-red-400 p-3 rounded-lg text-sm text-center">
                 {loginError}
               </div>
             )}
             
             <div>
-              <label htmlFor="email" className="block text-gray-400 mb-2">Email</label>
+              <label htmlFor="email" className="block text-gray-400 mb-2 text-sm sm:text-base">Email</label>
               <input
                 id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm sm:text-base"
                 required
               />
             </div>
             
             <div>
-              <label htmlFor="password" className="block text-gray-400 mb-2">Password</label>
+              <label htmlFor="password" className="block text-gray-400 mb-2 text-sm sm:text-base">Password</label>
               <input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm sm:text-base"
                 required
               />
             </div>
             
             <button
               type="submit"
-              className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-colors duration-300 flex items-center justify-center"
+              className="w-full bg-purple-600 text-white py-2.5 sm:py-3 rounded-lg hover:bg-purple-700 transition-colors duration-300 flex items-center justify-center text-sm sm:text-base"
             >
               <Lock className="w-4 h-4 mr-2" />
               Login
@@ -1174,23 +1240,23 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4">
       {/* Delete Confirmation Modal */}
       {showDeleteConfirm && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-gray-800 p-6 rounded-xl max-w-md w-full">
-            <h3 className="text-xl font-bold text-white mb-4">Confirm Delete</h3>
-            <p className="text-gray-300 mb-6">Are you sure you want to delete this message?</p>
-            <div className="flex justify-end space-x-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-gray-800 p-5 sm:p-6 rounded-xl max-w-md w-full mx-4">
+            <h3 className="text-lg sm:text-xl font-bold text-white mb-4">Confirm Delete</h3>
+            <p className="text-gray-300 text-sm sm:text-base mb-6">Are you sure you want to delete this message?</p>
+            <div className="flex justify-end space-x-3 sm:space-x-4">
               <button
                 onClick={cancelDeleteMessage}
-                className="px-4 py-2 text-gray-300 hover:text-white"
+                className="px-3 sm:px-4 py-2 text-gray-300 hover:text-white text-sm sm:text-base"
               >
                 Cancel
               </button>
               <button
                 onClick={() => confirmDeleteMessage(showDeleteConfirm)}
-                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                className="px-3 sm:px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 text-sm sm:text-base"
               >
                 Delete
               </button>
@@ -1199,80 +1265,123 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
         </div>
       )}
 
-      <div className="bg-gray-900 rounded-2xl w-full max-w-7xl h-[90vh] overflow-hidden border border-gray-700">
+      <div className="bg-gray-900 rounded-2xl w-full max-w-7xl h-[95vh] sm:h-[90vh] overflow-hidden border border-gray-700 flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-700">
-          <h2 className="text-2xl font-bold text-white">Omnia Admin Dashboard</h2>
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-700">
+          <div className="flex items-center space-x-3">
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="lg:hidden text-gray-400 hover:text-white transition-colors duration-300"
+            >
+              <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
+            </button>
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white">Omnia Admin Dashboard</h2>
+          </div>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-white transition-colors duration-300"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
         </div>
 
-        <div className="flex h-full">
-          {/* Sidebar */}
-          <div className="w-64 bg-gray-800 border-r border-gray-700 p-4">
-            <nav className="space-y-2">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all duration-300 ${
-                    activeTab === tab.id
-                      ? 'bg-purple-600 text-white'
-                      : 'text-gray-300 hover:bg-gray-700'
-                  }`}
-                >
-                  {tab.icon}
-                  <span className="flex-1">{tab.name}</span>
-                  {tab.id === 'messages' && unreadMessagesCount > 0 && (
-                    <span className="bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                      {unreadMessagesCount}
-                    </span>
-                  )}
-                </button>
-              ))}
-            </nav>
+        <div className="flex flex-1 overflow-hidden relative">
+          {/* Sidebar - Mobile */}
+          <div className={`lg:hidden fixed inset-0 z-40 transition-transform duration-300 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+            <div className="fixed inset-0 bg-black/50" onClick={() => setSidebarOpen(false)} />
+            <div className="relative w-64 bg-gray-800 h-full overflow-y-auto">
+              <div className="p-4">
+                <nav className="space-y-2">
+                  {tabs.map((tab) => (
+                    <button
+                      key={tab.id}
+                      onClick={() => {
+                        setActiveTab(tab.id);
+                        setSidebarOpen(false);
+                      }}
+                      className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all duration-300 ${
+                        activeTab === tab.id
+                          ? 'bg-purple-600 text-white'
+                          : 'text-gray-300 hover:bg-gray-700'
+                      }`}
+                    >
+                      {tab.icon}
+                      <span className="flex-1 text-sm sm:text-base">{tab.name}</span>
+                      {tab.id === 'messages' && unreadMessagesCount > 0 && (
+                        <span className="bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                          {unreadMessagesCount}
+                        </span>
+                      )}
+                    </button>
+                  ))}
+                </nav>
+              </div>
+            </div>
+          </div>
+
+          {/* Sidebar - Desktop */}
+          <div className="hidden lg:block w-64 bg-gray-800 border-r border-gray-700 overflow-y-auto">
+            <div className="p-4">
+              <nav className="space-y-2">
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all duration-300 ${
+                      activeTab === tab.id
+                        ? 'bg-purple-600 text-white'
+                        : 'text-gray-300 hover:bg-gray-700'
+                    }`}
+                  >
+                    {tab.icon}
+                    <span className="flex-1">{tab.name}</span>
+                    {tab.id === 'messages' && unreadMessagesCount > 0 && (
+                      <span className="bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                        {unreadMessagesCount}
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </nav>
+            </div>
           </div>
 
           {/* Main Content */}
           <div className="flex-1 overflow-y-auto">
             {activeTab === 'dashboard' && (
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-white mb-6">Real-Time Overview</h3>
+              <div className="p-4 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Real-Time Overview</h3>
                 
-                {/* Stats Grid */}
-                <div className="grid grid-cols-4 gap-6 mb-8">
-                  <div className="bg-gray-800 p-6 rounded-xl">
+                {/* Stats Grid - Responsive */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                  <div className="bg-gray-800 p-4 sm:p-6 rounded-xl">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-gray-400 text-sm">Total Real Visitors</p>
-                        <p className="text-2xl font-bold text-white">{visitorData.totalVisitors}</p>
+                        <p className="text-gray-400 text-xs sm:text-sm">Total Real Visitors</p>
+                        <p className="text-xl sm:text-2xl font-bold text-white">{visitorData.totalVisitors}</p>
                       </div>
-                      <Users className="w-8 h-8 text-purple-400" />
+                      <Users className="w-6 h-6 sm:w-8 sm:h-8 text-purple-400" />
                     </div>
                   </div>
                   
-                  <div className="bg-gray-800 p-6 rounded-xl">
+                  <div className="bg-gray-800 p-4 sm:p-6 rounded-xl">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-gray-400 text-sm">Today's Visitors</p>
-                        <p className="text-2xl font-bold text-white">{visitorData.todayVisitors}</p>
+                        <p className="text-gray-400 text-xs sm:text-sm">Today's Visitors</p>
+                        <p className="text-xl sm:text-2xl font-bold text-white">{visitorData.todayVisitors}</p>
                       </div>
-                      <Clock className="w-8 h-8 text-green-400" />
+                      <Clock className="w-6 h-6 sm:w-8 sm:h-8 text-green-400" />
                     </div>
                   </div>
                   
-                  <div className="bg-gray-800 p-6 rounded-xl">
+                  <div className="bg-gray-800 p-4 sm:p-6 rounded-xl">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-gray-400 text-sm">New Messages</p>
-                        <p className="text-2xl font-bold text-white">{unreadMessagesCount}</p>
+                        <p className="text-gray-400 text-xs sm:text-sm">New Messages</p>
+                        <p className="text-xl sm:text-2xl font-bold text-white">{unreadMessagesCount}</p>
                       </div>
                       <div className="relative">
-                        <Eye className="w-8 h-8 text-blue-400" />
+                        <Eye className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400" />
                         {unreadMessagesCount > 0 && (
                           <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                             {unreadMessagesCount}
@@ -1282,38 +1391,38 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                     </div>
                   </div>
                   
-                  <div className="bg-gray-800 p-6 rounded-xl">
+                  <div className="bg-gray-800 p-4 sm:p-6 rounded-xl">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-gray-400 text-sm">Countries</p>
-                        <p className="text-2xl font-bold text-white">{visitorData.countries.length}</p>
+                        <p className="text-gray-400 text-xs sm:text-sm">Countries</p>
+                        <p className="text-xl sm:text-2xl font-bold text-white">{visitorData.countries.length}</p>
                       </div>
-                      <Globe className="w-8 h-8 text-yellow-400" />
+                      <Globe className="w-6 h-6 sm:w-8 sm:h-8 text-yellow-400" />
                     </div>
                   </div>
                 </div>
 
-                {/* Quick Actions */}
-                <div className="bg-gray-800 p-6 rounded-xl">
-                  <h4 className="text-lg font-semibold text-white mb-4">Quick Actions</h4>
-                  <div className="flex space-x-4">
+                {/* Quick Actions - Responsive */}
+                <div className="bg-gray-800 p-4 sm:p-6 rounded-xl">
+                  <h4 className="text-base sm:text-lg font-semibold text-white mb-4">Quick Actions</h4>
+                  <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
                     <button
                       onClick={() => downloadData('all')}
-                      className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors duration-300"
+                      className="flex items-center justify-center space-x-2 bg-purple-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors duration-300 text-sm sm:text-base"
                     >
                       <Download className="w-4 h-4" />
                       <span>Export All Data</span>
                     </button>
                     <button
                       onClick={() => downloadData('messages')}
-                      className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300"
+                      className="flex items-center justify-center space-x-2 bg-blue-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300 text-sm sm:text-base"
                     >
                       <Download className="w-4 h-4" />
                       <span>Export Messages</span>
                     </button>
                     <button
                       onClick={() => downloadData('visitors')}
-                      className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-300"
+                      className="flex items-center justify-center space-x-2 bg-green-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-300 text-sm sm:text-base"
                     >
                       <Download className="w-4 h-4" />
                       <span>Export Visitors</span>
@@ -1324,12 +1433,12 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
             )}
 
             {activeTab === 'messages' && (
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-bold text-white flex items-center">
+              <div className="p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 space-y-3 sm:space-y-0">
+                  <h3 className="text-lg sm:text-xl font-bold text-white flex items-center flex-wrap">
                     <span>Contact Messages ({messages.length})</span>
                     {unreadMessagesCount > 0 && (
-                      <span className="ml-3 bg-red-500 text-white text-sm rounded-full px-3 py-1 flex items-center">
+                      <span className="ml-2 sm:ml-3 bg-red-500 text-white text-xs sm:text-sm rounded-full px-2 sm:px-3 py-1 flex items-center">
                         <Eye className="w-3 h-3 mr-1" />
                         {unreadMessagesCount} unread
                       </span>
@@ -1337,7 +1446,7 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                   </h3>
                   <button
                     onClick={() => downloadData('messages')}
-                    className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors duration-300"
+                    className="flex items-center justify-center space-x-2 bg-purple-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors duration-300 text-sm sm:text-base w-full sm:w-auto"
                   >
                     <Download className="w-4 h-4" />
                     <span>Export</span>
@@ -1346,19 +1455,19 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
 
                 <div className="space-y-4">
                   {messages.length === 0 ? (
-                    <div className="text-center text-gray-400 py-8">
+                    <div className="text-center text-gray-400 py-8 text-sm sm:text-base">
                       No messages received yet.
                     </div>
                   ) : (
                     messages.map((message) => (
-                      <div key={message.id} className="bg-gray-800 p-6 rounded-xl">
-                        <div className="flex items-start justify-between mb-4">
-                          <div>
-                            <h4 className="text-white font-semibold">{message.name}</h4>
-                            <p className="text-gray-400 text-sm">{message.email}</p>
-                            {message.whatsapp && <p className="text-gray-400 text-sm">{message.whatsapp}</p>}
+                      <div key={message.id} className="bg-gray-800 p-4 sm:p-6 rounded-xl">
+                        <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-4 space-y-3 sm:space-y-0">
+                          <div className="flex-1">
+                            <h4 className="text-white font-semibold text-base sm:text-lg">{message.name}</h4>
+                            <p className="text-gray-400 text-xs sm:text-sm break-all">{message.email}</p>
+                            {message.whatsapp && <p className="text-gray-400 text-xs sm:text-sm break-all">{message.whatsapp}</p>}
                           </div>
-                          <div className="flex space-x-2">
+                          <div className="flex space-x-2 self-start sm:self-auto">
                             <span className={`px-2 py-1 rounded text-xs ${
                               message.status === 'unread' 
                                 ? 'bg-red-600 text-white' 
@@ -1384,12 +1493,12 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                             </button>
                           </div>
                         </div>
-                        <p className="text-gray-300 mb-4">{message.message}</p>
-                        <div className="flex items-center justify-between text-sm text-gray-400">
+                        <p className="text-gray-300 mb-4 text-sm sm:text-base break-words">{message.message}</p>
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs sm:text-sm text-gray-400 space-y-2 sm:space-y-0">
                           {message.country && (
                             <span className="flex items-center space-x-1">
-                              <MapPin className="w-3 h-3" />
-                              <span>{message.country}{message.city && `, ${message.city}`}</span>
+                              <MapPin className="w-3 h-3 flex-shrink-0" />
+                              <span className="break-all">{message.country}{message.city && `, ${message.city}`}</span>
                             </span>
                           )}
                           {message.timestamp && (
@@ -1404,12 +1513,12 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
             )}
 
             {activeTab === 'visitors' && (
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-bold text-white">Real Visitor Tracking ({realTimeVisitors.length})</h3>
+              <div className="p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 space-y-3 sm:space-y-0">
+                  <h3 className="text-lg sm:text-xl font-bold text-white">Real Visitor Tracking ({realTimeVisitors.length})</h3>
                   <button
                     onClick={() => downloadData('visitors')}
-                    className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors duration-300"
+                    className="flex items-center justify-center space-x-2 bg-purple-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors duration-300 text-sm sm:text-base w-full sm:w-auto"
                   >
                     <Download className="w-4 h-4" />
                     <span>Export</span>
@@ -1418,19 +1527,19 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
 
                 <div className="space-y-4">
                   {realTimeVisitors.map((visitor) => (
-                    <div key={visitor.id} className="bg-gray-800 p-6 rounded-xl">
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <h4 className="text-white font-semibold flex items-center space-x-2">
-                            <MapPin className="w-4 h-4 text-purple-400" />
+                    <div key={visitor.id} className="bg-gray-800 p-4 sm:p-6 rounded-xl">
+                      <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-4 space-y-3 sm:space-y-0">
+                        <div className="flex-1">
+                          <h4 className="text-white font-semibold flex flex-wrap items-center space-x-2 text-sm sm:text-base">
+                            <MapPin className="w-4 h-4 text-purple-400 flex-shrink-0" />
                             <span>{visitor.country}, {visitor.city}</span>
-                            {visitor.region && <span className="text-gray-400">({visitor.region})</span>}
+                            {visitor.region && <span className="text-gray-400 text-xs">({visitor.region})</span>}
                           </h4>
-                          <p className="text-gray-400 text-sm">IP: {visitor.ip}</p>
-                          <p className="text-gray-400 text-sm">{visitor.device} - {visitor.browser}</p>
-                          {visitor.isp && <p className="text-gray-400 text-sm">ISP: {visitor.isp}</p>}
+                          <p className="text-gray-400 text-xs sm:text-sm break-all">IP: {visitor.ip}</p>
+                          <p className="text-gray-400 text-xs sm:text-sm">{visitor.device} - {visitor.browser}</p>
+                          {visitor.isp && <p className="text-gray-400 text-xs sm:text-sm break-all">ISP: {visitor.isp}</p>}
                         </div>
-                        <div className="flex space-x-2">
+                        <div className="flex space-x-2 self-start sm:self-auto">
                           <span className={`px-2 py-1 rounded text-xs ${
                             visitor.isActive ? 'bg-green-600 text-white' : 'bg-gray-600 text-white'
                           }`}>
@@ -1456,38 +1565,40 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                          </div>
                        </div>
                       
-                       <div className="grid grid-cols-4 gap-4 mb-4">
-                         <div>
-                           <p className="text-gray-400 text-sm">Visit Time</p>
-                           <p className="text-white font-semibold text-sm">{new Date(visitor.visitTime).toLocaleString()}</p>
+                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-4">
+                         <div className="col-span-2 sm:col-span-1">
+                           <p className="text-gray-400 text-xs">Visit Time</p>
+                           <p className="text-white font-semibold text-xs sm:text-sm break-all">{new Date(visitor.visitTime).toLocaleString()}</p>
                          </div>
                          <div>
-                          <p className="text-gray-400 text-sm">Time on Site</p>
-                           <p className="text-white font-semibold text-sm">{formatTimeOnSite(visitor.timeOnSite)}</p>
+                          <p className="text-gray-400 text-xs">Time on Site</p>
+                           <p className="text-white font-semibold text-xs sm:text-sm">{formatTimeOnSite(visitor.timeOnSite)}</p>
                          </div>
                          <div>
-                           <p className="text-gray-400 text-sm">Screen</p>
-                           <p className="text-white font-semibold text-sm">{visitor.screenResolution}</p>
+                           <p className="text-gray-400 text-xs">Screen</p>
+                           <p className="text-white font-semibold text-xs sm:text-sm break-all">{visitor.screenResolution}</p>
                         </div>
                         <div>
-                          <p className="text-gray-400 text-sm">Language</p>
-                          <p className="text-white font-semibold text-sm">{visitor.language}</p>
+                          <p className="text-gray-400 text-xs">Language</p>
+                          <p className="text-white font-semibold text-xs sm:text-sm break-all">{visitor.language}</p>
                         </div>
                       </div>
 
-                      <div>
-                        <p className="text-gray-400 text-sm mb-2">Pages Viewed:</p>
-                        <div className="flex space-x-2">
-                          {visitor.pageViews?.map((page) => (
-                            <span
-                              key={page}
-                              className="bg-purple-600/20 text-purple-400 px-2 py-1 rounded text-xs"
-                            >
-                              {page}
-                            </span>
-                          ))}
+                      {visitor.pageViews && visitor.pageViews.length > 0 && (
+                        <div>
+                          <p className="text-gray-400 text-xs sm:text-sm mb-2">Pages Viewed:</p>
+                          <div className="flex flex-wrap gap-2">
+                            {visitor.pageViews.map((page) => (
+                              <span
+                                key={page}
+                                className="bg-purple-600/20 text-purple-400 px-2 py-1 rounded text-xs break-all"
+                              >
+                                {page}
+                              </span>
+                            ))}
+                          </div>
                         </div>
-                      </div>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -1495,31 +1606,31 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
             )}
 
             {activeTab === 'analytics' && (
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-white mb-6">Site Analytics</h3>
+              <div className="p-4 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Site Analytics</h3>
                 
-                <div className="grid grid-cols-2 gap-6 mb-8">
-                  <div className="bg-gray-800 p-6 rounded-xl">
-                    <h4 className="text-lg font-semibold text-white mb-4">Page Views</h4>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                  <div className="bg-gray-800 p-4 sm:p-6 rounded-xl">
+                    <h4 className="text-base sm:text-lg font-semibold text-white mb-4">Page Views</h4>
                     <div className="space-y-3">
                       {Object.entries(visitorData.pageViews).map(([page, views]) => (
                         <div key={page} className="flex items-center justify-between">
-                          <span className="text-gray-300 capitalize">{page}</span>
-                          <span className="text-white font-semibold">{views as React.ReactNode}</span>
+                          <span className="text-gray-300 text-sm sm:text-base capitalize break-all flex-1 mr-2">{page}</span>
+                          <span className="text-white font-semibold text-sm sm:text-base">{views as React.ReactNode}</span>
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="bg-gray-800 p-6 rounded-xl">
-                    <h4 className="text-lg font-semibold text-white mb-4">Top Countries</h4>
+                  <div className="bg-gray-800 p-4 sm:p-6 rounded-xl">
+                    <h4 className="text-base sm:text-lg font-semibold text-white mb-4">Top Countries</h4>
                     <div className="space-y-3">
                       {visitorData.countries.slice(0, 5).map((country) => {
                         const countryVisitors = realTimeVisitors.filter(v => v.country === country).length;
                         return (
                           <div key={country} className="flex items-center justify-between">
-                            <span className="text-gray-300">{country}</span>
-                            <span className="text-white font-semibold">{countryVisitors}</span>
+                            <span className="text-gray-300 text-sm sm:text-base break-all flex-1 mr-2">{country}</span>
+                            <span className="text-white font-semibold text-sm sm:text-base">{countryVisitors}</span>
                           </div>
                         );
                       })}
@@ -1527,26 +1638,26 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                   </div>
                 </div>
 
-                <div className="bg-gray-800 p-6 rounded-xl">
-                  <h4 className="text-lg font-semibold text-white mb-4">Device Analytics</h4>
-                  <div className="grid grid-cols-3 gap-4">
+                <div className="bg-gray-800 p-4 sm:p-6 rounded-xl">
+                  <h4 className="text-base sm:text-lg font-semibold text-white mb-4">Device Analytics</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div className="text-center">
-                      <p className="text-2xl font-bold text-purple-400">
+                      <p className="text-xl sm:text-2xl font-bold text-purple-400">
                         {realTimeVisitors.filter(v => v.device === 'Mobile').length}
                       </p>
-                      <p className="text-gray-400 text-sm">Mobile</p>
+                      <p className="text-gray-400 text-xs sm:text-sm">Mobile</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-2xl font-bold text-blue-400">
+                      <p className="text-xl sm:text-2xl font-bold text-blue-400">
                         {realTimeVisitors.filter(v => v.device === 'Desktop').length}
                       </p>
-                      <p className="text-gray-400 text-sm">Desktop</p>
+                      <p className="text-gray-400 text-xs sm:text-sm">Desktop</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-2xl font-bold text-green-400">
+                      <p className="text-xl sm:text-2xl font-bold text-green-400">
                         {realTimeVisitors.filter(v => v.isActive).length}
                       </p>
-                      <p className="text-gray-400 text-sm">Active Now</p>
+                      <p className="text-gray-400 text-xs sm:text-sm">Active Now</p>
                     </div>
                   </div>
                 </div>
@@ -1554,27 +1665,27 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
             )}
 
             {activeTab === 'security' && (
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-white mb-6">Security Management</h3>
+              <div className="p-4 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Security Management</h3>
                 
-                <div className="grid gap-6">
-                  <div className="bg-gray-800 p-6 rounded-xl">
-                    <h4 className="text-lg font-semibold text-white mb-4">Banned IPs ({bannedIPs.length})</h4>
+                <div className="grid gap-4 sm:gap-6">
+                  <div className="bg-gray-800 p-4 sm:p-6 rounded-xl">
+                    <h4 className="text-base sm:text-lg font-semibold text-white mb-4">Banned IPs ({bannedIPs.length})</h4>
                     {bannedIPs.length === 0 ? (
-                      <p className="text-gray-400">No banned IPs</p>
+                      <p className="text-gray-400 text-sm sm:text-base">No banned IPs</p>
                     ) : (
                       <div className="space-y-2">
                         {bannedIPs.map((banned) => (
-                          <div key={banned.ip} className="flex items-center justify-between bg-gray-700 p-3 rounded">
-                            <div>
-                              <span className="text-white font-mono">{banned.ip}</span>
-                              <span className="text-gray-400 text-sm ml-2">
+                          <div key={banned.ip} className="flex flex-col sm:flex-row sm:items-center justify-between bg-gray-700 p-3 rounded gap-2">
+                            <div className="flex-1">
+                              <span className="text-white font-mono text-xs sm:text-sm break-all">{banned.ip}</span>
+                              <span className="text-gray-400 text-xs sm:text-sm block sm:inline sm:ml-2">
                                 Banned: {new Date(banned.bannedAt).toLocaleString()}
                               </span>
                             </div>
                             <button
                               onClick={() => unbanVisitor(banned.ip)}
-                              className="text-green-400 hover:text-green-300"
+                              className="text-green-400 hover:text-green-300 self-start sm:self-auto"
                               title="Unban"
                             >
                               <UserCheck className="w-4 h-4" />
@@ -1585,24 +1696,24 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                     )}
                   </div>
 
-                  <div className="bg-gray-800 p-6 rounded-xl">
-                    <h4 className="text-lg font-semibold text-white mb-4">Security Status</h4>
+                  <div className="bg-gray-800 p-4 sm:p-6 rounded-xl">
+                    <h4 className="text-base sm:text-lg font-semibold text-white mb-4">Security Status</h4>
                     <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-300">Data Encryption</span>
-                        <span className="text-green-400 font-semibold">Active</span>
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <span className="text-gray-300 text-sm sm:text-base">Data Encryption</span>
+                        <span className="text-green-400 font-semibold text-sm sm:text-base">Active</span>
                       </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-300">Secure Storage</span>
-                        <span className="text-green-400 font-semibold">Enabled</span>
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <span className="text-gray-300 text-sm sm:text-base">Secure Storage</span>
+                        <span className="text-green-400 font-semibold text-sm sm:text-base">Enabled</span>
                       </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-300">Admin Access</span>
-                        <span className="text-green-400 font-semibold">Protected</span>
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <span className="text-gray-300 text-sm sm:text-base">Admin Access</span>
+                        <span className="text-green-400 font-semibold text-sm sm:text-base">Protected</span>
                       </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-300">Real-time Tracking</span>
-                        <span className="text-green-400 font-semibold">Active</span>
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <span className="text-gray-300 text-sm sm:text-base">Real-time Tracking</span>
+                        <span className="text-green-400 font-semibold text-sm sm:text-base">Active</span>
                       </div>
                     </div>
                   </div>
@@ -1617,58 +1728,3 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
 };
 
 export default AdminPanel;
-// // export default AdminPanel;
-// import { useEffect, useState } from 'react';
-// import { createClient } from '@supabase/supabase-js';
-
-// // تعريف نوع الرسالة
-// interface Message {
-//   id: number;
-//   created_at: string;
-//   name: string;
-//   email: string;
-//   whatsapp: string;
-//   message: string;
-// }
-
-// const supabase = createClient(
-//   'https://mldvuzkrcjnltzgwtpfc.supabase.co',
-//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZHZ1emtyY2pubHR6Z3d0cGZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5Mjg4MjYsImV4cCI6MjA2NjUwNDgyNn0.idcUACM1z8IPkYdpV-oT_R1jZexmC25W7IMZaFvooUc'
-// );
-
-// export default function MessagesTest() {
-//   const [messages, setMessages] = useState<Message[]>([]);
-
-//   useEffect(() => {
-//     const fetchMessages = async () => {
-//       const { data, error } = await supabase.from('messages').select('*');
-
-//       if (error) {
-//         console.error('❌ Fetch error:', error.message);
-//       } else if (data) {
-//         setMessages(data as Message[]); // تأكيد أن البيانات من نوع Message[]
-//       }
-//     };
-
-//     fetchMessages();
-//   }, []);
-
-//   return (
-//     <div style={{ padding: '2rem', fontFamily: 'Arial, sans-serif' }}>
-//       <h2>📬 Messages:</h2>
-//       {messages.length === 0 ? (
-//         <p>No messages found.</p>
-//       ) : (
-//         messages.map((msg) => (
-//           <div key={msg.id} style={{ marginBottom: '1rem', border: '1px solid #ccc', padding: '1rem', borderRadius: '8px' }}>
-//             <p><strong>Name:</strong> {msg.name}</p>
-//             <p><strong>Email:</strong> {msg.email}</p>
-//             <p><strong>WhatsApp:</strong> {msg.whatsapp}</p>
-//             <p><strong>Message:</strong> {msg.message}</p>
-//             <p style={{ fontSize: '0.8rem', color: 'gray' }}>Sent: {new Date(msg.created_at).toLocaleString()}</p>
-//           </div>
-//         ))
-//       )}
-//     </div>
-//   );
-// }
