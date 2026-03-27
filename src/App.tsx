@@ -14,6 +14,7 @@ import StoreAndCourses from './components/StoreAndCourses';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import AdminPanel from './components/AdminPanel';
+import BackgroundMusic from './components/BackgroundMusic';
 import ParticleBackground from './components/ParticleBackground';
 
 // Interfaces
@@ -263,6 +264,7 @@ function App() {
             path="/"
             element={
               <>
+                <BackgroundMusic />
                 <ParticleBackground />
                 <Hero />
                 <About />
