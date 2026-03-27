@@ -15,7 +15,7 @@ const StoreAndCourses = () => {
             <span className="text-sm font-semibold uppercase tracking-wider text-purple-300">Exclusive Access</span>
             <Sparkles className="w-8 h-8 text-pink-400 animate-pulse" />
           </div>
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 bg-clip-text text-transparent leading-tight">
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent leading-tight">
             Unlock your inner power
           </h2>
           <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
@@ -43,7 +43,7 @@ const StoreAndCourses = () => {
             </h3>
             <p className="text-gray-300 mb-8 leading-relaxed text-lg opacity-90 group-hover:text-gray-200 transition-colors">
              Welcome to the online store where you can explore spiritual products and tools. 
-              <span className="text-green-400 font-semibold block mt-2 text-xl">Shop Now</span>
+              <span className="text-yellow-400 font-semibold block mt-2 text-xl">Shop Now</span>
             </p>
             <a
               href="https://beyond-holistic-store-eg.vercel.app/"
@@ -70,8 +70,7 @@ const StoreAndCourses = () => {
                 Online Courses
               </h3>
               <p className="text-gray-300 mb-8 leading-relaxed text-lg opacity-90 group-hover:text-gray-200 transition-colors relative z-10">
-                Revolutionary programs blending ancient wisdom with cutting-edge healing techniques. 
-                Limited spots – secure yours before launch. 
+              A space to learn, expand, and deepen your connection with your energy and inner wisdom.
                 <span className="text-purple-300 font-semibold block mt-2 text-xl">Master Your Gifts. Lead Your Path.</span>
               </p>
               <button className="group/btn flex items-center justify-center w-full bg-gradient-to-r from-yellow-500 to-purple-500 hover:from-yellow-600 hover:to-purple-600 text-white px-8 py-5 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-yellow-400/50 relative z-10">
@@ -96,7 +95,7 @@ const StoreAndCourses = () => {
             </h3>
             <p className="text-gray-300 mb-8 leading-relaxed text-lg opacity-90 group-hover:text-gray-200 transition-colors">
               Here you will find tools and guidance to support your journey, along with answers you have been seeking.
-              <span className="text-indigo-300 font-semibold block mt-2 text-xl">Coming Soon</span>
+              <span className="text-yellow-300 font-semibold block mt-2 text-xl">Coming Soon</span>
             </p>
             <button className="group/btn flex items-center justify-center w-full bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white px-8 py-5 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-blue-400/50">
               Explore Blog
