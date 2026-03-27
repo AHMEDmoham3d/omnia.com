@@ -68,7 +68,7 @@ const StoreAndCourses = () => {
                 </div>
               </div>
               <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 relative z-10 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-yellow-400 group-hover:to-purple-400 group-hover:bg-clip-text transition-all duration-300">
-                Powerhouse Courses
+                Online Courses
               </h3>
               <p className="text-gray-300 mb-8 leading-relaxed text-lg opacity-90 group-hover:text-gray-200 transition-colors relative z-10">
                 Revolutionary programs blending ancient wisdom with cutting-edge healing techniques. 
