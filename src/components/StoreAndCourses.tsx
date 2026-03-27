@@ -19,10 +19,10 @@ const StoreAndCourses = () => {
             Unlock your inner power
           </h2>
           <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Dive into our exclusive <span className="font-semibold text-pink-300">Healing Store</span> packed with transformative tools. 
-            Coming soon: <span className="font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Powerhouse Courses</span> 
-            & <span className="font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">Insightful Blog</span>.
-            Don't just evolve – <span className="font-bold text-yellow-400">Dominate</span> ✨
+            Everything you need for your journey    
+             <span className="font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">tools</span> 
+            & <span className="font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">courses, and a shopping experience</span>.
+            plus a blog where you can explore tools and find answers to your questions  – <span className="font-bold text-yellow-400">for clarity</span> ✨
           </p>
         </div>
 
