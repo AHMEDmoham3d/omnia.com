@@ -22,7 +22,7 @@ const StoreAndCourses = () => {
             Everything you need for your journey    
              <span className="font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">tools</span> 
             & <span className="font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">courses, and a shopping experience</span>.
-            plus a blog where you can explore tools and find answers to your questions  – <span className="font-bold text-yellow-400">for clarity</span> ✨
+            plus a blog where you can explore tools and find answers to your questions  – for clarity ✨
           </p>
         </div>
 
@@ -72,6 +72,7 @@ const StoreAndCourses = () => {
               <p className="text-gray-300 mb-8 leading-relaxed text-lg opacity-90 group-hover:text-gray-200 transition-colors relative z-10">
               A space to learn, expand, and deepen your connection with your energy and inner wisdom.
                 <span className="text-purple-300 font-semibold block mt-2 text-xl">Master Your Gifts. Lead Your Path.</span>
+                <span className="text-yellow-400 font-semibold block mt-2 text-xl">coming soon</span>
               </p>
               <button className="group/btn flex items-center justify-center w-full bg-gradient-to-r from-yellow-500 to-purple-500 hover:from-yellow-600 hover:to-purple-600 text-white px-8 py-5 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-yellow-400/50 relative z-10">
                 learn and grow  
