@@ -160,13 +160,7 @@ const About = () => {
 
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in-up-more-delayed">
-          <a
-            href="#services"
-            className="group bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
-          >
-            Explore Services
-            <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
-          </a>
+
           
           <a
             href="#contact"
@@ -174,6 +168,24 @@ const About = () => {
           >
             Book your Session
             <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300">✨</span>
+          </a>
+
+            <a
+            href="https://beyond-holistic-store-eg.vercel.app/"
+            className="group bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+          >
+            Visit our store
+            <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
+          </a>
+          
+
+
+          <a
+            href="#services"
+            className="group bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+          >
+            Explore Services
+            <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
           </a>
         </div>
       </div>
