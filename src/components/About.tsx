@@ -70,20 +70,12 @@ const About = () => {
       <div className="container mx-auto max-w-6xl">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+          {/* <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
             Beyond Holistic 
-          </h2>
+          </h2> */}
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            {/* Welcome to a sacred space where ancient wisdom meets modern healing.<br />
-            I am dedicated to guiding you on your journey to awake your own consciousness to find your way in life
-            through some practices that have been cherished for centuries. */}
-              Welcome to a saced space , no matter what you are going through <br />
-              you will find guidance here.
-            </p>
-        </div>
-
-        {/* Main Content */}
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+            This space was created for those who are seeking clarity, healing, guiding and a deeper connection with themselves.
+          </p>
           {/* Image */}
 <div className="relative">
             <div className="h-[450px] sm:h-[500px] md:h-[550px] lg:h-[650px] max-w-lg mx-auto rounded-3xl overflow-hidden bg-gradient-to-br from-purple-900/30 to-pink-900/30 p-2">
