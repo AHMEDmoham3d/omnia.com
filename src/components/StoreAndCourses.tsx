@@ -9,7 +9,7 @@ const StoreAndCourses = () => {
       
       <div className="container mx-auto max-w-6xl">
         {/* Section Header */}
-        <div className="text-center mb-20">
+        {/* <div className="text-center mb-20">
           <div className="inline-flex items-center justify-center gap-2 mb-6">
             <Sparkles className="w-8 h-8 text-pink-400 animate-pulse" />
             <span className="text-sm font-semibold uppercase tracking-wider text-purple-300">Exclusive Access</span>
@@ -24,12 +24,12 @@ const StoreAndCourses = () => {
             & <span className="font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">courses, and a shopping experience</span>.
             plus a blog where you can explore tools and find answers to your questions  – for clarity ✨
           </p>
-        </div>
+        </div> */}
 
         {/* Store & Courses Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {/* Store Card */}
-          <div className="group bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-3xl p-10 border border-gray-700/50 hover:border-purple-400/70 hover:bg-purple-500/5 transition-all duration-500 hover:transform hover:scale-105 hover:shadow-2xl">
+          {/* <div className="group bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-3xl p-10 border border-gray-700/50 hover:border-purple-400/70 hover:bg-purple-500/5 transition-all duration-500 hover:transform hover:scale-105 hover:shadow-2xl">
             <div className="flex items-start justify-between mb-8">
               <div className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 p-4 rounded-2xl group-hover:scale-110 transition-all duration-300 flex items-center justify-center border border-purple-400/30">
                 <ShoppingBag className="w-10 h-10 text-pink-400 group-hover:text-pink-300" strokeWidth={1.5} />
@@ -52,10 +52,10 @@ const StoreAndCourses = () => {
               Shop now
               <ArrowRight className="w-5 h-5 ml-3 group-hover/btn:translate-x-1 transition-transform duration-300" />
             </a>
-          </div>
+          </div> */}
 
           {/* Courses Card */}
-          <div className="group bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-3xl p-10 border border-gray-700/50 hover:border-pink-400/70 hover:bg-pink-500/5 transition-all duration-500 hover:transform hover:scale-105 hover:shadow-2xl relative overflow-hidden">
+          {/* <div className="group bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-3xl p-10 border border-gray-700/50 hover:border-pink-400/70 hover:bg-pink-500/5 transition-all duration-500 hover:transform hover:scale-105 hover:shadow-2xl relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-t from-yellow-400/10 via-transparent to-purple-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <div className="relative z-10">
               <div className="flex items-start justify-between mb-8">
@@ -79,10 +79,10 @@ const StoreAndCourses = () => {
                 <ArrowRight className="w-5 h-5 ml-3 group-hover/btn:translate-x-1 transition-transform duration-300" />
               </button>
             </div>
-          </div>
+          </div> */}
 
           {/* Blog Card */}
-          <div className="group bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-3xl p-10 border border-gray-700/50 hover:border-blue-400/70 hover:bg-blue-500/5 transition-all duration-500 hover:transform hover:scale-105 hover:shadow-2xl">
+          {/* <div className="group bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-3xl p-10 border border-gray-700/50 hover:border-blue-400/70 hover:bg-blue-500/5 transition-all duration-500 hover:transform hover:scale-105 hover:shadow-2xl">
             <div className="flex items-start justify-between mb-8">
               <div className="bg-gradient-to-br from-blue-500/20 to-indigo-500/20 p-4 rounded-2xl group-hover:scale-110 transition-all duration-300 flex items-center justify-center border border-blue-400/30">
                 <BookOpen className="w-10 h-10 text-blue-400 group-hover:text-blue-300" strokeWidth={1.5} />
@@ -102,11 +102,11 @@ const StoreAndCourses = () => {
               Explore Blog
               <ArrowRight className="w-5 h-5 ml-3 group-hover/btn:translate-x-1 transition-transform duration-300" />
             </button>
-          </div>
+          </div> */}
         </div>
 
         {/* CTA Banner */}
-        <div className="text-center mt-20 p-8 bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-3xl border border-purple-400/30 backdrop-blur-sm">
+        {/* <div className="text-center mt-20 p-8 bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-3xl border border-purple-400/30 backdrop-blur-sm">
           <p className="text-lg md:text-xl text-gray-200 mb-4">
             Ready to accelerate your transformation?{' '}
             <span className="font-bold text-white">Start with the store today</span> and get ready for courses & blog that change everything.
@@ -119,7 +119,7 @@ const StoreAndCourses = () => {
               Enter The Store Now
             </a>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

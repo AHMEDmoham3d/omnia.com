@@ -27,7 +27,7 @@ const Footer = () => {
               Guiding souls on their spiritual journey through ancient wisdom, 
               tarot readings, energy healing, and sound therapy. Discover your path to inner harmony.
             </p>
-            <div className="flex space-x-4">
+            {/* <div className="flex space-x-4">
               <a
                 href="mailto:ms.omnia.o@hotmail.com"
                 className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-pink-400 hover:bg-gray-700 transition-all duration-300"
@@ -60,7 +60,7 @@ const Footer = () => {
               >
                 <TikTokIcon />
               </a>
-            </div>
+            </div> */}
           </div>
 
           {/* Quick Links */}

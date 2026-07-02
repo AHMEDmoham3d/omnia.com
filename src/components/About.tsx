@@ -74,7 +74,8 @@ const About = () => {
             Beyond Holistic 
           </h2> */}
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            This space was created for those who are seeking clarity, healing, guiding and a deeper connection with themselves.
+            This space was created for those who are seeking clarity, healing, guidance
+             and a deeper connection with themselves.
           </p>
           {/* Image */}
 <div className="relative">
@@ -167,19 +168,17 @@ const About = () => {
             className="group bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             Book your Session
-            <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300">✨</span>
+            <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
           </a>
 
-            <a
+          <a
             href="https://beyond-holistic-store-eg.vercel.app/"
-            className="group bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="group bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-xl"
           >
             Visit our store
             <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
           </a>
           
-
-
           <a
             href="#services"
             className="group bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"

@@ -112,7 +112,8 @@ flex items-center justify-center overflow-hidden">
         </div>
         
         <p className="text-xl md:text-2xl text-gray-300 mb-8 font-light animate-fade-in-up">
-               Welcome to a saced space , no matter what you are going through <br />
+               Welcome to a sacred
+               space, no matter what you are going through <br />
               you will find guidance here.
         </p>
         
