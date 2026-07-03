@@ -66,10 +66,10 @@ const About = () => {
   ];
 
   return (
-<section ref={sectionRef} id="about" className="py-20 px-4 relative">
+<section ref={sectionRef} id="about" className="py-12 px-4 relative">
       <div className="container mx-auto max-w-6xl">
         {/* Section Header */}
-        <div className="text-center mb-16">
+<div className="text-center mb-10">
           {/* <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
             Beyond Holistic 
           </h2> */}

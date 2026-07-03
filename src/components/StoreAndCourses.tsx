@@ -3,7 +3,7 @@ import { ShoppingBag, GraduationCap, BookOpen, Sparkles, ArrowRight } from 'luci
 
 const StoreAndCourses = () => {
   return (
-    <section id="store-courses" className="py-20 px-4 relative overflow-hidden">
+<section id="store-courses" className="py-12 px-4 relative overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-transparent to-pink-900/10"></div>
       

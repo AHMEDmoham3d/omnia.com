@@ -127,10 +127,10 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-20 px-4 relative">
+<section id="services" className="py-12 px-4 relative">
       <div className="container mx-auto max-w-6xl">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent flex items-center justify-center gap-2 flex-wrap">
             Feel <Heart className="w-5 h-5 text-pink-400 inline" />
             Heal <Heart className="w-5 h-5 text-pink-400 inline" />
@@ -144,7 +144,7 @@ const Services = () => {
         </div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 gap-8 mb-20">
+        <div className="grid md:grid-cols-2 gap-8 mb-12">
           {services.map((service, index) => (
             <div
               key={index}
