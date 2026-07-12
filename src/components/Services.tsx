@@ -22,7 +22,7 @@ const Services = () => {
         </div>
       ),
       title: "Readings",
-      description: "Online (Video Call) ",
+      description: "",
       features: [
         <div key="tarot-types" className="grid grid-cols-1 gap-4 mt-4">
           <div className="bg-gray-700/30 p-4 rounded-lg">
@@ -36,6 +36,9 @@ const Services = () => {
             <p className="mt-3 text-gray-300">
               <span className="font-semibold text-pink-300">💫My sessions</span> focus on guidance, self-awareness, and personal growth.
               They are not intended for spying, spell work, or manipulation of others
+            </p>
+            <p className="mt-3 text-gray-300">
+              <span className="font-semibold text-pink-300">.</span>Choose the reading that best suits your needs:
             </p>
           </div>
 
@@ -67,9 +70,30 @@ const Services = () => {
     {
       icon: <Music className="w-7 h-7 text-pink-400" />,
       title: "Sound Therapy",
-      description: "A gentle yet powerful healing session that. I use a combination of frequencies and ancient techniques that work directly on your nervous system to bring deep relaxation, restore balance, and promote healing. It's a journey back to your natural state of harmony.",
+      description: (
+        <>
+          It is a therapeutic experience that uses a combination of sound and frequencies that work directly on your nervous system to bring deep relaxation, restore balance, and promote healing.
+
+          <div className="mt-4">
+            <span className="font-semibold text-pink-300">🕯️🌿 Deep Relaxation</span>
+            <p className="mt-2 text-gray-300">
+              Designed to calm the nervous system and support those experiencing stress, anxiety, panic attacks, insomnia, mental overload, or difficulty focusing, helping restore inner balance.
+            </p>
+          </div>
+
+          <div className="mt-4">
+            <span className="font-semibold text-pink-300">🕯️🌿 Pain Release</span>
+            <p className="mt-2 text-gray-300">
+              Designed for physical pain relief, muscle tension, chronic fatigue, fibromyalgia, back pain, neck and shoulder pain, headaches, and other body discomforts.
+            </p>
+          </div>
+
+          <div className="mt-4">
+            <span className="font-semibold text-yellow-300">⚠️ Sound Sessions</span> may be customized based on your individual needs to provide the best possible experience, so If you have a medical condition or currently receiving medical treatment, please contact me before booking to ensure the session is suitable for you.
+          </div>
+        </>
+      ),
       features: [
-        "There are 3 different types of sessions:",
         <div key="sound-therapy-types" className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
           <div className="bg-gray-700/30 p-4 rounded-lg">
             <span className="font-semibold text-pink-300">- BACK TO BALANCE</span>
@@ -190,7 +214,7 @@ const Services = () => {
                         {service.title === "Tarot Reading" 
                           ? "60 min, Online (Video Call) or In person"
                           : service.title === "Sound Therapy"
-                            ? "90 min, In person Only"
+                            ? "2 hours, In-person only"
                           : service.title === "Healing Sessions" 
                             ? "60 min, Online (Video Call) or In person"
                             : service.title === "Soul Print"
