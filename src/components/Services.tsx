@@ -21,8 +21,8 @@ const Services = () => {
           </div>
         </div>
       ),
-      title: "Reading",
-      description: "",
+      title: "Readings",
+      description: "Online (Video Call) ",
       features: [
         <div key="tarot-types" className="grid grid-cols-1 gap-4 mt-4">
           <div className="bg-gray-700/30 p-4 rounded-lg">
@@ -107,11 +107,26 @@ const Services = () => {
       title: "Healing Sessions",
       description: (
         <>
-          These sessions are designed to support your journey toward clarity, emotional balance, and inner harmony.
-          Through intuitive guidance and energetic awareness, we 
-          open a safe space for transformation and deeper connection with yourself.
-          <br /><br />
-          It is perfect for releasing blockages related to relationships, family dynamics, grief or loss, money challenges, emotional struggles,...Its a safe space to let go and realign your energy.
+          <div className="font-semibold text-pink-300">🤍🕯️🪶 Healing Session</div>
+          <div className="mt-1 text-gray-300">📍Online Video Call</div>
+          <br />
+          <p>
+            Healing Sessions are designed to help you gain clarity, reconnect with yourself, and take meaningful steps toward healing and personal growth
+          </p>
+          <p className="mt-3">
+            These sessions are perfect for those who are ready to understand themselves more deeply, improve their quality of life,
+            release recurring patterns, overcome personal blocks, and move forward with greater clarity and confidence.
+          </p>
+          <p className="mt-3">
+            💫Each session is personalized and held in a safe, supportive, and completely confidential space.
+          </p>
+          <p className="mt-3 font-semibold">● The Healing Session consists of two stages:</p>
+          <p className="mt-2">🕯️ Initial Healing Session</p>
+          <p className="mt-2">🕯️ Follow-Up Session</p>
+          <p className="mt-1">
+            The follow-up session is designed to review your progress, explore any changes you've experienced,
+            and provide continued support throughout your healing journey.
+          </p>
         </>
       ),
       features: []
