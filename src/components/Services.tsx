@@ -89,13 +89,13 @@ const Services = () => {
           </div>
 
           <div className="mt-4">
-            <span className="font-semibold text-yellow-300">⚠️ Sound Sessions</span> may be customized based on your individual needs to provide the best possible experience, so If you have a medical condition or currently receiving medical treatment, please contact me before booking to ensure the session is suitable for you.
+            <span className="font-semibold text-yellow-300">⚠️ Sound Sessions</span> are customized based on your individual needs to provide the best possible experience, so If you have a medical condition or currently receiving medical treatment, please contact me before booking to ensure the session is suitable for you.
           </div>
         </>
       ),
       features: [
         <div key="sound-therapy-types" className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-          <div className="bg-gray-700/30 p-4 rounded-lg">
+          {/* <div className="bg-gray-700/30 p-4 rounded-lg">
             <span className="font-semibold text-pink-300">- BACK TO BALANCE</span>
             <ul className="list-disc pl-5 mt-2 space-y-1">
               <li>Stress relief</li>
@@ -103,8 +103,8 @@ const Services = () => {
               <li>Soul Print</li>
               <li>Deep Relaxation</li>
             </ul>
-          </div>
-          <div className="bg-gray-700/30 p-4 rounded-lg">
+          </div> */}
+          {/* <div className="bg-gray-700/30 p-4 rounded-lg">
             <span className="font-semibold text-pink-300">- PAIN TO PEACE</span>
             <ul className="list-disc pl-5 mt-2 space-y-1">
               <li>Back, shoulder, neck, knee tightness</li>
@@ -113,8 +113,8 @@ const Services = () => {
               <li>Panic/Anxiety Attack</li>
               <li>Insomnia</li>
             </ul>
-          </div>
-          <div className="bg-gray-700/30 p-4 rounded-lg">
+          </div> */}
+          {/* <div className="bg-gray-700/30 p-4 rounded-lg">
             <span className="font-semibold text-pink-300">- NATURAL BEAUTY</span>
             <ul className="list-disc pl-5 mt-2 space-y-1">
               <li>Natural glow</li>
@@ -122,7 +122,7 @@ const Services = () => {
               <li>Reduce Facial Tension</li>
               <li>Reduce signs and wrinkles</li>
             </ul>
-          </div>
+          </div> */}
         </div>
       ]
     },
@@ -211,10 +211,10 @@ const Services = () => {
                       <span className="flex items-center space-x-1">
                         <Clock className="w-4 h-4" />
                       <span>
-                        {service.title === "Tarot Reading" 
+                    {service.title === "Tarot Reading" 
                           ? "60 min, Online (Video Call) or In person"
                           : service.title === "Sound Therapy"
-                            ? "2 hours, In-person only"
+                            ? ""
                           : service.title === "Healing Sessions" 
                             ? "60 min, Online (Video Call) or In person"
                             : service.title === "Soul Print"
