@@ -107,7 +107,7 @@ const Services = () => {
       title: "Healing Sessions",
       description: (
         <>
-          {/* <div className="font-semibold text-pink-300">🤍🕯️🪶 Healing Session</div> */}
+          <div className="font-semibold text-pink-300">🤍🕯️🪶</div>
           <div className="mt-1 text-gray-300">📍Online Video Call</div>
           <br />
           <p>
@@ -131,24 +131,24 @@ const Services = () => {
       ),
       features: []
     },
-    {
-      icon: <Users className="w-7 h-7 text-white" />,
-      title: "Soul Print",
-      description: "",
-      features: [
-        <div className="flex flex-col items-center justify-center text-center">
-          <div className="flex items-center space-x-2 mb-6 mt-4">
-            <div className="relative">
-              <Sparkles className="w-8 h-8 text-purple-400 animate-pulse" />
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-ping"></div>
-            </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Coming Soon
-            </span>
-          </div>
-        </div>
-      ]
-    }
+    // {
+    //   icon: <Users className="w-7 h-7 text-white" />,
+    //   title: "Soul Print",
+    //   description: "",
+    //   features: [
+    //     <div className="flex flex-col items-center justify-center text-center">
+    //       <div className="flex items-center space-x-2 mb-6 mt-4">
+    //         <div className="relative">
+    //           <Sparkles className="w-8 h-8 text-purple-400 animate-pulse" />
+    //           <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-ping"></div>
+    //         </div>
+    //         <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+    //           Coming Soon
+    //         </span>
+    //       </div>
+    //     </div>
+    //   ]
+    // }
   ];
 
   return (
