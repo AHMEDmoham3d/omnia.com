@@ -73,10 +73,7 @@ const About = () => {
           {/* <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
             Beyond Holistic 
           </h2> */}
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            This space was created for those who are seeking clarity, healing, guidance
-             and a deeper connection with themselves.
-          </p>
+
           {/* Image */}
 <div className="relative">
             <div className="h-[450px] sm:h-[500px] md:h-[550px] lg:h-[650px] max-w-lg mx-auto rounded-3xl overflow-hidden bg-gradient-to-br from-purple-900/30 to-pink-900/30 p-2">
@@ -175,7 +172,7 @@ const About = () => {
             href="https://beyond-holistic-store-eg.vercel.app/"
             className="group bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-xl"
           >
-            Visit our store
+            Visit the store
             <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
           </a>
           
@@ -183,7 +180,14 @@ const About = () => {
             href="#services"
             className="group bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
-            Explore Services
+            Corner Healing
+            <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
+          </a>
+          <a
+            href="#"
+            className="group bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+          >
+            Learning Hub
             <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
           </a>
         </div>

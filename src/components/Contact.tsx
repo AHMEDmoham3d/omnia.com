@@ -155,31 +155,15 @@ const Contact = () => {
                   </div>
                 </a>
 
-                {info.title === "WhatsApp" && (
+                {info.title === "Location" && (
                   <div className="mt-4">
                     <div className="p-4 bg-gray-800/50 backdrop-blur-sm rounded-xl hover:bg-gray-700/50 transition-all duration-300">
                       <div className="flex items-center space-x-3 mb-3">
-                        <span className="text-gray-300 text-sm tracking-wide">find me</span>
+                        <span className="text-gray-300 text-sm tracking-wide">Social Media</span>
                         <div className="h-px flex-1 bg-gradient-to-r from-purple-500/0 via-purple-400/40 to-pink-400/0" />
                       </div>
 
                       <div className="flex space-x-4">
-                        <a
-                          href="mailto:ms.omnia.o@hotmail.com"
-                          className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-pink-400 hover:bg-gray-700 transition-all duration-300 transform hover:scale-110 hover:-translate-y-0.5"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Mail className="w-5 h-5" />
-                        </a>
-                        <a
-                          href="https://wa.me/+201009058159"
-                          className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-pink-400 hover:bg-gray-700 transition-all duration-300 transform hover:scale-110 hover:-translate-y-0.5"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Phone className="w-5 h-5" />
-                        </a>
                         <a
                           href="https://www.instagram.com/beyondholistic.eg?igsh=MTQ5Z3k2MDZma3Vocg=="
                           className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-pink-400 hover:bg-gray-700 transition-all duration-300 transform hover:scale-110 hover:-translate-y-0.5"
@@ -194,7 +178,7 @@ const Contact = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <svg viewBox="0 0 24 24" width="20" height="20" className="fill-pink-400">
+                          <svg viewBox="0 0 24 24" className="w-5 h-5 fill-pink-400" aria-hidden="true">
                             <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
                           </svg>
                         </a>
@@ -205,7 +189,7 @@ const Contact = () => {
               </React.Fragment>
             ))}
 
-
+{/* 
             <div className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-xl p-6 border border-purple-400/20">
               <h4 className="text-white font-semibold mb-3">Why Choose Omnia?</h4>
               <ul className="space-y-2 text-gray-300 text-sm">
@@ -215,7 +199,7 @@ const Contact = () => {
                 <li>✨Holding a space of non- judgment</li>
                 <li>💫 Sees beyond the surface</li>
               </ul>
-            </div>
+            </div> */}
           </div>
 
           <div className="lg:col-span-2">

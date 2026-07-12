@@ -38,7 +38,7 @@ const Services = () => {
               They are not intended for spying, spell work, or manipulation of others
             </p>
             <p className="mt-3 text-gray-300">
-              <span className="font-semibold text-pink-300">.</span>Choose the reading that best suits your needs:
+              <span className="font-semibold text-pink-300">●</span>Choose the reading that best suits your needs:
             </p>
           </div>
 
@@ -132,7 +132,7 @@ const Services = () => {
       description: (
         <>
           <div className="font-semibold text-pink-300">🤍🕯️🪶</div>
-          <div className="mt-1 text-gray-300">📍Online Video Call</div>
+          <div className="mt-1 text-pink-300">📍Online Video Call</div>
           <br />
           <p>
             Healing Sessions are designed to help you gain clarity, reconnect with yourself, and take meaningful steps toward healing and personal growth
@@ -144,7 +144,7 @@ const Services = () => {
           <p className="mt-3">
             💫Each session is personalized and held in a safe, supportive, and completely confidential space.
           </p>
-          <p className="mt-3 font-semibold">● The Healing Session consists of two stages:</p>
+          <p className="mt-3 font-semibold"> <span className="mt-1 text-yellow-300">●</span> The Healing Session consists of two stages:</p>
           <p className="mt-2">🕯️ Initial Healing Session</p>
           <p className="mt-2">🕯️ Follow-Up Session</p>
           <p className="mt-1">
@@ -208,20 +208,29 @@ const Services = () => {
                   <div>
                     <h3 className="text-2xl font-bold text-white mb-2">{service.title}</h3>
                     <div className="flex items-center space-x-4 text-sm text-pink-300">
-                      <span className="flex items-center space-x-1">
-                        <Clock className="w-4 h-4" />
-                      <span>
-                    {service.title === "Tarot Reading" 
-                          ? "60 min, Online (Video Call) or In person"
-                          : service.title === "Sound Therapy"
-                            ? ""
-                          : service.title === "Healing Sessions" 
-                            ? "60 min, Online (Video Call) or In person"
-                            : service.title === "Soul Print"
-                              ? "Online Only"
-                              : ""}
-                      </span>
-                      </span>
+                      {service.title === "Sound Therapy" ? (
+                        <span className="flex items-center space-x-1">
+                          <Clock className="w-4 h-4" />
+                          <span>2 houres,Online</span>
+                        </span>
+                      ) : service.title !== "Readings" ? (
+                        <span className="flex items-center space-x-1">
+                          <Clock className="w-4 h-4" />
+                          <span>
+                            {service.title === "Tarot Reading" 
+                              ? "60 min, Online (Video Call) or In person"
+                              : service.title === "Sound Therapy"
+                                ? ""
+                              : service.title === "Healing Sessions" 
+                                ? "60 min, Online (Video Call) or In person"
+                                : service.title === "Soul Print"
+                                  ? "Online Only"
+                                  : ""}
+                          </span>
+                        </span>
+                      ) : (
+                        <span />
+                      )}
                     </div>
                   </div>
                 </div>

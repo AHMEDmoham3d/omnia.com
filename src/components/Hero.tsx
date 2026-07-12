@@ -116,7 +116,10 @@ flex items-center justify-center overflow-hidden">
                space, no matter what you are going through <br />
               you will find guidance here.
         </p>
-        
+                  <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            This space was created for those who are seeking clarity, healing, guidance
+             and a deeper connection with themselves.
+          </p>
         {/* <p className="text-lg text-gray-400 mb-12 max-w-2xl mx-auto animate-fade-in-up-delayed">
           I support people in understanding their path, releasing blockages, and reconnecting with their inner strength and intuition.
         </p> */}
