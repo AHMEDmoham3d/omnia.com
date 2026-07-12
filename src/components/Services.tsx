@@ -21,35 +21,45 @@ const Services = () => {
           </div>
         </div>
       ),
-      title: "Tarot Reading",
+      title: "Reading",
       description: "",
       features: [
         <div key="tarot-types" className="grid grid-cols-1 gap-4 mt-4">
           <div className="bg-gray-700/30 p-4 rounded-lg">
-            <span className="font-semibold text-xl text-pink-300">2026 Reading<br/>(available till end of January only)</span>
-            <p className="mt-2 text-gray-300">
-              An exclusive reading that covers your personal energy in details for the year of 2026 including: (your major highlights, Opportunities, Warnings, Lessons and guidance)
+            <p className="text-gray-300">
+              <span className="font-semibold text-pink-300">📍All readings</span> are held online via video call in a safe, respectful, and completely confidential
             </p>
-            <p className="mt-2 text-green-300">
-              🔮plus: PDF file as a reference to you + 20% discount on Private reading valid for 3 months.
+            <p className="mt-3 text-gray-300">
+              <span className="font-semibold text-pink-300">💫Appointments</span> are scheduled based on availability
+              <span className="font-semibold text-yellow-300">⚡Urgent Reading</span> available within 48 hours with extra fees
             </p>
-          </div>
-          
-          <div className="bg-gray-700/30 p-4 rounded-lg">
-            <span className="font-semibold text-xl text-pink-300">Private Reading - one to one, video Call, 60 min</span>
-            <p className="mt-2 text-gray-300">
-              Its a private reading that covers your topics, answering your questions clarify your situations and clear all your doubts
+            <p className="mt-3 text-gray-300">
+              <span className="font-semibold text-pink-300">💫My sessions</span> focus on guidance, self-awareness, and personal growth.
+              They are not intended for spying, spell work, or manipulation of others
             </p>
           </div>
-          
+
           <div className="bg-gray-700/30 p-4 rounded-lg">
-            <span className="font-semibold text-xl text-pink-300">Daily Tiktok Live Reading</span>
-            <ul className="list-disc pl-5 mt-2 space-y-1 text-gray-300">
-              <li>Yes/No questions</li>
-              <li>Detailed Questions</li>
-              <li>Mini Readings</li>
-              <li>Vip Readings</li>
-            </ul>
+            <span className="font-semibold text-xl text-pink-300">🔮Tarot Reading</span>
+            <p className="mt-2 text-gray-300">⏳️1 Hour</p>
+            <p className="mt-2 text-gray-300">
+              A personalized reading designed to bring clarity, answer your questions, and help you better understand your situations and the people involved
+            </p>
+          </div>
+
+          <div className="bg-gray-700/30 p-4 rounded-lg">
+            <span className="font-semibold text-xl text-pink-300">🔮Charm Reading</span>
+            <p className="mt-2 text-gray-300">
+              Its a general reading using symbolic charms to offer insight into different areas of your life, including love, relationships, career, finances, travel, and more
+            </p>
+          </div>
+
+          <div className="bg-gray-700/30 p-4 rounded-lg">
+            <span className="font-semibold text-xl text-pink-300">🔮Energy Blockage Reading</span>
+            <p className="mt-2 text-gray-300">
+              A focused reading designed to explore the energetic patterns that may be influencing a specific area of your life,
+              helping you gain clarity and a deeper understanding of the root causes behind what may be holding you back
+            </p>
           </div>
         </div>
       ]
