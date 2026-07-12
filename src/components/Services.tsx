@@ -89,7 +89,7 @@ const Services = () => {
           </div>
 
           <div className="mt-4">
-            <span className="font-semibold text-yellow-300">⚠️ Sound Sessions</span> are customized based on your individual needs to provide the best possible experience, so If you have a medical condition or currently receiving medical treatment, please contact me before booking to ensure the session is suitable for you.
+            <span className="font-semibold text-yellow-300">⚠️ Sound Sessions</span> are customized based on your needs to provide the best possible experience, so If you have a medical condition or currently receiving medical treatment, please contact me before booking to ensure the session is suitable for you.
           </div>
         </>
       ),
