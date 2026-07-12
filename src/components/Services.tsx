@@ -107,7 +107,7 @@ const Services = () => {
       title: "Healing Sessions",
       description: (
         <>
-          <div className="font-semibold text-pink-300">🤍🕯️🪶 Healing Session</div>
+          {/* <div className="font-semibold text-pink-300">🤍🕯️🪶 Healing Session</div> */}
           <div className="mt-1 text-gray-300">📍Online Video Call</div>
           <br />
           <p>
