@@ -102,7 +102,7 @@ const About = () => {
 
           {/* Content */}
           <div className="space-y-6">
-            <h3 className="text-3xl font-bold text-white mb-4">
+            <h3 className="text-3xl font-bold text-pink-400 mb-4">
                Omnia Abdo
 
             </h3>
