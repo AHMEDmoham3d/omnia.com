@@ -65,7 +65,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section id="home" className="relative min-h-[61vh]
+<section id="home" className="relative min-h-[55vh]
 flex items-center justify-center overflow-hidden">
       {/* Animated Background */}
       <canvas

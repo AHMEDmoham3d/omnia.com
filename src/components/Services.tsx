@@ -131,7 +131,6 @@ const Services = () => {
       title: "Healing Sessions",
       description: (
         <>
-          <div className="font-semibold text-pink-300">🤍🕯️🪶</div>
           <div className="mt-1 text-pink-300">📍Online Video Call</div>
           <br />
           <p>
@@ -145,8 +144,8 @@ const Services = () => {
             💫Each session is personalized and held in a safe, supportive, and completely confidential space.
           </p>
           <p className="mt-3 font-semibold"> <span className="mt-1 text-yellow-300">●</span> The Healing Session consists of two stages:</p>
-          <p className="mt-2">🕯️ Initial Healing Session</p>
-          <p className="mt-2">🕯️ Follow-Up Session</p>
+          <p className="mt-2 text-pink-300">🕯️ Initial Healing Session</p>
+          <p className="mt-2 text-pink-300">🕯️ Follow-Up Session</p>
           <p className="mt-1">
             The follow-up session is designed to review your progress, explore any changes you've experienced,
             and provide continued support throughout your healing journey.
@@ -176,10 +175,10 @@ const Services = () => {
   ];
 
   return (
-<section id="services" className="py-12 px-4 relative">
+<section id="services" className="py-8 px-4 relative">
       <div className="container mx-auto max-w-6xl">
         {/* Section Header */}
-        <div className="text-center mb-10">
+<div className="text-center mb-6">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent flex items-center justify-center gap-2 flex-wrap">
             Feel <Heart className="w-5 h-5 text-pink-400 inline" />
             Heal <Heart className="w-5 h-5 text-pink-400 inline" />
@@ -193,7 +192,7 @@ const Services = () => {
         </div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
+<div className="grid md:grid-cols-2 gap-8 mb-8">
           {services.map((service, index) => (
             <div
               key={index}

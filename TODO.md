@@ -1,8 +1,8 @@
 # TODO
 
-- [ ] تعديل src/components/Services.tsx
-  - [x] استبدال نص قسم Tarot Reading الحالي بكلام "Reading Services" الجديد
-  - [x] تضمين تفاصيل: السرية، المواعيد، Urgent Reading خلال 48 ساعة، ومنع التلاعب/السباينج
-  - [x] إضافة/تأكيد العناوين: Tarot Reading / Charm Reading / Energy Blockage Reading بنفس الصياغة الإنجليزية
-- [x] تشغيل npm run build (أو npm run dev) للتأكد من عدم وجود أخطاء
+## Spacing fixes (sections close together)
+- [x] Inspect layout in Hero/About/Services/Contact/StoreAndCourses/Footer
+- [x] Reduce top/bottom padding and margins that create large gaps between sections
+- [x] Keep internal spacing inside cards/typography readable (avoid breaking layout)
+- [x] Run build/lint after changes
 

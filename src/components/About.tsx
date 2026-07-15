@@ -66,7 +66,7 @@ const About = () => {
   ];
 
   return (
-<section ref={sectionRef} id="about" className="py-12 px-4 relative">
+<section ref={sectionRef} id="about" className="py-8 px-4 relative">
       <div className="container mx-auto max-w-6xl">
         {/* Section Header */}
 <div className="text-center mb-10">

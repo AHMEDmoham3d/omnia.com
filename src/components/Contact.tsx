@@ -123,9 +123,9 @@ const Contact = () => {
   ];
 
   return (
-<section id="contact" className="py-12 px-4 relative">
+<section id="contact" className="py-8 px-4 relative">
       <div className="container mx-auto max-w-6xl">
-        <div className="text-center mb-10">
+<div className="text-center mb-6">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
             Connect With Me
           </h2>
