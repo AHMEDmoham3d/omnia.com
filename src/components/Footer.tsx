@@ -23,10 +23,10 @@ const Footer = () => {
                 Beyond Holistic
               </span>
             </div>
-            <p className="text-gray-400 mb-4 max-w-md">
+            {/* <p className="text-gray-400 mb-4 max-w-md">
               Guiding souls on their spiritual journey through ancient wisdom, 
               tarot readings, energy healing, and sound therapy. Discover your path to inner harmony.
-            </p>
+            </p> */}
             {/* <div className="flex space-x-4">
               <a
                 href="mailto:ms.omnia.o@hotmail.com"
@@ -64,7 +64,7 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div>
+          {/* <div>
             <h4 className="text-white font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               {['Home', 'About', 'Services', 'Contact'].map((link) => (
@@ -78,10 +78,10 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
           {/* Services */}
-          <div>
+          {/* <div>
             <h4 className="text-white font-semibold mb-4">Services</h4>
             <ul className="space-y-2">
               {[
@@ -100,7 +100,7 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
         </div>
 
         {/* Bottom Section */}

@@ -159,7 +159,7 @@ const Contact = () => {
                   <div className="mt-4">
                     <div className="p-4 bg-gray-800/50 backdrop-blur-sm rounded-xl hover:bg-gray-700/50 transition-all duration-300">
                       <div className="flex items-center space-x-3 mb-3">
-                        <span className="text-gray-300 text-sm tracking-wide">Social Media</span>
+<span className="text-gray-400 text-sm tracking-wide">Social Media</span>
                         <div className="h-px flex-1 bg-gradient-to-r from-purple-500/0 via-purple-400/40 to-pink-400/0" />
                       </div>
 
