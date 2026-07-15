@@ -186,9 +186,9 @@ const Services = () => {
             Rise
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Choose from a range of transformative sessions, each designed to support your personal journey,
+            {/* Choose from a range of transformative sessions, each designed to support your personal journey,
             whether you are seeking clarity, balance, emotional or physical pain release — There is a space for you here{' '}
-            <Smile className="w-5 h-5 inline text-yellow-400" />
+            <Smile className="w-5 h-5 inline text-yellow-400" /> */}
           </p>
         </div>
 
@@ -222,7 +222,7 @@ const Services = () => {
                               : service.title === "Sound Therapy"
                                 ? ""
                               : service.title === "Healing Sessions" 
-                                ? "60 min, Online (Video Call) or In person"
+                                ? ""
                                 : service.title === "Soul Print"
                                   ? "Online Only"
                                   : ""}
