@@ -211,7 +211,7 @@ const Services = () => {
                       {service.title === "Sound Therapy" ? (
                         <span className="flex items-center space-x-1">
                           <Clock className="w-4 h-4" />
-                          <span>2 houres,Online</span>
+                          <span>2 hours,In person(Only)</span>
                         </span>
                       ) : service.title !== "Readings" ? (
                         <span className="flex items-center space-x-1">

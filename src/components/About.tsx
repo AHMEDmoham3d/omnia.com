@@ -180,7 +180,7 @@ const About = () => {
             href="#services"
             className="group bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
-            Corner Healing
+            Healing Corner 
             <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
           </a>
           <a
