@@ -1,13 +1,20 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Heart, Eye, Waves, Star, Sun, Moon, Music, Sparkles } from 'lucide-react';
+import HealingCornerModal from './HealingCornerModal';
+
 
 const About = () => {
   const sectionRef = useRef<HTMLElement>(null);
   // const videoRef = useRef<HTMLVideoElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [userInteracted, setUserInteracted] = useState(false);
+  const [showLearningHubModal, setShowLearningHubModal] = useState(false);
+
+
+  const [showHealingCornerModal, setShowHealingCornerModal] = useState(false);
 
   const features = [
+
     {
       icon: <Heart className="w-12 h-12 text-pink-400" />,
       title: "Spiritual Healing",
@@ -137,6 +144,7 @@ const About = () => {
 
         {/* Features Grid */}
         {/* <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+
           {features.map((feature, index) => (
             <div
               key={index}
@@ -178,19 +186,68 @@ const About = () => {
           
           <a
             href="#services"
+            onClick={(e) => {
+              e.preventDefault();
+              setShowHealingCornerModal(true);
+            }}
             className="group bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             Healing Corner 
             <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
           </a>
-          <a
-            href="#"
+          <button
+
+            type="button"
+            onClick={() => setShowLearningHubModal(true)}
             className="group bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             Learning Hub
             <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
-          </a>
+          </button>
         </div>
+
+        {/* Learning Hub Modal */}
+        {showLearningHubModal && (
+
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm animate-fadeIn">
+            <div className="bg-gradient-to-br from-gray-900 to-gray-800 text-white p-8 rounded-2xl shadow-2xl w-[90vw] max-w-md mx-auto animate-scaleIn border border-purple-500/30">
+              <div className="flex flex-col items-center space-y-4 text-center">
+                <div className="relative">
+                  <Sparkles className="w-12 h-12 text-purple-300 animate-pulse" />
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-ping"></div>
+                </div>
+
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  Coming Soon
+                </h2>
+
+                <button
+                  onClick={() => setShowLearningHubModal(false)}
+                  className="px-6 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-600 hover:to-purple-600 transition-all duration-300 font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
+                >
+                  Got it! ✨
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Global styles for modal animations (local to this component) */}
+        <style>{`
+          @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+          }
+
+          @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+          }
+
+          .animate-fadeIn { animation: fadeIn 0.2s ease-out; }
+          .animate-scaleIn { animation: scaleIn 0.3s ease-out; }
+        `}</style>
+
       </div>
     </section>
   );
