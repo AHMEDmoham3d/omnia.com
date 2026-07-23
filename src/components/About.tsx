@@ -114,14 +114,17 @@ const About = () => {
 
             </h3>
             <p className="text-gray-300 text-lg leading-relaxed">
-              Practicing since 2020, with a strong foundation in continuous study and a scientific approach, I combine my tools and techniques to help you find clarity, transformation and personal growth.
+              I've been practicing since 2020 with a strong foundation in continuous study, combining different tools and techniques to create personalized sessions tailored to your unique needs and spiritual path.
             </p>
             <p className="text-gray-300 text-lg leading-relaxed">
               {/* I hold sacred space for those who are ready to release what no longer serves them and reconnect with their inner light. Through sound therapy, tarot, energy healing */}
-              Iam dedicated to guiding you through your journey to awake your own consciousness to find your way in life.
+              My intention is to help you gain clarity, reconnect with yourself, and support your healing and personal growth.
             </p>
             <p className="text-gray-300 text-lg leading-relaxed">
-              Each session is personalized to your unique needs and spiritual path.
+              Because I believe that every journey begins with awareness, and sometimes a single insight can change everything.
+            </p>
+            <p className="text-gray-300 text-lg leading-relaxed">
+              Below, you'll find a variety of sessions designed to support different needs and intentions. If you're unsure which one is right for you, feel free to send me a WhatsApp message—I’ll be happy to help you choose the session that best suits you.
             </p>
 
             {/* Stats */}
