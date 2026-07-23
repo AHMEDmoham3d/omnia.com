@@ -209,6 +209,12 @@ const About = () => {
           </button>
         </div>
 
+        {/* Healing Corner Modal */}
+        <HealingCornerModal
+          open={showHealingCornerModal}
+          onClose={() => setShowHealingCornerModal(false)}
+        />
+
         {/* Learning Hub Modal */}
         {showLearningHubModal && (
 
