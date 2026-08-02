@@ -72,7 +72,7 @@ const HealingCornerModal = ({ open, onClose }: HealingCornerModalProps) => {
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div>
                   {/* <div className="text-sm uppercase tracking-wider text-purple-300 font-semibold">Tack your ,asseg</div> */}
-                  <div className="mt-1 text-lg sm:text-xl font-semibold">Choose your spiritual message now.</div>
+                  <div className="mt-1 text-lg sm:text-xl font-semibold">There is a message waiting for you.</div>
                   <a
                     href="https://cart-one-navy.vercel.app/"
                     target="_blank"
@@ -98,12 +98,12 @@ const HealingCornerModal = ({ open, onClose }: HealingCornerModalProps) => {
               {/* <div className="text-gray-400 text-sm">
                 Same style as the site • designed for mobile + desktop
               </div> */}
-              <button
+              {/* <button
                 onClick={onClose}
                 className="px-6 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-600 hover:to-purple-600 transition-all duration-300 font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
               >
                 Got it! ✨
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
