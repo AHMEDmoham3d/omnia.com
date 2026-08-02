@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Sparkles, X } from 'lucide-react';
+import { ArrowRight, Sparkles, X } from 'lucide-react';
 
 type HealingCornerModalProps = {
   open: boolean;
@@ -71,11 +71,18 @@ const HealingCornerModal = ({ open, onClose }: HealingCornerModalProps) => {
             <div className="mt-5 rounded-2xl bg-white/5 border border-white/10 p-4 sm:p-5">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div>
-                  <div className="text-sm uppercase tracking-wider text-purple-300 font-semibold">Tack your ,asseg</div>
+                  {/* <div className="text-sm uppercase tracking-wider text-purple-300 font-semibold">Tack your ,asseg</div> */}
                   <div className="mt-1 text-lg sm:text-xl font-semibold">Choose your spiritual message now.</div>
-                    <button>
-                      <a href="https://cart-one-navy.vercel.app/" target="_blank" rel="noopener nopreferrer" className="text-ellipsis overflow-auto">click Here</a>
-                    </button>
+                  <a
+                    href="https://cart-one-navy.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-600 hover:to-purple-600 px-6 py-2.5 text-sm sm:text-base font-semibold text-white shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-pink-500/40 transition-all duration-300 transform hover:scale-105"
+                  >
+                    <Sparkles className="w-4 h-4" />
+                    Click Here
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
                 </div>
                 <div className="flex gap-2">
                   {/* <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-400/30">
