@@ -72,7 +72,7 @@ const HealingCornerModal = ({ open, onClose }: HealingCornerModalProps) => {
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div>
                   {/* <div className="text-sm uppercase tracking-wider text-purple-300 font-semibold">Tack your ,asseg</div> */}
-                  <div className="mt-1 text-lg sm:text-xl font-semibold">There is a message waiting for you.</div>
+                  <div className="mt-1 text-lg sm:text-xl font-semibold">Pick a card 🔮.</div>
                   <a
                     href="https://cart-one-navy.vercel.app/"
                     target="_blank"
@@ -80,7 +80,7 @@ const HealingCornerModal = ({ open, onClose }: HealingCornerModalProps) => {
                     className="mt-3 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-600 hover:to-purple-600 px-6 py-2.5 text-sm sm:text-base font-semibold text-white shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-pink-500/40 transition-all duration-300 transform hover:scale-105"
                   >
                     <Sparkles className="w-4 h-4" />
-                    Click Here
+                    Lets start
                     <ArrowRight className="w-4 h-4" />
                   </a>
                 </div>
