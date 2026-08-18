@@ -72,7 +72,7 @@ const HealingCornerModal = ({ open, onClose }: HealingCornerModalProps) => {
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div>
                   {/* <div className="text-sm uppercase tracking-wider text-purple-300 font-semibold">Tack your ,asseg</div> */}
-                  <div className="mt-1 text-lg sm:text-xl font-semibold">Pick a card 🔮.</div>
+                  <div className="mt-1 text-lg sm:text-xl font-semibold">Pick a card 🔮</div>
                   <a
                     href="https://cart-one-navy.vercel.app/"
                     target="_blank"
