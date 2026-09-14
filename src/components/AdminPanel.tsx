@@ -943,7 +943,6 @@
 //   );
 // }
 
-
 import React, { useState, useEffect } from 'react';
 import { X, Users, Globe, Clock, Download, Trash2, Ban, UserCheck, Eye, BarChart3, Shield, MapPin, Lock, Menu } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
@@ -1172,6 +1171,21 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}m ${secs}s`;
+  };
+
+  // تنسيق تاريخ الرسالة القادم من created_at
+  const formatMessageDate = (dateString?: string) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return '';
+    return date.toLocaleString('en-GB', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    });
   };
 
   useEffect(() => {
@@ -1501,8 +1515,14 @@ const AdminPanel = ({ onClose, visitorData }: AdminPanelProps) => {
                               <span className="break-all">{message.country}{message.city && `, ${message.city}`}</span>
                             </span>
                           )}
-                          {message.timestamp && (
-                            <span>{new Date(message.timestamp).toLocaleString()}</span>
+                          {/* هنا بقى بيظهر تاريخ الرسالة من عمود created_at */}
+                          {message.created_at && (
+                            <span className="flex items-center space-x-1">
+                              <Clock className="w-3 h-3 flex-shrink-0" />
+                              <span className="font-medium text-gray-300">
+                                {formatMessageDate(message.created_at)}
+                              </span>
+                            </span>
                           )}
                         </div>
                       </div>
