@@ -17,6 +17,7 @@ import Footer from './components/Footer';
 import AdminPanel from './components/AdminPanel';
 import BackgroundMusic from './components/BackgroundMusic';
 import ParticleBackground from './components/ParticleBackground';
+import NewYearBookingModal from './components/NewYearBookingModal';
 
 // Interfaces
 interface Visitor {
@@ -61,6 +62,8 @@ interface LocationData {
 }
 
 function App() {
+  const [isNewYearModalOpen, setIsNewYearModalOpen] = useState(true);
+
   const [visitorData, setVisitorData] = useState<{
     totalVisitors: number;
     uniqueVisitors: number;
@@ -90,6 +93,7 @@ function App() {
     // Disable right click and dev tools
     const disableSecurityRisks = () => {
       document.addEventListener('contextmenu', (e: MouseEvent) => e.preventDefault());
+
       document.addEventListener('keydown', (e: KeyboardEvent) => {
         if (
           e.key === 'F12' ||
@@ -338,6 +342,11 @@ function App() {
             path="/"
             element={
               <>
+                <NewYearBookingModal
+                  open={isNewYearModalOpen}
+                  onClose={() => setIsNewYearModalOpen(false)}
+                />
+
                 <BackgroundMusic />
                 <ParticleBackground />
                 <Hero />
