@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
@@ -99,6 +100,7 @@ function App() {
         }
       });
     };
+
     disableSecurityRisks();
   }, []);
 
@@ -117,8 +119,13 @@ function App() {
           screen.width + screen.height
         );
 
-        const existingData: Visitor[] = JSON.parse(localStorage.getItem('omnia_secure_visitors') || '[]');
-        const isUniqueVisitor = !existingData.find((v) => v.id === visitorId);
+        const existingData: Visitor[] = JSON.parse(
+          localStorage.getItem('omnia_secure_visitors') || '[]'
+        );
+
+        const isUniqueVisitor = !existingData.find(
+          (v) => v.id === visitorId
+        );
 
         const visitorInfo: Visitor = {
           id: visitorId,
@@ -128,7 +135,9 @@ function App() {
           region: locationData.region || 'Unknown',
           timezone: locationData.timezone || 'Unknown',
           isp: locationData.org || 'Unknown',
-          device: /Mobile|Android|iPhone|iPad/.test(navigator.userAgent) ? 'Mobile' : 'Desktop',
+          device: /Mobile|Android|iPhone|iPad/.test(navigator.userAgent)
+            ? 'Mobile'
+            : 'Desktop',
           browser: navigator.userAgent.split(' ').pop()?.split('/')[0] || 'unknown',
           screenResolution: `${screen.width}x${screen.height}`,
           language: navigator.language,
@@ -143,19 +152,33 @@ function App() {
           ? [...existingData, visitorInfo]
           : existingData.map((v) =>
               v.id === visitorId
-                ? { ...v, visitTime: new Date().toISOString(), lastActivity: new Date().toISOString(), isActive: true }
+                ? {
+                    ...v,
+                    visitTime: new Date().toISOString(),
+                    lastActivity: new Date().toISOString(),
+                    isActive: true
+                  }
                 : v
             );
 
-        localStorage.setItem('omnia_secure_visitors', JSON.stringify(updatedVisitors));
+        localStorage.setItem(
+          'omnia_secure_visitors',
+          JSON.stringify(updatedVisitors)
+        );
 
         const today = new Date().toDateString();
+
         const todayVisitors = updatedVisitors.filter(
           (v) => new Date(v.visitTime).toDateString() === today
         ).length;
 
-        const uniqueCountries = [...new Set(updatedVisitors.map((v) => v.country))];
-        const uniqueCities = [...new Set(updatedVisitors.map((v) => v.city))];
+        const uniqueCountries = [
+          ...new Set(updatedVisitors.map((v) => v.country))
+        ];
+
+        const uniqueCities = [
+          ...new Set(updatedVisitors.map((v) => v.city))
+        ];
 
         setVisitorData({
           totalVisitors: updatedVisitors.length,
@@ -164,10 +187,22 @@ function App() {
           countries: uniqueCountries,
           cities: uniqueCities,
           pageViews: {
-            home: updatedVisitors.reduce((acc, v) => acc + (v.pageViews.includes('home') ? 1 : 0), 0),
-            services: updatedVisitors.reduce((acc, v) => acc + (v.pageViews.includes('services') ? 1 : 0), 0),
-            about: updatedVisitors.reduce((acc, v) => acc + (v.pageViews.includes('about') ? 1 : 0), 0),
-            contact: updatedVisitors.reduce((acc, v) => acc + (v.pageViews.includes('contact') ? 1 : 0), 0)
+            home: updatedVisitors.reduce(
+              (acc, v) => acc + (v.pageViews.includes('home') ? 1 : 0),
+              0
+            ),
+            services: updatedVisitors.reduce(
+              (acc, v) => acc + (v.pageViews.includes('services') ? 1 : 0),
+              0
+            ),
+            about: updatedVisitors.reduce(
+              (acc, v) => acc + (v.pageViews.includes('about') ? 1 : 0),
+              0
+            ),
+            contact: updatedVisitors.reduce(
+              (acc, v) => acc + (v.pageViews.includes('contact') ? 1 : 0),
+              0
+            )
           },
           realTimeVisitors: updatedVisitors.filter((v) => v.isActive)
         });
@@ -182,32 +217,53 @@ function App() {
     let currentPage = 'home';
 
     const trackPageView = (page: string) => {
-      const visitors: Visitor[] = JSON.parse(localStorage.getItem('omnia_secure_visitors') || '[]');
+      const visitors: Visitor[] = JSON.parse(
+        localStorage.getItem('omnia_secure_visitors') || '[]'
+      );
+
       const currentVisitorId = visitors[visitors.length - 1]?.id;
 
       if (currentVisitorId) {
         const updatedVisitors = visitors.map((v) => {
           if (v.id === currentVisitorId) {
-            const updatedPageViews = [...new Set([...v.pageViews, page])];
-            return { ...v, pageViews: updatedPageViews, lastActivity: new Date().toISOString() };
+            const updatedPageViews = [
+              ...new Set([...v.pageViews, page])
+            ];
+
+            return {
+              ...v,
+              pageViews: updatedPageViews,
+              lastActivity: new Date().toISOString()
+            };
           }
+
           return v;
         });
-        localStorage.setItem('omnia_secure_visitors', JSON.stringify(updatedVisitors));
+
+        localStorage.setItem(
+          'omnia_secure_visitors',
+          JSON.stringify(updatedVisitors)
+        );
       }
     };
 
     const handleScroll = () => {
       const sections = ['home', 'about', 'services', 'contact'];
+
       const scrollPosition = window.scrollY + window.innerHeight / 2;
 
       sections.forEach(section => {
         const element = document.getElementById(section);
+
         if (element) {
           const elementTop = element.offsetTop;
           const elementBottom = elementTop + element.offsetHeight;
 
-          if (scrollPosition >= elementTop && scrollPosition <= elementBottom && currentPage !== section) {
+          if (
+            scrollPosition >= elementTop &&
+            scrollPosition <= elementBottom &&
+            currentPage !== section
+          ) {
             currentPage = section;
             trackPageView(section);
           }
@@ -216,11 +272,15 @@ function App() {
     };
 
     const handleVisibilityChange = () => {
-      const visitors: Visitor[] = JSON.parse(localStorage.getItem('omnia_secure_visitors') || '[]');
+      const visitors: Visitor[] = JSON.parse(
+        localStorage.getItem('omnia_secure_visitors') || '[]'
+      );
+
       const currentVisitorId = visitors[visitors.length - 1]?.id;
 
       if (document.hidden && currentVisitorId) {
         const timeSpent = Date.now() - startTime;
+
         const updatedVisitors = visitors.map((v) => {
           if (v.id === currentVisitorId) {
             return {
@@ -230,29 +290,43 @@ function App() {
               lastActivity: new Date().toISOString()
             };
           }
+
           return v;
         });
-        localStorage.setItem('omnia_secure_visitors', JSON.stringify(updatedVisitors));
+
+        localStorage.setItem(
+          'omnia_secure_visitors',
+          JSON.stringify(updatedVisitors)
+        );
       } else if (!document.hidden) {
         startTime = Date.now();
       }
     };
 
     window.addEventListener('scroll', handleScroll);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    document.addEventListener(
+      'visibilitychange',
+      handleVisibilityChange
+    );
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
+
+      document.removeEventListener(
+        'visibilitychange',
+        handleVisibilityChange
+      );
     };
   }, []);
 
   useEffect(() => {
-    const savedMessages: Message[] = JSON.parse(localStorage.getItem('omnia_secure_messages') || '[]');
+    const savedMessages: Message[] = JSON.parse(
+      localStorage.getItem('omnia_secure_messages') || '[]'
+    );
+
     setMessages(savedMessages);
   }, []);
-
-
 
   return (
     <Router>
