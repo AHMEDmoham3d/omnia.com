@@ -9,7 +9,7 @@ interface NewYearBookingModalProps {
 const WHATSAPP_NUMBER = '201009058159';
 
 const WHATSAPP_MESSAGE =
-  'مرحباً، أريد حجز سيشن رأس السنة. من فضلكم أرسلوا لي التفاصيل والمواعيد المتاحة.';
+  'مرحباً، أريد حجز New Year Reading 2027. من فضلكم أرسلوا لي التفاصيل والمواعيد المتاحة.';
 
 const WHATSAPP_URL =
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
@@ -51,7 +51,7 @@ const NewYearBookingModal: React.FC<NewYearBookingModalProps> = ({
         alignItems: 'center',
         justifyContent: 'center',
         padding: '20px',
-        backgroundColor: 'rgba(0, 0, 0, 0.82)',
+        backgroundColor: 'rgba(15, 8, 25, 0.85)',
         backdropFilter: 'blur(8px)',
         WebkitBackdropFilter: 'blur(8px)'
       }}
@@ -65,8 +65,8 @@ const NewYearBookingModal: React.FC<NewYearBookingModalProps> = ({
           padding: '45px 28px 35px',
           textAlign: 'center',
           borderRadius: '24px',
-          border: '1px solid rgba(218, 177, 100, 0.5)',
-          background: 'linear-gradient(145deg, #171923, #25202b, #352515)',
+          border: '1px solid rgba(222, 157, 224, 0.5)',
+          background: 'linear-gradient(145deg, #211629, #30203d, #422744)',
           boxShadow: '0 25px 80px rgba(0, 0, 0, 0.65)',
           color: '#ffffff',
           fontFamily: 'Arial, sans-serif',
@@ -105,7 +105,7 @@ const NewYearBookingModal: React.FC<NewYearBookingModalProps> = ({
 
         <p
           style={{
-            color: '#e6bd77',
+            color: '#e8a8df',
             fontSize: '13px',
             letterSpacing: '3px',
             marginBottom: '15px'
@@ -119,25 +119,32 @@ const NewYearBookingModal: React.FC<NewYearBookingModalProps> = ({
             fontSize: '30px',
             fontWeight: 'bold',
             lineHeight: 1.5,
-            color: '#f2d39b',
+            color: '#f2c5ed',
             margin: '0 0 18px'
           }}
         >
-          احجز سيشن رأس السنة
+          🎉🎅🏻New Year Reading 2027🎉
         </h2>
 
         <p
           style={{
-            color: '#dedede',
+            color: '#eee2f0',
             fontSize: '15px',
             lineHeight: 2,
             margin: '0 auto 28px',
             maxWidth: '340px'
           }}
         >
-          استقبل السنة الجديدة بتجربة مميزة.
-          تواصل معنا الآن لمعرفة تفاصيل السيشن
-          والمواعيد المتاحة للحجز.
+          .
+
+          متاح الان قراءات السنة الجديدة 2027
+
+          استقبل السنة الجديدة برؤية أوضح لطاقتك، واكتشف أهم الفرص والتحديات والتغييرات المحتملة خلال عام 2027 🪄
+
+          القراءة شاملة ومفصلة لطاقتك ومختلف جوانب حياتك من 💼 العمل والمال❤️ الحب والعلاقات🌿 الصحة ✈️ السفر ✨ الفرص⚡ التحديات والتحذيرات🔮 والنصائح الخاصه بك
+
+          ✨ ابدأ 2027 بوعى ورؤية أعمق لنفسك وللطاقات المحيطة بك
+          .
         </p>
 
         <a
@@ -154,17 +161,17 @@ const NewYearBookingModal: React.FC<NewYearBookingModalProps> = ({
             margin: '0 auto',
             padding: '16px 20px',
             borderRadius: '50px',
-            background: 'linear-gradient(135deg, #e9c47d, #c99b4d)',
-            color: '#171717',
+            background: 'linear-gradient(135deg, #edb2e5, #b78bdc, #9674c9)',
+            color: '#24152e',
             fontSize: '16px',
             fontWeight: 'bold',
             textDecoration: 'none',
-            boxShadow: '0 8px 25px rgba(201, 155, 77, 0.25)',
+            boxShadow: '0 8px 25px rgba(190, 130, 210, 0.3)',
             boxSizing: 'border-box'
           }}
         >
           <span style={{ fontSize: '21px' }}>☘</span>
-          احجز عبر واتساب
+         Book now
         </a>
 
         <button
@@ -175,12 +182,12 @@ const NewYearBookingModal: React.FC<NewYearBookingModalProps> = ({
             margin: '22px auto 0',
             border: 'none',
             background: 'transparent',
-            color: '#aaaaaa',
+            color: '#c9b6d1',
             fontSize: '14px',
             cursor: 'pointer'
           }}
         >
-          لاحقاً
+         Later
         </button>
       </div>
 
